@@ -81,6 +81,13 @@ class _LoginCredentialsState extends State<LoginCredentials> {
             return temp;
           }
         ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton(
+            onPressed: () {},
+            child: const Text('forgot password'),
+          ),
+        ),
       ],
     );
   }

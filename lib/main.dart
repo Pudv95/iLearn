@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:ilearn/Screens/Authentication/Login/login_page.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -9,6 +10,7 @@ void main()async{
   return runApp( MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
+      fontFamily: 'Work Sans',
       textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.grey)
     ),
     home: await isLoggedIn()?const Placeholder(): const LoginPage(),
@@ -16,9 +18,7 @@ void main()async{
 }
 
 Future<bool> isLoggedIn()async{
-  print('here');
-  await Future.delayed(const Duration(seconds: 1));
-  print('here');
+  log('Loading....');
   await Future.delayed(const Duration(seconds: 1));
   return false;
 }
