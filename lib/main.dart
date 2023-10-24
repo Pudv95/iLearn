@@ -8,7 +8,9 @@ void main()async{
   FlutterNativeSplash.preserve(widgetsBinding: widgetBinding);
   return runApp( MaterialApp(
     debugShowCheckedModeBanner: false,
-    theme: ThemeData(),
+    theme: ThemeData(
+      textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.grey)
+    ),
     home: await isLoggedIn()?const Placeholder(): const LoginPage(),
   ));
 }
