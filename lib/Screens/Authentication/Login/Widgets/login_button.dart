@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ilearn/Screens/Authentication/OTP/otp_page.dart';
 import '../Control/elevated_button.dart';
 
 class LoginButton extends StatelessWidget {
@@ -13,11 +14,14 @@ class LoginButton extends StatelessWidget {
         width: double.infinity,
         height: height*0.05,
         child: ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if(formKey.currentState!.validate()){
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Processing Data')),
                 );
+                FocusScope.of(context).unfocus();
+                await Future.delayed(const Duration(seconds: 1));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>OtpPage()));
               }
             },
             style: ElevatedButtonDesign.buttonDesign(),
