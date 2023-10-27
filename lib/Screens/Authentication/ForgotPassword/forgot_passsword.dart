@@ -1,4 +1,5 @@
 import 'package:ilearn/Resources/imports.dart';
+import 'package:ilearn/Screens/Authentication/ResetPassword/reset_password.dart';
 
 import '../Login/Control/elevated_button.dart';
 import '../Login/Control/input_field.dart';
@@ -58,7 +59,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               width: double.infinity,
               height: height * 0.05,
               child: ElevatedButton(
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ResetPassword()));
+                },
                 style: ElevatedButtonDesign.buttonDesign(),
                 child: const Text('NEXT'),
               ),

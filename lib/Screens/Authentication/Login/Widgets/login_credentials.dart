@@ -86,7 +86,7 @@ class _LoginCredentialsState extends State<LoginCredentials> {
           alignment: Alignment.centerRight,
           child: TextButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgotPassword()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>const ForgotPassword()));
             },
             child: const Text('forgot password?'),
           ),
