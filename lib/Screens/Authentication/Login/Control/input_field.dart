@@ -30,7 +30,7 @@ class InputField {
       floatingLabelBehavior: FloatingLabelBehavior.never,
       prefixIcon: icon,
       prefixIconColor: Colors.grey,
-      suffixIcon: (label == 'Email')
+      suffixIcon: (label != 'Password')
           ? const SizedBox()
           : IconButton(
               onPressed: () {

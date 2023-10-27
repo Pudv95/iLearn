@@ -19,6 +19,6 @@ void main()async{
 
 Future<bool> isLoggedIn()async{
   log('Loading....');
-  await Future.delayed(const Duration(seconds: 1));
+  await Future.delayed(const Duration(seconds: 0));
   return false;
 }

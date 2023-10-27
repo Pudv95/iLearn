@@ -1,5 +1,6 @@
 import 'package:ilearn/Resources/imports.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:ilearn/Screens/Authentication/ForgotPassword/forgot_passsword.dart';
 import 'package:ilearn/Screens/Authentication/Login/Control/input_field.dart';
 
 class LoginCredentials extends StatefulWidget {
@@ -84,8 +85,10 @@ class _LoginCredentialsState extends State<LoginCredentials> {
         Align(
           alignment: Alignment.centerRight,
           child: TextButton(
-            onPressed: () {},
-            child: const Text('forgot password'),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgotPassword()));
+            },
+            child: const Text('forgot password?'),
           ),
         ),
       ],
