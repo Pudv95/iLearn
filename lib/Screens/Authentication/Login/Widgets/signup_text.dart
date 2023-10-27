@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ilearn/Screens/Authentication/SignUp/sign_up.dart';
 
 
 class SignUpText extends StatelessWidget {
@@ -10,7 +11,9 @@ class SignUpText extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text('Don\'t have account?',style: TextStyle(letterSpacing: 0.75,fontWeight: FontWeight.w600),),
-        TextButton(onPressed: () {}, child: const Text('sign up')),
+        TextButton(onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>const SignUP()));
+        }, child: const Text('sign up')),
       ],
     );
   }
