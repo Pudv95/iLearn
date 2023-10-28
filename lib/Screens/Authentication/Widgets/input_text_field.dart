@@ -1,5 +1,4 @@
 import 'package:ilearn/Resources/imports.dart';
-import 'package:ilearn/Screens/Authentication/Login/Control/input_field.dart';
 
 class InputTextField extends StatefulWidget {
   final FocusNode focusNode;
@@ -22,14 +21,12 @@ class InputTextField extends StatefulWidget {
 }
 
 class _InputTextFieldState extends State<InputTextField> {
-  bool showPassword = false;
+  bool showPassword = true;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-        onTapOutside: (value){
-          setState(() {
-            widget.focusNode.unfocus();
-          });
+        onTap: () {
+          setState(() {});
         },
         controller: widget.textEditingController,
         focusNode: widget.focusNode,
@@ -45,7 +42,9 @@ class _InputTextFieldState extends State<InputTextField> {
                       showPassword = !showPassword;
                     });
                   },
-                  icon: (showPassword) ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off),
+                  icon: (!showPassword)
+                      ? const Icon(Icons.visibility)
+                      : const Icon(Icons.visibility_off),
                 ),
           suffixIconColor: Colors.grey,
           border: OutlineInputBorder(
@@ -58,7 +57,7 @@ class _InputTextFieldState extends State<InputTextField> {
           label: Text(widget.data),
           focusColor: AllColor.textFormBoxFocus,
         ),
-        obscureText: (showPassword)?true:false,
+        obscureText: (showPassword) ? true : false,
         cursorColor: AllColor.textFormText,
         validator: (value) {
           return widget.validator(value);

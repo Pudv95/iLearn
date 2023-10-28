@@ -1,7 +1,6 @@
 import 'package:ilearn/Resources/imports.dart';
-import 'package:ilearn/Screens/Authentication/ResetPassword/reset_password.dart';
-
-import '../Login/Control/elevated_button.dart';
+import 'package:ilearn/Screens/Authentication/OTP/otp_page.dart';
+import 'package:ilearn/Screens/Authentication/Widgets/next_button.dart';
 import '../Login/Control/input_field.dart';
 
 
@@ -13,6 +12,8 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+
+  //forget-password
 
   final InputField _validators = InputField();
   @override
@@ -55,17 +56,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   }
               ),
             ),
-            SizedBox(
-              width: double.infinity,
-              height: height * 0.05,
-              child: ElevatedButton(
-                onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ResetPassword()));
-                },
-                style: ElevatedButtonDesign.buttonDesign(),
-                child: const Text('NEXT'),
-              ),
-            ),
+            CustomLoginButton(onPress: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> const OtpPage(email: 'Testing this')));
+            }, data: 'Next'),
           ],
         ),
       )

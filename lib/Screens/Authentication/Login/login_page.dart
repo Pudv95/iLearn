@@ -1,5 +1,6 @@
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:ilearn/Resources/imports.dart';
+import 'package:ilearn/Screens/Authentication/Widgets/next_button.dart';
 import 'package:text_divider/text_divider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -38,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const LoginCredentials(),
-                    LoginButton(formKey: _formKey),
+                    CustomLoginButton(formKey: _formKey, onPress: (){}, data: 'Log In'),
                     TextDivider.horizontal(
                         text: const Text('Or continue with'), thickness: 1.5,size: height*0.1),
                     const GoogleLoginButton(),
