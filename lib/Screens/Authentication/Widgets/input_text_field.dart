@@ -6,6 +6,8 @@ class InputTextField extends StatefulWidget {
   final String data;
   final Icon icon;
   final bool isPasswordField;
+  final bool hasError;
+  final void Function()? onTap;
   final TextEditingController textEditingController;
   const InputTextField(
       {super.key,
@@ -14,6 +16,8 @@ class InputTextField extends StatefulWidget {
       required this.data,
       required this.icon,
       this.isPasswordField = false,
+      this.onTap,
+      this.hasError = false,
       required this.textEditingController});
 
   @override
@@ -25,9 +29,7 @@ class _InputTextFieldState extends State<InputTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-        onTap: () {
-          setState(() {});
-        },
+        onTap: widget.onTap,
         controller: widget.textEditingController,
         focusNode: widget.focusNode,
         decoration: InputDecoration(
@@ -50,14 +52,14 @@ class _InputTextFieldState extends State<InputTextField> {
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: const BorderSide(style: BorderStyle.none, width: 0)),
-          fillColor: (!widget.focusNode.hasFocus)
+          fillColor: (widget.hasError)?AllColor.errorRed:(!widget.focusNode.hasFocus)
               ? AllColor.textFormBox
               : AllColor.textFormBoxFocus,
           filled: true,
           label: Text(widget.data),
           focusColor: AllColor.textFormBoxFocus,
         ),
-        obscureText: (showPassword) ? true : false,
+        obscureText: (showPassword && widget.isPasswordField) ? true : false,
         cursorColor: AllColor.textFormText,
         validator: (value) {
           return widget.validator(value);

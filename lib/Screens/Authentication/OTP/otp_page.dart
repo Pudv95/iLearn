@@ -10,17 +10,21 @@ import 'package:pinput/pinput.dart';
 
 class OtpPage extends StatefulWidget {
   final String email;
-  const OtpPage({super.key,required this.email,});
+  final bool passwordResetting;
+  const OtpPage({
+    super.key,
+    required this.email,
+    required this.passwordResetting,
+  });
 
   @override
   State<OtpPage> createState() => _OtpPageState();
 }
 
 class _OtpPageState extends State<OtpPage> {
-
   final TextEditingController _otpController = TextEditingController();
 
-  verifyOTP(otp) async {
+  verifyEmail(otp) async {
     String baseURl = dotenv.get('BaseUrl');
     var headers = {
       'Content-Type': 'application/json',
@@ -33,8 +37,8 @@ class _OtpPageState extends State<OtpPage> {
         url,
         headers: headers,
         body: jsonEncode({
-          "email" :  widget.email,
-          "otp" : otp,
+          "email": widget.email,
+          "otp": otp,
         }),
       );
 
@@ -50,28 +54,27 @@ class _OtpPageState extends State<OtpPage> {
     }
   }
 
-
-  resendOTP()async{
+  verifyOTP(otp) async {
     String baseURl = dotenv.get('BaseUrl');
     var headers = {
       'Content-Type': 'application/json',
     };
 
-    var url = Uri.parse('$baseURl/resend-otp');
-
+    var url = Uri.parse('$baseURl/verify-otp');
 
     try {
       http.Response response = await http.post(
         url,
         headers: headers,
         body: jsonEncode({
-          "email" :  widget.email,
+          "email": widget.email,
+          "otp": otp,
         }),
       );
 
       if (response.statusCode == 200) {
         print(response.body);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('OTP is sent')));
+        return jsonDecode(response.body)['data']['token'];
       }
     } catch (error) {
       print('Error: $error');
@@ -79,11 +82,36 @@ class _OtpPageState extends State<OtpPage> {
     }
   }
 
+  resendOTP() async {
+    String baseURl = dotenv.get('BaseUrl');
+    var headers = {
+      'Content-Type': 'application/json',
+    };
 
+    var url = Uri.parse('$baseURl/resend-otp');
+
+    try {
+      http.Response response = await http.post(
+        url,
+        headers: headers,
+        body: jsonEncode({
+          "email": widget.email,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        print(response.body);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('OTP is sent')));
+      }
+    } catch (error) {
+      print('Error: $error');
+      return false;
+    }
+  }
 
   final focusNode = FocusNode();
   final _pinKey = GlobalKey<FormState>();
-
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +141,7 @@ class _OtpPageState extends State<OtpPage> {
                 height: 32,
                 child: TextButton(
                     onPressed: () {},
-                    child:  Text(
+                    child: Text(
                       widget.email,
                       style: const TextStyle(
                           fontSize: 13, decoration: TextDecoration.underline),
@@ -140,7 +168,7 @@ class _OtpPageState extends State<OtpPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   length: 4,
                   validator: (value) {
-                    if(value!.length != 4){
+                    if (value!.length != 4) {
                       return "Enter the OTP";
                     }
                     return null;
@@ -165,30 +193,52 @@ class _OtpPageState extends State<OtpPage> {
                   'Resend Code',
                   style: TextStyle(decoration: TextDecoration.underline),
                 )),
-            CustomLoginButton(onPress: ()async {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>const ResetPassword()));
-              return;
-              if(_pinKey.currentState!.validate()){
-                if(await verifyOTP(_otpController)){
-                  if(context.mounted){
-                    Navigator.popUntil(context, (route) => route.isFirst);
+            CustomLoginButton(
+                onPress: () async {
+                  if (_pinKey.currentState!.validate()) {
+                    if (widget.passwordResetting) {
+                      String token = await verifyOTP(_otpController.text);
+                      if (context.mounted) {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ResetPassword(token: token)));
+                      }
+                    }
+
+                    if (await verifyEmail(_otpController) &&
+                        !widget.passwordResetting) {
+                      if (context.mounted) {
+                        Navigator.popUntil(context, (route) => route.isFirst);
+                      }
+                    } else {
+                      if (context.mounted) {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('OTP is NOT Valid'),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('Try Again')),
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.popUntil(
+                                            context, (route) => route.isFirst);
+                                      },
+                                      child: Text('Login')),
+                                ],
+                              );
+                            });
+                      }
+                    }
                   }
-                }
-                else{
-                  if(context.mounted){
-                    showDialog(context: context, builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text('OTP is NOT Valid'),
-                        actions: [
-                          TextButton(onPressed: (){Navigator.pop(context);}, child: Text('Try Again')),
-                          TextButton(onPressed: (){Navigator.popUntil(context, (route) => route.isFirst);}, child: Text('Login')),
-                        ],
-                      );
-                    });
-                  }
-                }
-              }
-            }, data: 'Next'),
+                },
+                data: 'Next'),
             SizedBox(
               height: height * 0.20,
             ),

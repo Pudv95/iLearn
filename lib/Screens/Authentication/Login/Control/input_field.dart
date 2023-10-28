@@ -25,6 +25,24 @@ class InputField {
     return null;
   }
 
+  String? nameValidator(name) {
+    if (name.length < 3) {
+      passwordColor = AllColor.errorRed;
+      if (name.length == 0) return 'This field is required';
+      return 'Enter valid name';
+    }
+    return null;
+  }
+
+  String? usernameValidator(username) {
+    if (username.length < 3) {
+      passwordColor = AllColor.errorRed;
+      if (username.length == 0) return 'This field is required';
+      return 'Enter valid username';
+    }
+    return null;
+  }
+
   InputDecoration decoration(String label, Icon icon) {
     return InputDecoration(
       floatingLabelBehavior: FloatingLabelBehavior.never,

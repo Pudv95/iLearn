@@ -1,13 +1,15 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/Screens/Authentication/Login/Control/input_field.dart';
 import 'package:ilearn/Screens/Authentication/Widgets/input_text_field.dart';
-
+import 'package:http/http.dart' as http;
 
 import '../Widgets/next_button.dart';
 import '../Widgets/password_stepper.dart';
 
 class ResetPassword extends StatefulWidget {
-  const ResetPassword({super.key});
+  final String token;
+  const ResetPassword({super.key,required this.token});
 
   @override
   State<ResetPassword> createState() => _ResetPasswordState();
@@ -17,9 +19,30 @@ class _ResetPasswordState extends State<ResetPassword> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-  final InputField _validators = InputField();
   final FocusNode _passwordNode = FocusNode();
   final FocusNode _confirmPasswordNode = FocusNode();
+
+  resetPassword()async{
+    var headers = {
+      'Authorization':
+      'Bearer ${widget.token}'
+    };
+    String baseURl = dotenv.get('BaseUrl');
+    var url = Uri.parse('$baseURl/change-password');
+    var body = {'newPassword': _passwordController.text};
+
+    try {
+      var response = await http.post(url, headers: headers, body: body);
+
+      if (response.statusCode == 200) {
+        print(response.body);
+      } else {
+        print(response.reasonPhrase);
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,12 +104,16 @@ class _ResetPasswordState extends State<ResetPassword> {
               margin: 10,
             ),
             SizedBox(height: height*0.05,),
-            CustomLoginButton(onPress: (){}, data: 'Next'),
+            CustomLoginButton(onPress: ()async{
+                await resetPassword();
+                if(context.mounted){
+                  Navigator.popUntil(context, (route) => route.isFirst);
+                }
+            }, data: 'Next'),
             SizedBox(
               height: height * 0.2,
             ),
             const SignUpText(),
-
           ],
         ),
       ),
