@@ -1,7 +1,10 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/Screens/Authentication/OTP/otp_page.dart';
 import 'package:ilearn/Screens/Authentication/Widgets/next_button.dart';
 import '../Login/Control/input_field.dart';
+import 'package:http/http.dart' as http;
+import '../Widgets/input_text_field.dart';
 
 
 class ForgotPassword extends StatefulWidget {
@@ -13,9 +16,30 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword> {
 
-  //forget-password
 
-  final InputField _validators = InputField();
+  forgotPassword()async{
+    String baseURl = dotenv.get('BaseUrl');
+    var url = Uri.parse('$baseURl/forget-password');
+    var body = {'email': _emailController.text};
+
+    try {
+      var response = await http.post(url, body: body);
+
+      if (response.statusCode == 200) {
+        print(response.body);
+      } else {
+        print(response.reasonPhrase);
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+
+  final TextEditingController _emailController = TextEditingController();
+  final FocusNode _emailFocusNode = FocusNode();
+  bool emailHasError = false;
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -43,21 +67,29 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             ),
             Padding(
               padding:  EdgeInsets.only(top: height*0.05,bottom: height*0.05),
-              child: TextFormField(
-                  decoration: _validators.decoration('Enter email address', const Icon(Icons.email_outlined)),
-                  cursorColor: AllColor.textFormText,
-                  obscureText: _validators.showPassword,
-                  validator: (value){
-                    String? temp;
+              child:  InputTextField(
+                  hasError: emailHasError,
+                  focusNode: _emailFocusNode,
+                  validator: (value) {
+                    if(InputField().emailValidator(value) != null){
+                      setState(() {
+                        emailHasError = true;
+                      });
+                      return InputField().emailValidator(value);
+                    }
+                    return null;
+                  },
+                  onTap: (){
                     setState(() {
-                      temp = _validators.passwordValidator(value);
+                      emailHasError = false;
                     });
-                    return temp;
-                  }
-              ),
+                  },
+                  data: 'Email',
+                  icon: const Icon(Icons.email_outlined),
+                  textEditingController: _emailController),
             ),
             CustomLoginButton(onPress: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> const OtpPage(email: 'Testing this')));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> OtpPage(email: _emailController.text, passwordResetting: true,)));
             }, data: 'Next'),
           ],
         ),

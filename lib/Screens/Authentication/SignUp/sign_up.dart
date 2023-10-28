@@ -59,7 +59,6 @@ class _SignUPState extends State<SignUP> {
         body: jsonEncode(userModel.toJson()),
       );
       if (response.statusCode == 201) {
-        print("IM am aherererererererererrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
         print(response.body);
         return true;
       }
