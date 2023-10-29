@@ -47,7 +47,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             InputTextField(
               focusNode: _passwordNode,
               validator: (value) {
-                return null;
+                return Validators().passwordValidator(value);
               },
               data: 'Password',
               icon: const Icon(Icons.lock),
@@ -60,7 +60,12 @@ class _ResetPasswordState extends State<ResetPassword> {
             InputTextField(
               focusNode: _confirmPasswordNode,
               validator: (value){
-                return null;
+                if(_passwordController.text != value){
+                  return "Password doesn't match";
+                }
+                else {
+                  return Validators().passwordValidator(value);
+                }
               },
               data: 'Confirm Password',
               icon: const Icon(Icons.lock),

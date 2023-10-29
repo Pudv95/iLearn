@@ -32,6 +32,7 @@ class _InputTextFieldState extends State<InputTextField> {
         onTap: widget.onTap,
         controller: widget.textEditingController,
         focusNode: widget.focusNode,
+        onTapOutside: (value){widget.focusNode.unfocus();},
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.never,
           prefixIcon: widget.icon,

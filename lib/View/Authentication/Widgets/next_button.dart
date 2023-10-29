@@ -34,9 +34,8 @@ class _CustomLoginButtonState extends State<CustomLoginButton> {
                     RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ))),
-            child: (!loading)
-                ? Text(widget.data)
-                : const SizedBox(height: 25,width: 25,child: CircularProgressIndicator(),)
+            child:Text(widget.data)
+
         ));
   }
 }

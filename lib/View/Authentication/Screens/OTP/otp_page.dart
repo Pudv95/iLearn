@@ -6,8 +6,6 @@ import 'package:ilearn/Resources/imports.dart';
 import 'package:http/http.dart' as http;
 import 'package:pinput/pinput.dart';
 
-
-
 class OtpPage extends StatefulWidget {
   final String email;
   final bool passwordResetting;
@@ -99,7 +97,7 @@ class _OtpPageState extends State<OtpPage> {
             ),
             TextButton(
                 onPressed: () async {
-                  await Authentication().resendOTP(context,widget.email);
+                  await Authentication().resendOTP(context, widget.email);
                 },
                 child: const Text(
                   'Resend Code',
@@ -109,19 +107,24 @@ class _OtpPageState extends State<OtpPage> {
                 onPress: () async {
                   if (_pinKey.currentState!.validate()) {
                     if (widget.passwordResetting) {
-                      String token = await Authentication().verifyOTP(_otpController.text,widget.email);
-                      log('got the token = $token');
+                      String token = await Authentication()
+                          .verifyOTP(_otpController.text, widget.email);
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('OTP verified Successfully'),
+                      ));
                       if (context.mounted) {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    ResetPassword(token: token??"")));
+                                    ResetPassword(token: token ?? "")));
                       }
-                    }
-                    else if (await Authentication().verifyEmail(_otpController.text,widget.email)
-                        ) {
+                    } else if (await Authentication()
+                        .verifyEmail(_otpController.text, widget.email)) {
                       if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('OTP verified Successfully'),
+                        ));
                         Navigator.popUntil(context, (route) => route.isFirst);
                       }
                     } else {
