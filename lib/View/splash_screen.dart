@@ -1,0 +1,51 @@
+import 'package:ilearn/Resources/imports.dart';
+import 'package:ilearn/View/Authentication/Screens/Login/login_page.dart';
+import 'package:ilearn/View/Home/dashboard.dart';
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+
+  @override
+  void initState() {
+    _isLoggedIn();
+    super.initState();
+  }
+
+  _isLoggedIn() async {
+    await Future.delayed(const Duration(seconds: 2));
+    bool loggedIn = false;
+    if(context.mounted) {
+      if (loggedIn) {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const MyDashboard()));
+      } else {
+        // Navigator.pushReplacement(context,
+        //     MaterialPageRoute(builder: (context) => const LoginPage()));
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/Icons/iLearn.png',scale: 5,),
+            const Padding(
+              padding: EdgeInsets.only(left: 30,right: 20),
+              child: LinearProgressIndicator(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
