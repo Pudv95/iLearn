@@ -222,7 +222,7 @@ class Authentication{
       print(response.body);
       User user = User.fromJson(jsonDecode(response.body)['user']);
       if(context.mounted){
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyDashboard(student: user)));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyDashboard(user: user)));
       }
 
     } else {

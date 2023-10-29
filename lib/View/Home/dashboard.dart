@@ -6,8 +6,8 @@ import '../Authentication/Screens/Login/login_page.dart';
 
 
 class MyDashboard extends StatefulWidget {
-  final User student;
-  const MyDashboard({super.key,required this.student});
+  final User user;
+  const MyDashboard({super.key,required this.user});
 
   @override
   State<MyDashboard> createState() => _MyDashboardState();
@@ -23,26 +23,63 @@ class _MyDashboardState extends State<MyDashboard> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: ElevatedButton(
-              onPressed: ()async{
-                print(widget.student.toJson());
-                await storage.deleteAll();
-                if(context.mounted){
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const LoginPage()));
-                }
-              },
-              child: const Text('Log Out'),
+        appBar: AppBar(
+          title: Text('User Profile'),
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'User Details',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 16),
+                UserProfileItem(label: 'Username', value: widget.user.username ?? ''),
+                UserProfileItem(label: 'Name', value: widget.user.name ?? ''),
+                UserProfileItem(label: 'Email', value: widget.user.email ?? ''),
+                UserProfileItem(label: 'Role', value: widget.user.role ?? ''),
+                SizedBox(height: 32),
+                ElevatedButton(
+                  onPressed: ()async{
+                    print(widget.user.toJson());
+                    await storage.deleteAll();
+                    if(context.mounted){
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const LoginPage()));
+                    }
+                  },
+                  child: Text('Logout'),
+                ),
+              ],
             ),
-          )
-        ],
-      )
+          ),
+        ),
+      );
+  }
+}
 
+class UserProfileItem extends StatelessWidget {
+  final String label;
+  final String value;
+
+  UserProfileItem({required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '$label:',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        Text(value),
+        SizedBox(height: 8),
+      ],
     );
   }
 }
