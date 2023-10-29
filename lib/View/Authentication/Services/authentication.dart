@@ -128,7 +128,9 @@ class Authentication{
       if (response.statusCode == 200) {
         print(response.body);
         return jsonDecode(response.body)['data']['token'];
-
+      }
+      else{
+        print(response.body);
       }
     } catch (error) {
       print('Error: $error');

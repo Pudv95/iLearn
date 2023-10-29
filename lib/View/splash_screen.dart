@@ -22,8 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _isLoggedIn() async {
 
-    // await Future.delayed(const Duration(seconds: 2));
-
+    await Future.delayed(const Duration(seconds: 1));
     String? token = await storage.read(key: 'token');
     if(context.mounted) {
       if (token != null) {

@@ -107,9 +107,15 @@ class _OtpPageState extends State<OtpPage> {
                 onPress: () async {
                   if (_pinKey.currentState!.validate()) {
                     if (widget.passwordResetting) {
-                      String token = await Authentication()
+                      String? token = await Authentication()
                           .verifyOTP(_otpController.text, widget.email);
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      if(token == null){
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('Invalid OTP'),
+                        ));
+                        return;
+                      }
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text('OTP verified Successfully'),
                       ));
                       if (context.mounted) {
@@ -122,13 +128,12 @@ class _OtpPageState extends State<OtpPage> {
                     } else if (await Authentication()
                         .verifyEmail(_otpController.text, widget.email)) {
                       if (context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('OTP verified Successfully'),
                         ));
                         Navigator.popUntil(context, (route) => route.isFirst);
                       }
                     } else {
-                      log('i dont want to be here');
                       if (context.mounted) {
                         showDialog(
                             context: context,
