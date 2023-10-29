@@ -1,14 +1,45 @@
 import 'package:ilearn/Resources/imports.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:ilearn/View/Authentication/Screens/Login/login_page.dart';
 
-class MyDashboard extends StatelessWidget {
-  const MyDashboard({super.key});
+
+
+class MyDashboard extends StatefulWidget {
+  MyDashboard({super.key});
+
+  @override
+  State<MyDashboard> createState() => _MyDashboardState();
+}
+
+class _MyDashboardState extends State<MyDashboard> {
+  final storage =  const FlutterSecureStorage();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      body: Container(
-        child: Text('MY Home'),
-      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: ElevatedButton(
+              onPressed: ()async{
+                await storage.deleteAll();
+                if(context.mounted){
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LoginPage()));
+                }
+              },
+              child: const Text('Log Out'),
+            ),
+          )
+        ],
+      )
+
     );
   }
 }

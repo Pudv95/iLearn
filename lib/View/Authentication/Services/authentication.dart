@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../Models/user_model.dart';
 import '../../../Resources/imports.dart';
 
 class Authentication{
 
+  final storage = const FlutterSecureStorage();
   final String baseURl = dotenv.get('BaseUrl');
 
 // SignUP Functions
@@ -55,8 +58,10 @@ class Authentication{
           "password" : password,
         }),
       );
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         print(response.body);
+        await storage.write(key: "token", value: jsonDecode(response.body)['data']['token']);
+        log(jsonDecode(response.body)['data']['token']);
         // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyDashboard()));
         return true;
       }

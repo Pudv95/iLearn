@@ -3,7 +3,6 @@ export 'colors.dart';
 export 'icons.dart';
 export 'package:ilearn/View/Authentication/Services/authentication.dart';
 export 'package:ilearn/View/Authentication/Screens/Login/Widgets/google_login_button.dart';
-export 'package:ilearn/View/Authentication/Screens/Login/Widgets/login_button.dart';
 export 'package:ilearn/View/Authentication/Screens/Login/Widgets/login_credentials.dart';
 export 'package:ilearn/View/Authentication/Screens/Login/Widgets/signup_text.dart';
 export 'package:ilearn/View/Authentication/Control/input_field.dart';

@@ -1,3 +1,4 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/View/Authentication/Screens/Login/login_page.dart';
 import 'package:ilearn/View/Home/dashboard.dart';
@@ -11,6 +12,8 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
+  final storage  = const FlutterSecureStorage();
+
   @override
   void initState() {
     _isLoggedIn();
@@ -18,15 +21,17 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _isLoggedIn() async {
-    await Future.delayed(const Duration(seconds: 2));
-    bool loggedIn = false;
+
+    // await Future.delayed(const Duration(seconds: 2));
+
+    String? token = await storage.read(key: 'token');
     if(context.mounted) {
-      if (loggedIn) {
+      if (token != null) {
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const MyDashboard()));
+            MaterialPageRoute(builder: (context) => MyDashboard()));
       } else {
-        // Navigator.pushReplacement(context,
-        //     MaterialPageRoute(builder: (context) => const LoginPage()));
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const LoginPage()));
       }
     }
   }

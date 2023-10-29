@@ -12,7 +12,7 @@ class SignUpText extends StatelessWidget {
         const Text('Don\'t have account?',style: TextStyle(letterSpacing: 0.75,fontWeight: FontWeight.w600),),
         TextButton(onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context)=>const SignUP()));
-        }, child: const Text('sign up')),
+        }, child: const Text('Sign Up')),
       ],
     );
   }
