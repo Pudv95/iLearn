@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ilearn/Resources/imports.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -67,6 +69,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 if (await Authentication()
                     .forgotPassword(_emailController.text)) {
                   if (context.mounted) {
+                    log('Forgot password started');
                     Navigator.push(
                         context,
                         MaterialPageRoute(

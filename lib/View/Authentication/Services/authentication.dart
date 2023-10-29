@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:ilearn/Models/student_model.dart';
+import 'package:ilearn/View/Home/dashboard.dart';
 import '../../../Models/user_model.dart';
 import '../../../Resources/imports.dart';
 
@@ -61,8 +63,8 @@ class Authentication{
       if (response.statusCode == 200) {
         print(response.body);
         await storage.write(key: "token", value: jsonDecode(response.body)['data']['token']);
-        log(jsonDecode(response.body)['data']['token']);
-        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyDashboard()));
+        String token = (jsonDecode(response.body)['data']['token']);
+        await getUserData(context, token);
         return true;
       }
       else {
@@ -97,6 +99,7 @@ class Authentication{
         print(response.body);
         return true;
       } else {
+        print(response.body);
         return false;
       }
     } catch (error) {
@@ -125,6 +128,7 @@ class Authentication{
       if (response.statusCode == 200) {
         print(response.body);
         return jsonDecode(response.body)['data']['token'];
+
       }
     } catch (error) {
       print('Error: $error');
@@ -199,6 +203,28 @@ class Authentication{
       }
     } catch (e) {
       print('Error: $e');
+    }
+  }
+  
+// Get UserData Function
+
+  getUserData(context,token)async{
+    var headers = {
+      'Authorization': 'Bearer $token'
+    };
+
+    var url = Uri.parse('https://udemy-nx1v.onrender.com/');
+    var response = await http.get(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      print(response.body);
+      User user = User.fromJson(jsonDecode(response.body)['user']);
+      if(context.mounted){
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyDashboard(student: user)));
+      }
+
+    } else {
+      print(response.reasonPhrase);
     }
   }
 

@@ -36,6 +36,7 @@ class _CustomLoginButtonState extends State<CustomLoginButton> {
                 ))),
             child: (!loading)
                 ? Text(widget.data)
-                : const CircularProgressIndicator()));
+                : const SizedBox(height: 25,width: 25,child: CircularProgressIndicator(),)
+        ));
   }
 }

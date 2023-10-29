@@ -27,8 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
     String? token = await storage.read(key: 'token');
     if(context.mounted) {
       if (token != null) {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => MyDashboard()));
+        await Authentication().getUserData(context, token);
       } else {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const LoginPage()));

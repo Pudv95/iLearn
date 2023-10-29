@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:ilearn/Resources/imports.dart';
@@ -28,6 +29,7 @@ class _OtpPageState extends State<OtpPage> {
 
   @override
   Widget build(BuildContext context) {
+    log('Otp Page Reached');
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -108,21 +110,22 @@ class _OtpPageState extends State<OtpPage> {
                   if (_pinKey.currentState!.validate()) {
                     if (widget.passwordResetting) {
                       String token = await Authentication().verifyOTP(_otpController.text,widget.email);
+                      log('got the token = $token');
                       if (context.mounted) {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    ResetPassword(token: token)));
+                                    ResetPassword(token: token??"")));
                       }
                     }
-
-                    if (await Authentication().verifyEmail(_otpController,widget.email) &&
-                        !widget.passwordResetting) {
+                    else if (await Authentication().verifyEmail(_otpController.text,widget.email)
+                        ) {
                       if (context.mounted) {
                         Navigator.popUntil(context, (route) => route.isFirst);
                       }
                     } else {
+                      log('i dont want to be here');
                       if (context.mounted) {
                         showDialog(
                             context: context,
@@ -134,13 +137,13 @@ class _OtpPageState extends State<OtpPage> {
                                       onPressed: () {
                                         Navigator.pop(context);
                                       },
-                                      child: Text('Try Again')),
+                                      child: const Text('Try Again')),
                                   TextButton(
                                       onPressed: () {
                                         Navigator.popUntil(
                                             context, (route) => route.isFirst);
                                       },
-                                      child: Text('Login')),
+                                      child: const Text('Login')),
                                 ],
                               );
                             });

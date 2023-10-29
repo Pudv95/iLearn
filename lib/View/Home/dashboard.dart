@@ -1,11 +1,13 @@
 import 'package:ilearn/Resources/imports.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:ilearn/View/Authentication/Screens/Login/login_page.dart';
+import '../../Models/student_model.dart';
+import '../Authentication/Screens/Login/login_page.dart';
 
 
 
 class MyDashboard extends StatefulWidget {
-  MyDashboard({super.key});
+  final User student;
+  const MyDashboard({super.key,required this.student});
 
   @override
   State<MyDashboard> createState() => _MyDashboardState();
@@ -29,9 +31,10 @@ class _MyDashboardState extends State<MyDashboard> {
           Center(
             child: ElevatedButton(
               onPressed: ()async{
+                print(widget.student.toJson());
                 await storage.deleteAll();
                 if(context.mounted){
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LoginPage()));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const LoginPage()));
                 }
               },
               child: const Text('Log Out'),
