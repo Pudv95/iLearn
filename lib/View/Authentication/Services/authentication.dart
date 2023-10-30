@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -12,6 +13,14 @@ class Authentication{
 
   final storage = const FlutterSecureStorage();
   final String baseURl = dotenv.get('BaseUrl');
+  Future<bool> hasNetwork() async {
+    try {
+      final result = await InternetAddress.lookup('example.com');
+      return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
+    } on SocketException catch (_) {
+      return false;
+    }
+  }
 
 // SignUP Functions
   signUpUser(UserModel userModel) async {
@@ -33,6 +42,7 @@ class Authentication{
         return true;
       }
       else {
+
         print('Failed with status: ${response.statusCode}');
         print('Reason: ${response.reasonPhrase}');
         return false;
@@ -44,6 +54,12 @@ class Authentication{
 
 // Login Functions
   loginUser(context,email,password) async {
+
+    if(!(await hasNetwork())){
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No Internet Access')));
+      return;
+    }
+    
     FocusScope.of(context).unfocus();
     var headers = {
       'Content-Type': 'application/json',
@@ -70,6 +86,8 @@ class Authentication{
       else {
         print('Failed with status: ${response.statusCode}');
         print('Reason: ${response.reasonPhrase}');
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(
+            '${response.reasonPhrase}')));
         return false;
       }
     } catch (error) {
@@ -215,7 +233,7 @@ class Authentication{
       'Authorization': 'Bearer $token'
     };
 
-    var url = Uri.parse('https://udemy-nx1v.onrender.com/');
+    var url = Uri.parse('$baseURl/');
     var response = await http.get(url, headers: headers);
 
     if (response.statusCode == 200) {
