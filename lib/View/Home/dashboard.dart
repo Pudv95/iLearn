@@ -25,7 +25,7 @@ class _MyDashboardState extends State<MyDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('User Profile'),
+          title: const Text('User Profile'),
         ),
         body: Center(
           child: Padding(
@@ -34,16 +34,16 @@ class _MyDashboardState extends State<MyDashboard> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'User Details',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 UserProfileItem(label: 'Username', value: widget.user.username ?? ''),
                 UserProfileItem(label: 'Name', value: widget.user.name ?? ''),
                 UserProfileItem(label: 'Email', value: widget.user.email ?? ''),
                 UserProfileItem(label: 'Role', value: widget.user.role ?? ''),
-                SizedBox(height: 32),
+                const SizedBox(height: 32),
                 ElevatedButton(
                   onPressed: ()async{
                     print(widget.user.toJson());
@@ -52,7 +52,7 @@ class _MyDashboardState extends State<MyDashboard> {
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const LoginPage()));
                     }
                   },
-                  child: Text('Logout'),
+                  child: const Text('Logout'),
                 ),
               ],
             ),
@@ -66,7 +66,7 @@ class UserProfileItem extends StatelessWidget {
   final String label;
   final String value;
 
-  UserProfileItem({required this.label, required this.value});
+  const UserProfileItem({super.key, required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -75,10 +75,10 @@ class UserProfileItem extends StatelessWidget {
       children: [
         Text(
           '$label:',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         Text(value),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
       ],
     );
   }
