@@ -100,7 +100,7 @@ class _OtpPageState extends State<OtpPage> {
                   await Authentication().resendOTP(context, widget.email);
                 },
                 child: const Text(
-                  'Resend Code',
+                  'Resend OTP',
                   style: TextStyle(decoration: TextDecoration.underline),
                 )),
             CustomLoginButton(

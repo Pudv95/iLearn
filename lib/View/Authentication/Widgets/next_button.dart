@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ilearn/Resources/colors.dart';
 
 class CustomLoginButton extends StatefulWidget {
   final GlobalKey<FormState>? formKey;
@@ -27,9 +28,9 @@ class _CustomLoginButtonState extends State<CustomLoginButton> {
       width: double.infinity,
       height: height * 0.05,
       child: ElevatedButton(
-        onPressed: _isLoading ? null : () => _handlePress(),
+        onPressed: _isLoading ? (){} : () => _handlePress(),
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.blue),
+          backgroundColor: (!_isLoading)?MaterialStateProperty.all(AllColor.primaryButtonColor):MaterialStateProperty.all(AllColor.primaryButtonColorDisabled),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
@@ -37,9 +38,13 @@ class _CustomLoginButtonState extends State<CustomLoginButton> {
           ),
         ),
         child: _isLoading
-            ? const CircularProgressIndicator(
+            ? const SizedBox(
+              height: 30,
+              width: 30,
+              child: CircularProgressIndicator(
           color: Colors.white,
-        )
+        ),
+            )
             : Text(widget.data),
       ),
     );

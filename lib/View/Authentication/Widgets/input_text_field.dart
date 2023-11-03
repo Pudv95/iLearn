@@ -8,6 +8,7 @@ class InputTextField extends StatefulWidget {
   final bool isPasswordField;
   final bool hasError;
   final void Function()? onTap;
+  final Function(String)? onChanged;
   final TextEditingController textEditingController;
   const InputTextField(
       {super.key,
@@ -17,6 +18,7 @@ class InputTextField extends StatefulWidget {
       required this.icon,
       this.isPasswordField = false,
       this.onTap,
+      this.onChanged,
       this.hasError = false,
       required this.textEditingController});
 
@@ -32,6 +34,7 @@ class _InputTextFieldState extends State<InputTextField> {
         onTap: widget.onTap,
         controller: widget.textEditingController,
         focusNode: widget.focusNode,
+        onChanged: widget.onChanged,
         onTapOutside: (value){widget.focusNode.unfocus();},
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.never,

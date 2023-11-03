@@ -39,17 +39,21 @@ class _SignUPState extends State<SignUP> {
 
   @override
   Widget build(BuildContext context) {
+    bool isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    double myPadding = isKeyboard?height*0.05:height*0.15;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
         padding:
-            EdgeInsets.fromLTRB(width * 0.1, height * 0.03, width * 0.1, 0),
+            EdgeInsets.fromLTRB(width * 0.1, height*0.03, width * 0.1, 0),
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, height * 0.15, 0, 20),
+            AnimatedPadding(
+              padding: EdgeInsets.fromLTRB(0, myPadding, 0, 20),
+              duration: const Duration(milliseconds: 250),
+              curve: Curves.easeIn,
               child: Text(
                 'Join Us',
                 style: Theme.of(context).textTheme.displayLarge,
@@ -59,6 +63,7 @@ class _SignUPState extends State<SignUP> {
                 key: _formKey,
                 child: Column(
                   children: [
+                    SizedBox(height:MediaQuery.of(context).viewInsets.top),
                     InputTextField(
                         hasError: nameHasError,
                         focusNode: _nameFocusNode,
@@ -131,6 +136,7 @@ class _SignUPState extends State<SignUP> {
                     InputTextField(
                       hasError: passHasError,
                       focusNode: _passwordFocusNode,
+                      onChanged: (value){setState(() {});},
                       validator: (value) {
                         if (Validators().passwordValidator(value) != null) {
                           setState(() {
@@ -163,7 +169,7 @@ class _SignUPState extends State<SignUP> {
                 formKey: _formKey,
                 onPress: () async {
                   if (_formKey.currentState!.validate()) {
-                    if (await Authentication().signUpUser(createModel())) {
+                    if (await Authentication().signUpUser(context,createModel())) {
                       if (context.mounted) {
                         await Navigator.push(
                             context,

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -23,7 +22,7 @@ class Authentication{
   }
 
 // SignUP Functions
-  signUpUser(UserModel userModel) async {
+  signUpUser(context,UserModel userModel) async {
 
     var headers = {
       'Content-Type': 'application/json',
@@ -37,17 +36,19 @@ class Authentication{
         headers: headers,
         body: jsonEncode(userModel.toJson()),
       );
+      bool success = true;
+      String message = jsonDecode(response.body)['message'];
       if (response.statusCode == 201) {
-        print(response.body);
+        myToast(success, message);
         return true;
       }
       else {
-
-        print('Failed with status: ${response.statusCode}');
-        print('Reason: ${response.reasonPhrase}');
+        success = false;
+        myToast(success, message);
         return false;
       }
     } catch (error) {
+
       print('Error: $error');
     }
   }
@@ -76,18 +77,18 @@ class Authentication{
           "password" : password,
         }),
       );
+      bool success = true;
+      String message = jsonDecode(response.body)['message'];
       if (response.statusCode == 200) {
-        print(response.body);
         await storage.write(key: "token", value: jsonDecode(response.body)['data']['token']);
         String token = (jsonDecode(response.body)['data']['token']);
         await getUserData(context, token);
+        myToast(success, message);
         return true;
       }
       else {
-        print('Failed with status: ${response.statusCode}');
-        print('Reason: ${response.reasonPhrase}');
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(
-            '${response.reasonPhrase}')));
+        success = false;
+        myToast(success, message);
         return false;
       }
     } catch (error) {
@@ -112,12 +113,14 @@ class Authentication{
           "otp": otp,
         }),
       );
-
+      bool success = true;
+      String message = jsonDecode(response.body)['message'];
       if (response.statusCode == 200) {
-        print(response.body);
+        myToast(success, message);
         return true;
       } else {
-        print(response.body);
+        success = false;
+        myToast(success, message);
         return false;
       }
     } catch (error) {
@@ -142,13 +145,15 @@ class Authentication{
           "otp": otp,
         }),
       );
-
+      bool success = true;
+      String message = jsonDecode(response.body)['message'];
       if (response.statusCode == 200) {
-        print(response.body);
+        myToast(success, message);
         return jsonDecode(response.body)['data']['token'];
       }
       else{
-        print(response.body);
+        success = false;
+        myToast(success, message);
       }
     } catch (error) {
       print('Error: $error');
@@ -171,11 +176,14 @@ class Authentication{
           "email": email,
         }),
       );
-
+      bool success = true;
+      String message = jsonDecode(response.body)['message'];
       if (response.statusCode == 200) {
-        print(response.body);
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('OTP is sent')));
+        myToast(success, message);
+      }
+      else{
+        success = false;
+        myToast(success, message);
       }
     } catch (error) {
       print('Error: $error');
@@ -184,23 +192,26 @@ class Authentication{
   }
 
 // Forget Password Functions
-  forgotPassword(email)async{
+  forgotPassword(context,email)async{
     String baseURl = dotenv.get('BaseUrl');
     var url = Uri.parse('$baseURl/forget-password');
     var body = {'email': email};
 
     try {
       var response = await http.post(url, body: body);
-
+      bool success = true;
+      String message = jsonDecode(response.body)['message'];
       if (response.statusCode == 200) {
-        print(response.body);
+        myToast(success, message);
         return true;
       } else {
-        print(response.reasonPhrase);
+        success = false;
+        myToast(success, message);
         return false;
       }
     } catch (e) {
       print('Error: $e');
+      return false;
     }
   }
 
@@ -216,10 +227,15 @@ class Authentication{
     try {
       var response = await http.post(url, headers: headers, body: body);
 
+      bool success = true;
+      String message = jsonDecode(response.body)['message'];
       if (response.statusCode == 200) {
-        print(response.body);
+        myToast(success, message);
+        return true;
       } else {
-        print(response.reasonPhrase);
+        success = false;
+        myToast(success, message);
+        return false;
       }
     } catch (e) {
       print('Error: $e');
@@ -235,16 +251,17 @@ class Authentication{
 
     var url = Uri.parse('$baseURl/');
     var response = await http.get(url, headers: headers);
-
+    bool success = true;
+    String message = jsonDecode(response.body)['message'];
     if (response.statusCode == 200) {
-      print(response.body);
+      myToast(success, message);
       User user = User.fromJson(jsonDecode(response.body)['user']);
       if(context.mounted){
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyDashboard(user: user)));
       }
-
     } else {
-      print(response.reasonPhrase);
+      success = false;
+      myToast(success, message);
     }
   }
 

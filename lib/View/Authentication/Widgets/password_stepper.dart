@@ -1,5 +1,4 @@
 import 'package:ilearn/Resources/imports.dart';
-import 'package:password_strength/password_strength.dart';
 
 class PasswordStepper extends StatefulWidget {
   final String? password;
@@ -13,8 +12,36 @@ class PasswordStepper extends StatefulWidget {
 }
 
 class _PasswordStepperState extends State<PasswordStepper> {
-  getPasswordStrength(password) {
-    return estimatePasswordStrength(password);
+  getPasswordStrength(input) {
+    RegExp upperCaseRegex = RegExp(r'[A-Z]');
+    RegExp lowerCaseRegex = RegExp(r'[a-z]');
+    RegExp digitRegex = RegExp(r'[0-9]');
+    RegExp specialCharRegex = RegExp(r'[$@$!%*#?&]');
+    int matchCount = 0;
+    if (upperCaseRegex.hasMatch(input)) {
+      matchCount++;
+    }
+    if (lowerCaseRegex.hasMatch(input)) {
+      matchCount++;
+    }
+    if (digitRegex.hasMatch(input)) {
+      matchCount++;
+    }
+    if (specialCharRegex.hasMatch(input)) {
+      matchCount++;
+    }
+    switch (matchCount) {
+      case 1:
+        return 0.15;
+      case 2:
+        return 0.30;
+      case 3:
+        return 0.56;
+      case 4:
+        return 0.78;
+      default:
+        return 0.0; // No matches
+    }
   }
 
   getStepperColor() {

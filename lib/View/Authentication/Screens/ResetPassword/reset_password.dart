@@ -3,7 +3,7 @@ import '../../Widgets/password_stepper.dart';
 
 class ResetPassword extends StatefulWidget {
   final String token;
-  const ResetPassword({super.key,required this.token});
+  const ResetPassword({super.key, required this.token});
 
   @override
   State<ResetPassword> createState() => _ResetPasswordState();
@@ -15,8 +15,6 @@ class _ResetPasswordState extends State<ResetPassword> {
       TextEditingController();
   final FocusNode _passwordNode = FocusNode();
   final FocusNode _confirmPasswordNode = FocusNode();
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +47,12 @@ class _ResetPasswordState extends State<ResetPassword> {
               validator: (value) {
                 return Validators().passwordValidator(value);
               },
+              onTap: () {
+                setState(() {});
+              },
+              onChanged: (value) {
+                setState(() {});
+              },
               data: 'Password',
               icon: const Icon(Icons.lock),
               textEditingController: _passwordController,
@@ -59,13 +63,15 @@ class _ResetPasswordState extends State<ResetPassword> {
             ),
             InputTextField(
               focusNode: _confirmPasswordNode,
-              validator: (value){
-                if(_passwordController.text != value){
+              validator: (value) {
+                if (_passwordController.text != value) {
                   return "Password doesn't match";
-                }
-                else {
+                } else {
                   return Validators().passwordValidator(value);
                 }
+              },
+              onTap: () {
+                setState(() {});
               },
               data: 'Confirm Password',
               icon: const Icon(Icons.lock),
@@ -76,13 +82,18 @@ class _ResetPasswordState extends State<ResetPassword> {
               password: _passwordController.text,
               margin: 10,
             ),
-            SizedBox(height: height*0.05,),
-            CustomLoginButton(onPress: ()async{
-                await Authentication().resetPassword(widget.token,_passwordController.text);
-                if(context.mounted){
-                  Navigator.popUntil(context, (route) => route.isFirst);
-                }
-            }, data: 'Next'),
+            SizedBox(
+              height: height * 0.05,
+            ),
+            CustomLoginButton(
+                onPress: () async {
+                  await Authentication()
+                      .resetPassword(widget.token, _passwordController.text);
+                  if (context.mounted) {
+                    Navigator.popUntil(context, (route) => route.isFirst);
+                  }
+                },
+                data: 'Next'),
             SizedBox(
               height: height * 0.2,
             ),
@@ -93,5 +104,3 @@ class _ResetPasswordState extends State<ResetPassword> {
     );
   }
 }
-
-

@@ -12,3 +12,5 @@ export 'package:ilearn/View/Authentication/Widgets/next_button.dart';
 export 'package:ilearn/View/Authentication/Screens/SignUp/sign_up.dart';
 export 'package:ilearn/View/Authentication/Screens/ForgotPassword/forgot_passsword.dart';
 export 'package:ilearn/View/Authentication/Screens/ResetPassword/reset_password.dart';
+export 'package:ilearn/View/Authentication/Widgets/toast.dart';
+export 'package:flutter_svg_provider/flutter_svg_provider.dart';

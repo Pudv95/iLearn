@@ -11,6 +11,7 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword> {
   final TextEditingController _emailController = TextEditingController();
+  final GlobalKey<FormState> _emailTextField = GlobalKey<FormState>();
   final FocusNode _emailFocusNode = FocusNode();
   bool emailHasError = false;
 
@@ -44,6 +45,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           Padding(
             padding: EdgeInsets.only(top: height * 0.05, bottom: height * 0.05),
             child: InputTextField(
+              key: _emailTextField,
                 hasError: emailHasError,
                 focusNode: _emailFocusNode,
                 validator: (value) {
@@ -66,19 +68,23 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           ),
           CustomLoginButton(
               onPress: () async {
-                if (await Authentication()
-                    .forgotPassword(_emailController.text)) {
-                  if (context.mounted) {
-                    log('Forgot password started');
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => OtpPage(
+                _emailTextField.currentState!.validate();
+                  if(true){
+                    bool? temp = await Authentication()
+                        .forgotPassword(context,_emailController.text);
+                    if (temp != null  && temp) {
+                      if (context.mounted) {
+                        log('Forgot password started');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => OtpPage(
                                   email: _emailController.text,
                                   passwordResetting: true,
                                 )));
+                      }
+                    }
                   }
-                }
               },
               data: 'Next'),
         ],
