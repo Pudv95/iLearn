@@ -16,4 +16,9 @@ class AllColor {
 
     static Color? headingTextColor = Colors.black;
 
+
+    static Color? primaryFocusColor = const Color.fromRGBO(36, 110, 159, 1);
+
+    static Color? selectedIconColor = const Color.fromRGBO(58, 162, 230, 1);
+
 }

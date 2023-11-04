@@ -34,6 +34,7 @@ void main()async{
           fontWeight: FontWeight.bold,
         ),
       ),
+
     ),
     home: const SplashScreen(),
   ));

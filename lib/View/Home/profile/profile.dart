@@ -1,7 +1,8 @@
 import 'package:ilearn/Resources/imports.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../../Models/student_model.dart';
-import '../Authentication/Screens/Login/login_page.dart';
+import 'package:ilearn/View/Home/Screens/dashboard.dart';
+import '../../../Models/student_model.dart';
+import '../../Authentication/Screens/Login/login_page.dart';
 
 
 
@@ -54,6 +55,7 @@ class _MyDashboardState extends State<MyDashboard> {
                   },
                   child: const Text('Logout'),
                 ),
+                ElevatedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>Dashboard()));}, child: Text('dashboard'))
               ],
             ),
           ),

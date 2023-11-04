@@ -68,8 +68,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           ),
           CustomLoginButton(
               onPress: () async {
-                _emailTextField.currentState!.validate();
-                  if(true){
                     bool? temp = await Authentication()
                         .forgotPassword(context,_emailController.text);
                     if (temp != null  && temp) {
@@ -84,7 +82,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                 )));
                       }
                     }
-                  }
               },
               data: 'Next'),
         ],

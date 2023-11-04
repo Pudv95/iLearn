@@ -1,7 +1,8 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/View/Authentication/Screens/Login/login_page.dart';
-import 'package:ilearn/View/Home/dashboard.dart';
+import 'package:ilearn/View/Home/Screens/dashboard.dart';
+import 'package:ilearn/View/Home/profile/profile.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -26,7 +27,8 @@ class _SplashScreenState extends State<SplashScreen> {
     String? token = await storage.read(key: 'token');
     if(context.mounted) {
       if (token != null) {
-        await Authentication().getUserData(context, token);
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const Dashboard()));
+        // await Authentication().getUserData(context, token);
       } else {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const LoginPage()));

@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ilearn/Models/student_model.dart';
-import 'package:ilearn/View/Home/dashboard.dart';
+import 'package:ilearn/View/Home/profile/profile.dart';
 import '../../../Models/user_model.dart';
 import '../../../Resources/imports.dart';
 
@@ -77,18 +78,17 @@ class Authentication{
           "password" : password,
         }),
       );
-      bool success = true;
-      String message = jsonDecode(response.body)['message'];
       if (response.statusCode == 200) {
+        String message = jsonDecode(response.body)['message'];
         await storage.write(key: "token", value: jsonDecode(response.body)['data']['token']);
         String token = (jsonDecode(response.body)['data']['token']);
+        print(response.body);
         await getUserData(context, token);
-        myToast(success, message);
+        myToast(true, message);
         return true;
       }
       else {
-        success = false;
-        myToast(success, message);
+        myToast(false, jsonDecode(response.body)['message']);
         return false;
       }
     } catch (error) {
@@ -251,17 +251,14 @@ class Authentication{
 
     var url = Uri.parse('$baseURl/');
     var response = await http.get(url, headers: headers);
-    bool success = true;
-    String message = jsonDecode(response.body)['message'];
+    print(token);
     if (response.statusCode == 200) {
-      myToast(success, message);
       User user = User.fromJson(jsonDecode(response.body)['user']);
       if(context.mounted){
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyDashboard(user: user)));
       }
     } else {
-      success = false;
-      myToast(success, message);
+      myToast(true, 'Couldn\'t Fetch data');
     }
   }
 
