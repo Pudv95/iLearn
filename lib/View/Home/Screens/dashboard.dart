@@ -21,9 +21,7 @@ class _DashboardState extends State<Dashboard> {
       body: PageView(
         controller: _pageController,
         children: const [
-          Library(
-
-          ),
+          Library(),
           Search(
             title: 'Search',
           ),

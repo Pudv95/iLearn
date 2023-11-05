@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ilearn/Resources/colors.dart';
 import 'package:ilearn/View/Authentication/Screens/Login/login_page.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:ilearn/View/Home/Screens/dashboard.dart';
 import 'package:ilearn/View/splash_screen.dart';
 
 
@@ -36,6 +37,6 @@ void main()async{
       ),
 
     ),
-    home: const SplashScreen(),
+    home: const Dashboard(),
   ));
 }
