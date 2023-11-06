@@ -9,57 +9,121 @@ class Library extends StatefulWidget {
 
 class _LibraryState extends State<Library> {
   final List<IconButtonData> buttonData = [
-    IconButtonData(title: 'Your Learnings', icon: AllIcons.learningIcon, onPressed: () {}),
-    IconButtonData(title: 'Popular', icon: AllIcons.trendingIcon, onPressed: () {}),
-    IconButtonData(title: 'Teach at iLearn', icon: AllIcons.teachIcon, onPressed: () {}),
+    IconButtonData(
+        title: 'Your Learnings', icon: AllIcons.learningIcon, onPressed: () {}),
+    IconButtonData(
+        title: 'Popular', icon: AllIcons.trendingIcon, onPressed: () {}),
+    IconButtonData(
+        title: 'Teach at iLearn', icon: AllIcons.teachIcon, onPressed: () {}),
   ];
+
+  final List<Course> recommendedCourse = [
+    Course(rating: 4.3, tutor: 'Paras Upadhayay', courseTitle: 'Learn flutter in 37 hours', coursePic: 'assets/Icons/coursePic.png', liked: true, price: '899', courseDescription: ''),
+    Course(rating: 4.3, tutor: 'Prajjwal Tripathi', courseTitle: 'Learn flutter in 37 hours {Easy Version}', coursePic: 'assets/Icons/coursePic.png', liked: false, price: '8999', courseDescription: ''),
+    Course(rating: 4.3, tutor: 'Manas Jha', courseTitle: 'Learn flutter in 37 hours', coursePic: 'assets/Icons/coursePic.png', liked: true, price: '89239', courseDescription: ''),
+    Course(rating: 4.3, tutor: 'Lakshya Goel', courseTitle: 'Learn flutter in 37 hours', coursePic: 'assets/Icons/coursePic.png', liked: false, price: '8993', courseDescription: ''),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 25, right: 25),
-      child: Scaffold(
+    return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          toolbarHeight: 80,
+          elevation: 0,
           backgroundColor: Colors.white,
-          appBar: AppBar(
-            toolbarHeight: 80,
-            elevation: 0,
-            backgroundColor: Colors.white,
-            title: const Text(
+          title: const Padding(
+            padding: EdgeInsets.only(left: 15, right: 15),
+            child: Text(
               'Library',
-              style: TextStyle(color: Colors.black, fontSize: 24,fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold),
             ),
-            actions: const [
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Icon(
-                  Icons.favorite_outline,
-                  size: 30,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Icon(
-                  Icons.notifications,
-                  size: 30,
-                ),
-              ),
-            ],
-            iconTheme: const IconThemeData(color: Colors.black),
           ),
-          body: Column(
-            children: [
-              Wrap(
-                  children: List.generate(buttonData.length, (index) {
-                return IconElevatedButton(
-                  title: buttonData[index].title,
-                  icon: buttonData[index].icon,
-                  onPress: buttonData[index].onPressed,
-                );
-              })),
-              const SizedBox(height: 40,),
-              const StreakCalendar(streak: 10,),
-            ],
-          )),
-    );
+          actions: const [
+            Icon(
+              Icons.favorite_outline,
+              size: 30,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 10, right: 35),
+              child: Icon(
+                Icons.notifications,
+                size: 30,
+              ),
+            ),
+          ],
+          iconTheme: const IconThemeData(color: Colors.black),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: SingleChildScrollView(
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: Wrap(
+                        alignment: WrapAlignment.start,
+                        children: List.generate(buttonData.length, (index) {
+                          return IconElevatedButton(
+                            title: buttonData[index].title,
+                            icon: buttonData[index].icon,
+                            onPress: buttonData[index].onPressed,
+                          );
+                        })),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const StreakCalendar(
+                    streak: 10,
+                  ),
+                  const SizedBox(
+                    height: 56.14,
+                  ),
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Courses for You',
+                        style: Theme.of(context).textTheme.displayMedium,
+                      )),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Expanded(
+                    child: ListView(
+                      physics: const PageScrollPhysics(),
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      children: List.generate(recommendedCourse.length, (index) {
+                        return CoursesForMeCards(course: recommendedCourse[index]);
+                      }),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      const Text(
+                        'Categories',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontFamily: 'SF Pro Display',
+                          fontWeight: FontWeight.w500,
+                          height: 0,
+                        ),
+                      ),Spacer(),
+                      TextButton(onPressed: (){}, child: Text('See All',style: TextStyle(color: AllColor.primaryButtonColor),))
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 }
 
@@ -84,7 +148,10 @@ class IconElevatedButton extends StatelessWidget {
           icon: icon,
           label: Text(
             title,
-            style: TextStyle(color: AllColor.iconButtonTextColor,fontSize: 16,fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: AllColor.iconButtonTextColor,
+                fontSize: 16,
+                fontWeight: FontWeight.bold),
           ),
           style: ElevatedButton.styleFrom(
             shape:
@@ -113,73 +180,182 @@ class StreakCalendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    print(10/height);
+    print(10 / height);
     double width = MediaQuery.of(context).size.width;
-    print(25/width);
+    print(25 / width);
     return Stack(
       children: [
         Column(
           children: [
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             SizedBox(
-              height: height*0.20155,
-              width: width*0.82881,
+              height: height * 0.2155,
+              width: double.infinity,
               child: Card(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                color: const Color.fromRGBO(225, 243, 255, 1),
-                child:  SizedBox(
-                  height: height*0.05928,
-                  width: width*0.24305,
-                  child: Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          height: height*0.17784,width: width*0.34027,
-                          child: Wrap(
-                            children: [
-                              const Text(
-                                'Your Current \nStreak',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                  height: 0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  color: const Color.fromRGBO(225, 243, 255, 1),
+                  child: SizedBox(
+                    height: height * 0.06928,
+                    width: width * 0.24305,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 30, top: 10),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            height: height * 0.17784,
+                            width: width * 0.34027,
+                            child: Wrap(
+                              children: [
+                                const Text(
+                                  'Your Current \nStreak',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                    height: 0,
+                                  ),
                                 ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('$streak',style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 80),),
-                                  const SizedBox(width: 10,),
-                                  Column(children: [
-                                    SizedBox(height: height*0.05928),
-                                    const Text('Days',style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                      fontFamily: 'SF Pro Text',
-                                      fontWeight: FontWeight.w600,
-                                      height: 0,
-                                    ),),
-                                  ])
-                                ],
-                              )
-                            ],
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      '$streak',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 80),
+                                    ),
+                                    const SizedBox(
+                                      width: 3,
+                                    ),
+                                    Column(children: [
+                                      SizedBox(height: height * 0.05528),
+                                      const Text(
+                                        'Days',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontFamily: 'SF Pro Text',
+                                          fontWeight: FontWeight.w600,
+                                          height: 0,
+                                        ),
+                                      ),
+                                    ])
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              ),
+                  )),
             ),
           ],
         ),
-        Positioned(right:height*0.011856,bottom: width*0.06076,child: AllIcons.calendarImage),
+        Positioned(
+            right: height * 0.023856,
+            bottom: width * 0.08076,
+            child: AllIcons.calendarImage),
       ],
     );
   }
 }
+
+class CoursesForMeCards extends StatefulWidget {
+  final Course course;
+  const CoursesForMeCards(
+      {super.key,
+      required this.course});
+
+  @override
+  State<CoursesForMeCards> createState() => _CoursesForMeCardsState();
+}
+
+class _CoursesForMeCardsState extends State<CoursesForMeCards> {
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return SizedBox(
+      width: size.width*0.9,
+      height: size.height*0.01,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset(widget.course.coursePic,fit: BoxFit.cover,scale: 0.88,),
+          const SizedBox(height: 10,),
+          Wrap(
+            children: [
+              Text(
+                widget.course.courseTitle,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 24,
+                  fontFamily: 'SF Pro Display',
+                  fontWeight: FontWeight.w500,
+                ),
+              )
+            ],
+          ),
+          Text(widget.course.tutor,style:const TextStyle(
+            color: Colors.black,
+            fontSize: 14,
+            fontFamily: 'Sofia Sans',
+            fontWeight: FontWeight.w400,
+          ),),
+          Row(
+            children: [
+              Text(widget.course.rating.toString(),style :const TextStyle(
+                color: Colors.black,
+                fontSize: 14,
+                fontFamily: 'SF Pro Display',
+                fontWeight: FontWeight.w400,
+              )),
+              Icon(
+                Icons.star,
+                color: AllColor.iconColor,
+              ),
+              const Spacer(),
+              Text('₹${widget.course.price.toString()}',style: const TextStyle(
+                color: Colors.black,
+                fontSize: 22,
+                fontFamily: 'SF Pro Display',
+                fontWeight: FontWeight.w800,
+              ),),
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    widget.course.liked = !widget.course.liked;
+                  });
+                },
+                icon: Icon((widget.course.liked) ? Icons.favorite : Icons.favorite_border),
+                color: AllColor.iconColor,
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class Course{
+  String coursePic;
+  String courseTitle;
+  String tutor;
+  double rating;
+  String courseDescription;
+  String price;
+  bool liked;
+  Course({required this.rating,required this.tutor,required this.courseTitle,required this.coursePic,required this.liked,required this.price,required this.courseDescription});
+}
+
+
+
+
+
 
 
 

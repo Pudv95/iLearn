@@ -12,6 +12,7 @@ class AllColor {
     static Color? primaryButtonColorDisabled = Colors.blue.shade200;
     static Color iconButtonColor = const Color.fromRGBO(219, 219, 219, 0.4);
     static Color iconButtonTextColor = const Color.fromRGBO(131, 144, 160, 1);
+    static Color? iconColor = const Color.fromRGBO(36, 110, 159, 1);
 
 
     static Color? toastErrorColor = Colors.red;

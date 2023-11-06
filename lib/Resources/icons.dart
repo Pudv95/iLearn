@@ -11,4 +11,5 @@ class AllIcons{
 
   static Image calendarImage = Image.asset('assets/Icons/calendar.png');
 
+
 }
