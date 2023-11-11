@@ -1,7 +1,5 @@
 import 'dart:ui';
-
 import 'package:ilearn/Resources/imports.dart';
-import 'package:ilearn/View/Home/Screens/Library/Widgets/top_course_text.dart';
 import 'package:ilearn/View/Home/Screens/bottom_navigation_bar.dart';
 
 class CourseDescription extends StatefulWidget {
@@ -133,7 +131,7 @@ class _CourseDescriptionState extends State<CourseDescription> {
                               top: 55,
                               left: 10,
                               child: Text(
-                                widget.course.tutor!,
+                                widget.course.createdBy![0]['name'],
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 13,
@@ -275,12 +273,25 @@ class _CourseDescriptionState extends State<CourseDescription> {
                     height: 45,
                     width: size.width,
                     child: OutlinedButton(
-                      style: ButtonStyle(
-                        side: const MaterialStatePropertyAll<BorderSide>(BorderSide(color: Colors.blue)),
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))
-                      ),
-                        onPressed: () {}, child: const Text('Add to cart'))),
-                SizedBox(height: size.height*0.02,),
+                        style: ButtonStyle(
+                            side: MaterialStatePropertyAll<BorderSide>(
+                                BorderSide(color: AllColor.primaryFocusColor)),
+                            shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)))),
+                        onPressed: () {},
+                        child: Text(
+                          'Add to cart',
+                          style: TextStyle(
+                            color: AllColor.primaryFocusColor,
+                            fontSize: 18,
+                            fontFamily: 'SF Pro Display',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ))),
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
                 const Text(
                   'Educational Plan',
                   style: TextStyle(
@@ -288,11 +299,97 @@ class _CourseDescriptionState extends State<CourseDescription> {
                     fontSize: 22,
                     fontFamily: 'SF Pro Text',
                     fontWeight: FontWeight.w600,
-                    height: 0,
                   ),
                 ),
-                //TODO ajeeb sa block
-                SizedBox(height: size.height*0.02,),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  height: size.height * 0.09,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      border: Border.all(color: AllColor.primaryFocusColor),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        const Column(children: [
+                          Text(
+                            '04',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 24,
+                              fontFamily: 'SF Pro Display',
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
+                            'Active learners',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontFamily: 'SF Pro Display',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],),
+                        VerticalDivider(color: AllColor.primaryFocusColor,thickness: 1,),
+                        const Expanded(child: Column(children: [
+                          Text(
+                            '4',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 24,
+                              fontFamily: 'SF Pro Display',
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
+                            'Lectures',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontFamily: 'SF Pro Display',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],)),
+                        VerticalDivider(color: AllColor.primaryFocusColor,thickness: 1,),
+                        const Expanded(child: Column(children: [
+                          Text(
+                            '160',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 24,
+                              fontFamily: 'SF Pro Display',
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
+                            'Hours',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontFamily: 'SF Pro Display',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],)),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
                 const Text(
                   'Additional',
                   style: TextStyle(
@@ -303,11 +400,17 @@ class _CourseDescriptionState extends State<CourseDescription> {
                     height: 0,
                   ),
                 ),
-                AdditionalTexts(title: 'Certificates: ', content: 'Provided'),
-                AdditionalTexts(title: 'Subtitles: ', content: 'Hindi/English'),
-                AdditionalTexts(title: 'Files: ', content: '10 additional Files'),
-                AdditionalTexts(title: 'Access: ', content: 'LifeTime Access'),
-                SizedBox(height: size.height*0.02,),
+                const AdditionalTexts(
+                    title: 'Certificates: ', content: 'Provided'),
+                const AdditionalTexts(
+                    title: 'Subtitles: ', content: 'Hindi/English'),
+                const AdditionalTexts(
+                    title: 'Files: ', content: '10 additional Files'),
+                const AdditionalTexts(
+                    title: 'Access: ', content: 'LifeTime Access'),
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
                 const Text(
                   'Your Tutor',
                   style: TextStyle(
@@ -318,14 +421,16 @@ class _CourseDescriptionState extends State<CourseDescription> {
                     height: 0,
                   ),
                 ),
-                SizedBox(height: size.height*0.02,),
-                Row(
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+                const Row(
                   children: [
-                    CircleAvatar(radius: 70,),
+                    CircleAvatar(
+                      radius: 70,
+                    ),
                     Column(
-                      children: [
-
-                      ],
+                      children: [],
                     )
                   ],
                 )
@@ -348,7 +453,8 @@ class _CourseDescriptionState extends State<CourseDescription> {
 class AdditionalTexts extends StatelessWidget {
   final String title;
   final String content;
-  const AdditionalTexts({super.key, required this.title, required this.content});
+  const AdditionalTexts(
+      {super.key, required this.title, required this.content});
 
   @override
   Widget build(BuildContext context) {
@@ -357,7 +463,9 @@ class AdditionalTexts extends StatelessWidget {
       child: Row(
         children: [
           const Icon(Icons.add),
-          SizedBox(width: 10,),
+          const SizedBox(
+            width: 10,
+          ),
           Text.rich(
             TextSpan(
               children: [
@@ -387,4 +495,3 @@ class AdditionalTexts extends StatelessWidget {
     );
   }
 }
-

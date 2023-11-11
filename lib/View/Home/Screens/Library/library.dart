@@ -27,40 +27,36 @@ class _LibraryState extends State<Library> {
   final List<Course> recommendedCourse = [
     Course(
         rating: 4.3,
-        tutor: 'Paras Upadhayay',
         courseTitle: 'Learn flutter in 37 hours',
         coursePic: 'assets/Icons/coursePic.png',
         liked: true,
         price: '899',
         courseDescription:
-            'By the end of the cone you witho create simple and complex 20 3D animation You will learn the programer Effects am how to work with shapes, keyframes, etc. You! be able to animate characters logos infographics and typography You wil work such soft products Adobe A Media Encoder, Trapcode and others '),
+            'By the end of the cone you with create simple and complex 20 3D animation You will learn the programer Effects am how to work with shapes, keyframes, etc. You! be able to animate characters logos infographics and typography You wil work such soft products Adobe A Media Encoder, Trapcode and others '),
     Course(
         rating: 4.3,
-        tutor: 'Prajjwal Tripathi',
         courseTitle: 'Learn flutter in 37 hours {Easy Version}',
         coursePic: 'assets/Icons/coursePic.png',
         liked: false,
         price: '8999',
         courseDescription:
-            'By the end of the cone you witho create simple and complex 20 3D animation You will learn the programer Effects am how to work with shapes, keyframes, etc. You! be able to animate characters logos infographics and typography You wil work such soft products Adobe A Media Encoder, Trapcode and others '),
+            'By the end of the cone you with create simple and complex 20 3D animation You will learn the programer Effects am how to work with shapes, keyframes, etc. You! be able to animate characters logos infographics and typography You wil work such soft products Adobe A Media Encoder, Trapcode and others '),
     Course(
         rating: 4.3,
-        tutor: 'Manas Jha',
         courseTitle: 'Learn flutter in 37 hours',
         coursePic: 'assets/Icons/coursePic.png',
         liked: true,
         price: '89239',
         courseDescription:
-            'By the end of the cone you witho create simple and complex 20 3D animation You will learn the programer Effects am how to work with shapes, keyframes, etc. You! be able to animate characters logos infographics and typography You wil work such soft products Adobe A Media Encoder, Trapcode and others '),
+            'By the end of the cone you with create simple and complex 20 3D animation You will learn the programer Effects am how to work with shapes, keyframes, etc. You! be able to animate characters logos infographics and typography You wil work such soft products Adobe A Media Encoder, Trapcode and others '),
     Course(
         rating: 4.3,
-        tutor: 'Lakshya Goel',
         courseTitle: 'Learn flutter in 37 hours',
         coursePic: 'assets/Icons/coursePic.png',
         liked: false,
         price: '8993',
         courseDescription:
-            'By the end of the cone you witho create simple and complex 20 3D animation You will learn the programer Effects am how to work with shapes, keyframes, etc. You! be able to animate characters logos infographics and typography You wil work such soft products Adobe A Media Encoder, Trapcode and others '),
+            'By the end of the cone you with create simple and complex 20 3D animation You will learn the programer Effects am how to work with shapes, keyframes, etc. You! be able to animate characters logos infographics and typography You wil work such soft products Adobe A Media Encoder, Trapcode and others '),
   ];
   final List<Widget> categoryList = [
     CategoriesButton(

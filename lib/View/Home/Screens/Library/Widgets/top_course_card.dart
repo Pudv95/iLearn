@@ -76,7 +76,7 @@ class _TopCourseCardState extends State<TopCourseCard> {
                   ),
                 ),
                 Text(
-                  widget.course.tutor!,
+                  widget.course.createdBy![0]['name'],
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 12,

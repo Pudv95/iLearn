@@ -90,7 +90,7 @@ class _CoursesForMeCardsState extends State<CoursesForMeCards> {
               ],
             ),
             Text(
-              widget.course.tutor ?? '',
+              widget.course.createdBy![0]['name'],
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 14,
