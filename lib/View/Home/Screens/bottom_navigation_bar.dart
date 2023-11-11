@@ -23,15 +23,15 @@ class CustomBottomNavigationBar extends StatelessWidget {
               currentIndex: currPage,
               onTap: onTap,
               selectedIconTheme: IconThemeData(color: AllColor.selectedIconColor),
-              items: const [
+              items: [
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.book),
+                  icon: (currPage == 0)?AllIcons.librarySelected:AllIcons.library,
                   label: 'Library',
                 ),
-                BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+                BottomNavigationBarItem(icon: (currPage == 1)?AllIcons.searchSelected:AllIcons.search, label: 'Search'),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.mode_comment_outlined), label: 'Community'),
-                BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+                    icon: (currPage == 2)?AllIcons.communitySelected:AllIcons.community, label: 'Community'),
+                BottomNavigationBarItem(icon: (currPage == 3)?AllIcons.profileSelected:AllIcons.profile, label: 'Profile'),
               ]),
         ),
       ),

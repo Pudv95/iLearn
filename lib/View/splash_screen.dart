@@ -1,8 +1,8 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/View/Authentication/Screens/Login/login_page.dart';
-import 'package:ilearn/View/Home/Screens/dashboard.dart';
-import 'package:ilearn/View/Home/profile/profile.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -27,8 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
     String? token = await storage.read(key: 'token');
     if(context.mounted) {
       if (token != null) {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const Dashboard()));
-        // await Authentication().getUserData(context, token);
+        await Authentication().getUserData(context, token);
       } else {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const LoginPage()));
@@ -43,7 +42,8 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/Icons/iLearn.png',scale: 5,),
+            SvgPicture.asset('assets/Icons/iLearn.svg',height: 80,width: 80,),
+            SizedBox(height: 10,),
             const Padding(
               padding: EdgeInsets.only(left: 30,right: 20),
               child: LinearProgressIndicator(),

@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ilearn/Models/student_model.dart';
-import 'package:ilearn/View/Home/profile/profile.dart';
+import 'package:ilearn/View/Home/Screens/dashboard.dart';
 import '../../../Models/user_model.dart';
 import '../../../Resources/imports.dart';
 
@@ -255,7 +254,7 @@ class Authentication{
     if (response.statusCode == 200) {
       User user = User.fromJson(jsonDecode(response.body)['user']);
       if(context.mounted){
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyDashboard(user: user)));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Dashboard(user: user)));
       }
     } else {
       myToast(true, 'Couldn\'t Fetch data');

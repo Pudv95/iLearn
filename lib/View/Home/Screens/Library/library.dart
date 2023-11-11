@@ -24,7 +24,6 @@ class _LibraryState extends State<Library> {
     IconButtonData(
         title: 'Teach at iLearn', icon: AllIcons.teachIcon, onPressed: () {}),
   ];
-
   final List<Course> recommendedCourse = [
     Course(
         rating: 4.3,
@@ -62,6 +61,62 @@ class _LibraryState extends State<Library> {
         price: '8993',
         courseDescription:
             'By the end of the cone you witho create simple and complex 20 3D animation You will learn the programer Effects am how to work with shapes, keyframes, etc. You! be able to animate characters logos infographics and typography You wil work such soft products Adobe A Media Encoder, Trapcode and others '),
+  ];
+  final List<Widget> categoryList = [
+    CategoriesButton(
+      iconButtonData: IconButtonData(
+          title: 'App Development',
+          image: AllIcons.appDevelopment,
+          onPressed: () {}),
+    ),
+    CategoriesButton(
+      iconButtonData: IconButtonData(
+          title: 'Web Development',
+          image: AllIcons.webDevelopment,
+          onPressed: () {}),
+    ),
+    CategoriesButton(
+      iconButtonData: IconButtonData(
+          title: 'AIML Development',
+          image: AllIcons.aimlDevelopment,
+          onPressed: () {}),
+    ),
+    CategoriesButton(
+      iconButtonData: IconButtonData(
+          title: 'Personality Development',
+          image: AllIcons.personalityDevelopment,
+          onPressed: () {}),
+    ),
+    CategoriesButton(
+      iconButtonData: IconButtonData(
+          title: 'ARVR Development',
+          image: AllIcons.arvrDevelopment,
+          onPressed: () {}),
+    ),
+    CategoriesButton(
+      iconButtonData: IconButtonData(
+          title: 'Photography',
+          image: AllIcons.photographyDevelopment,
+          onPressed: () {}),
+    ),
+    CategoriesButton(
+      iconButtonData: IconButtonData(
+          title: 'Designing',
+          image: AllIcons.designingDevelopment,
+          onPressed: () {}),
+    ),
+    CategoriesButton(
+      iconButtonData: IconButtonData(
+          title: 'DataScience',
+          image: AllIcons.dataScienceDevelopment,
+          onPressed: () {}),
+    ),
+    CategoriesButton(
+      iconButtonData: IconButtonData(
+          title: 'Others',
+          image: AllIcons.others,
+          onPressed: () {}),
+    ),
   ];
 
   @override
@@ -111,7 +166,7 @@ class _LibraryState extends State<Library> {
                         children: List.generate(buttonData.length, (index) {
                           return IconElevatedButton(
                             title: buttonData[index].title,
-                            icon: buttonData[index].icon,
+                            icon: buttonData[index].icon!,
                             onPress: buttonData[index].onPressed,
                           );
                         })),
@@ -175,26 +230,7 @@ class _LibraryState extends State<Library> {
                     height: 60,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
-                      children: [
-                        CategoriesButton(
-                          iconButtonData: IconButtonData(
-                              title: 'App Development',
-                              icon: AllIcons.learningIcon,
-                              onPressed: () {}),
-                        ),
-                        CategoriesButton(
-                          iconButtonData: IconButtonData(
-                              title: 'App Development',
-                              icon: AllIcons.learningIcon,
-                              onPressed: () {}),
-                        ),
-                        CategoriesButton(
-                          iconButtonData: IconButtonData(
-                              title: 'App Development',
-                              icon: AllIcons.learningIcon,
-                              onPressed: () {}),
-                        ),
-                      ],
+                      children: categoryList,
                     ),
                   ),
                   const SizedBox(height: 20),

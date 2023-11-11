@@ -8,6 +8,10 @@ class User {
   String? role;
   String? shortId;
   int? iV;
+  List? createdCourses;
+  List? ownedCourses;
+  List? cart;
+  List? wishlist;
 
   User({this.sId,
     this.username,
@@ -17,7 +21,11 @@ class User {
     this.verify,
     this.role,
     this.shortId,
-    this.iV});
+    this.iV,
+    this.createdCourses,
+    this.ownedCourses,
+    this.cart,
+    this.wishlist});
 
   User.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -29,6 +37,10 @@ class User {
     role = json['role'];
     shortId = json['shortId'];
     iV = json['__v'];
+    createdCourses = json['createdCourses'];
+    ownedCourses = json['ownedCourses'];
+    cart = json['cart'];
+    wishlist = json['wishlist'];
   }
 
   Map<String, dynamic> toJson() {
@@ -42,6 +54,10 @@ class User {
     data['role'] = role;
     data['shortId'] = shortId;
     data['__v'] = iV;
+    data['createdCourses'] = createdCourses;
+    data['ownedCourses'] = ownedCourses;
+    data['cart'] = cart;
+    data['wishlist'] = wishlist;
     return data;
   }
 }

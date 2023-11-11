@@ -1,11 +1,7 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ilearn/Resources/colors.dart';
-import 'package:ilearn/View/Authentication/Screens/Login/login_page.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:ilearn/View/Home/Screens/dashboard.dart';
 import 'package:ilearn/View/splash_screen.dart';
 
 
@@ -16,8 +12,6 @@ class MyHttpOverrides extends HttpOverrides{
       ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }
-
-
 
 void main()async{
   HttpOverrides.global = MyHttpOverrides();
@@ -49,6 +43,6 @@ void main()async{
       ),
 
     ),
-    home: const Dashboard(),
+    home: const SplashScreen(),
   ));
 }
