@@ -62,7 +62,7 @@ class _LibraryState extends State<Library> {
           child: SingleChildScrollView(
             child: SizedBox(
               height: MediaQuery.of(context).size.height,
-              child: Column(
+              child: ListView(
                 children: [
                   SizedBox(
                     width: double.infinity,
@@ -96,7 +96,7 @@ class _LibraryState extends State<Library> {
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
-                    height: 350,
+                    height: 360,
                     child: ListView(
                       physics: const PageScrollPhysics(),
                       shrinkWrap: true,
@@ -120,6 +120,17 @@ class _LibraryState extends State<Library> {
                       ),Spacer(),
                       TextButton(onPressed: (){}, child: Text('See All',style: TextStyle(color: AllColor.primaryButtonColor),))
                     ],
+                  ),
+                  SizedBox(
+                    height: 50,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        CategoriesButton(onPressed: (){}, title: 'Web Development', icon: Icon(Icons.add_box)),
+                        CategoriesButton(onPressed: (){}, title: 'App Development', icon: Icon(Icons.add_box)),
+                        CategoriesButton(onPressed: (){}, title: 'Some Random Education', icon: Icon(Icons.add_box)),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -378,6 +389,26 @@ class SpecificCourse extends StatelessWidget {
     );
   }
 }
+
+class CategoriesButton extends StatelessWidget {
+  final void Function() onPressed;
+  final String title;
+  final Icon icon;
+  const CategoriesButton({super.key, required this.onPressed, required this.title, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton.icon(onPressed: onPressed, icon: icon, label: Text(title,style: TextStyle(color: Colors.black),),style: ButtonStyle(
+        elevation: MaterialStatePropertyAll<double>(0),
+        backgroundColor: MaterialStatePropertyAll<Color>(Color(0xFFF1F1F1)),
+      ),
+      ),
+    );
+  }
+}
+
 
 
 
