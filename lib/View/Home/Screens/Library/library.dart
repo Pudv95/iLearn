@@ -94,7 +94,9 @@ class _LibraryState extends State<Library> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Expanded(
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: 350,
                     child: ListView(
                       physics: const PageScrollPhysics(),
                       shrinkWrap: true,
@@ -284,12 +286,12 @@ class _CoursesForMeCardsState extends State<CoursesForMeCards> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(widget.course.coursePic,fit: BoxFit.cover,scale: 0.88,),
+          Image.asset(widget.course.coursePic ?? '',fit: BoxFit.cover,scale: 0.88,),
           const SizedBox(height: 10,),
           Wrap(
             children: [
               Text(
-                widget.course.courseTitle,
+                widget.course.courseTitle ?? '',
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 24,
@@ -299,7 +301,7 @@ class _CoursesForMeCardsState extends State<CoursesForMeCards> {
               )
             ],
           ),
-          Text(widget.course.tutor,style:const TextStyle(
+          Text(widget.course.tutor ?? '',style:const TextStyle(
             color: Colors.black,
             fontSize: 14,
             fontFamily: 'Sofia Sans',
@@ -326,11 +328,14 @@ class _CoursesForMeCardsState extends State<CoursesForMeCards> {
               ),),
               IconButton(
                 onPressed: () {
-                  setState(() {
-                    widget.course.liked = !widget.course.liked;
-                  });
+                  {
+                    setState(() {
+                      if(widget.course.liked != null) {
+                        widget.course.liked = !widget.course.liked!;}
+                    });
+                  }
                 },
-                icon: Icon((widget.course.liked) ? Icons.favorite : Icons.favorite_border),
+                icon: Icon((widget.course.liked!) ? Icons.favorite : Icons.favorite_border),
                 color: AllColor.iconColor,
               )
             ],
@@ -342,15 +347,38 @@ class _CoursesForMeCardsState extends State<CoursesForMeCards> {
 }
 
 class Course{
-  String coursePic;
-  String courseTitle;
-  String tutor;
-  double rating;
-  String courseDescription;
-  String price;
-  bool liked;
+  String? coursePic;
+  String? courseTitle;
+  String? tutor;
+  double? rating;
+  String? courseDescription;
+  String? price;
+  bool? liked;
   Course({required this.rating,required this.tutor,required this.courseTitle,required this.coursePic,required this.liked,required this.price,required this.courseDescription});
 }
+
+class SpecificCourse extends StatelessWidget {
+  final Course course;
+  const SpecificCourse({super.key, required this.course});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 200,
+      child: Row(
+        children: [
+          SizedBox(height:50,width: 50,child: Image.network(course.coursePic ?? '')),
+            Column(
+            children: [
+              Text(course.courseTitle??'')
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 
 
 
