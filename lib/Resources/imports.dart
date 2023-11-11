@@ -14,3 +14,4 @@ export 'package:ilearn/View/Authentication/Screens/ForgotPassword/forgot_passswo
 export 'package:ilearn/View/Authentication/Screens/ResetPassword/reset_password.dart';
 export 'package:ilearn/View/Authentication/Widgets/toast.dart';
 export 'package:flutter_svg_provider/flutter_svg_provider.dart';
+export 'package:ilearn/Models/course.dart';
