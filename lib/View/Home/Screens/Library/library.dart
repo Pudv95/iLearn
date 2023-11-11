@@ -8,7 +8,8 @@ import 'Widgets/top_course_card.dart';
 import 'Widgets/top_course_text.dart';
 
 class Library extends StatefulWidget {
-  const Library({super.key});
+  final PageController pageController;
+  const Library({super.key, required this.pageController});
 
   @override
   State<Library> createState() => _LibraryState();
@@ -32,7 +33,8 @@ class _LibraryState extends State<Library> {
         coursePic: 'assets/Icons/coursePic.png',
         liked: true,
         price: '899',
-        courseDescription: ''),
+        courseDescription:
+            'By the end of the cone you witho create simple and complex 20 3D animation You will learn the programer Effects am how to work with shapes, keyframes, etc. You! be able to animate characters logos infographics and typography You wil work such soft products Adobe A Media Encoder, Trapcode and others '),
     Course(
         rating: 4.3,
         tutor: 'Prajjwal Tripathi',
@@ -40,7 +42,8 @@ class _LibraryState extends State<Library> {
         coursePic: 'assets/Icons/coursePic.png',
         liked: false,
         price: '8999',
-        courseDescription: ''),
+        courseDescription:
+            'By the end of the cone you witho create simple and complex 20 3D animation You will learn the programer Effects am how to work with shapes, keyframes, etc. You! be able to animate characters logos infographics and typography You wil work such soft products Adobe A Media Encoder, Trapcode and others '),
     Course(
         rating: 4.3,
         tutor: 'Manas Jha',
@@ -48,7 +51,8 @@ class _LibraryState extends State<Library> {
         coursePic: 'assets/Icons/coursePic.png',
         liked: true,
         price: '89239',
-        courseDescription: ''),
+        courseDescription:
+            'By the end of the cone you witho create simple and complex 20 3D animation You will learn the programer Effects am how to work with shapes, keyframes, etc. You! be able to animate characters logos infographics and typography You wil work such soft products Adobe A Media Encoder, Trapcode and others '),
     Course(
         rating: 4.3,
         tutor: 'Lakshya Goel',
@@ -56,7 +60,8 @@ class _LibraryState extends State<Library> {
         coursePic: 'assets/Icons/coursePic.png',
         liked: false,
         price: '8993',
-        courseDescription: ''),
+        courseDescription:
+            'By the end of the cone you witho create simple and complex 20 3D animation You will learn the programer Effects am how to work with shapes, keyframes, etc. You! be able to animate characters logos infographics and typography You wil work such soft products Adobe A Media Encoder, Trapcode and others '),
   ];
 
   @override
@@ -118,7 +123,7 @@ class _LibraryState extends State<Library> {
                     streak: 10,
                   ),
                   const SizedBox(
-                    height: 56.14,
+                    height: 30,
                   ),
                   Align(
                       alignment: Alignment.centerLeft,
@@ -139,7 +144,9 @@ class _LibraryState extends State<Library> {
                       children:
                           List.generate(recommendedCourse.length, (index) {
                         return CoursesForMeCards(
-                            course: recommendedCourse[index]);
+                          course: recommendedCourse[index],
+                          pageController: widget.pageController,
+                        );
                       }),
                     ),
                   ),
@@ -170,13 +177,23 @@ class _LibraryState extends State<Library> {
                       scrollDirection: Axis.horizontal,
                       children: [
                         CategoriesButton(
-                             iconButtonData: IconButtonData(title: 'App Development', icon: AllIcons.learningIcon, onPressed: (){}),
-                        ),CategoriesButton(
-                             iconButtonData: IconButtonData(title: 'App Development', icon: AllIcons.learningIcon, onPressed: (){}),
-                        ),CategoriesButton(
-                             iconButtonData: IconButtonData(title: 'App Development', icon: AllIcons.learningIcon, onPressed: (){}),
+                          iconButtonData: IconButtonData(
+                              title: 'App Development',
+                              icon: AllIcons.learningIcon,
+                              onPressed: () {}),
                         ),
-
+                        CategoriesButton(
+                          iconButtonData: IconButtonData(
+                              title: 'App Development',
+                              icon: AllIcons.learningIcon,
+                              onPressed: () {}),
+                        ),
+                        CategoriesButton(
+                          iconButtonData: IconButtonData(
+                              title: 'App Development',
+                              icon: AllIcons.learningIcon,
+                              onPressed: () {}),
+                        ),
                       ],
                     ),
                   ),
@@ -191,22 +208,30 @@ class _LibraryState extends State<Library> {
                       children: [
                         TopCourseCard(
                           course: recommendedCourse[0],
+                          pageController: widget.pageController,
                         ),
                         TopCourseCard(
                           course: recommendedCourse[0],
+                          pageController: widget.pageController,
                         ),
                         TopCourseCard(
                           course: recommendedCourse[0],
+                          pageController: widget.pageController,
                         ),
                         TopCourseCard(
                           course: recommendedCourse[0],
+                          pageController: widget.pageController,
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20,),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   const TopCourseText(title: 'Flutter'),
-                  const SizedBox(height: 20,),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   SizedBox(
                     height: 250,
                     width: double.maxFinite,
@@ -215,20 +240,26 @@ class _LibraryState extends State<Library> {
                       children: [
                         TopCourseCard(
                           course: recommendedCourse[0],
+                          pageController: widget.pageController,
                         ),
                         TopCourseCard(
                           course: recommendedCourse[0],
+                          pageController: widget.pageController,
                         ),
                         TopCourseCard(
                           course: recommendedCourse[0],
+                          pageController: widget.pageController,
                         ),
                         TopCourseCard(
                           course: recommendedCourse[0],
+                          pageController: widget.pageController,
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 180,)
+                  const SizedBox(
+                    height: 120,
+                  )
                 ],
               ),
             ),

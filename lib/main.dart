@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ilearn/Resources/colors.dart';
 import 'package:ilearn/View/Authentication/Screens/Login/login_page.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -21,7 +22,11 @@ class MyHttpOverrides extends HttpOverrides{
 void main()async{
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
 
+    statusBarColor: Colors.white,
+  ));
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky, overlays: [ SystemUiOverlay.top ]);
   await dotenv.load(fileName: ".env");
   return runApp( MaterialApp(
     debugShowCheckedModeBanner: false,

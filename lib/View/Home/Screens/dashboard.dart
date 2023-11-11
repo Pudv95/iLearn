@@ -1,8 +1,10 @@
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/View/Home/Screens/Community/community.dart';
+import 'package:ilearn/View/Home/Screens/Course/course_description.dart';
 import 'package:ilearn/View/Home/Screens/Library/library.dart';
 import 'package:ilearn/View/Home/Screens/Search/search.dart';
-
+import 'package:ilearn/View/Home/Screens/bottom_navigation_bar.dart';
+import 'dart:ui';
 import 'Profile/profilie.dart';
 
 class Dashboard extends StatefulWidget {
@@ -18,17 +20,18 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: PageView(
         controller: _pageController,
-        children: const [
-          Library(),
-          Search(
+        children:  [
+          Library(pageController: _pageController,),
+          const Search(
             title: 'Search',
           ),
-          Community(
+          const Community(
             title: 'Community',
           ),
-          Profile(
+          const Profile(
             title: 'Profile',
           ),
         ],
@@ -38,27 +41,7 @@ class _DashboardState extends State<Dashboard> {
           });
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(
-          elevation: 0,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
-          currentIndex: currPage,
-          onTap: (ind) {
-            _pageController.jumpToPage(ind);
-          },
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          selectedIconTheme: IconThemeData(color: AllColor.selectedIconColor),
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.book),
-              label: '',
-            ),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.mode_comment_outlined), label: ''),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
-          ]),
+      bottomNavigationBar: CustomBottomNavigationBar(currPage: currPage, pageController: _pageController, onTap: (ind) { _pageController.jumpToPage(ind); },)
     );
   }
 }
