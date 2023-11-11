@@ -1,39 +1,40 @@
 name: Flutter CI
 
-
 on:
   push:
     branches:
-    - main
-    
+      - main
 
 jobs:
-  create-envfile:
-    runs-on: ubuntu-18.04
-
-    steps:
-      - name: Make envfile
-        uses: SpicyPizza/create-envfile@v1
-        with:
-          file_name: .env
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-java@v1
-      with:
-        java-version: '12.x'
-    
-    - uses: subosito/flutter-action@v1
-      with:
-        channel: 'stable'
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - run: flutter pub get
+      - name: Set up Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
 
-    # Build apk.
-    - run: flutter build apk
-    
-    - uses: actions/upload-artifact@v1
-      with:
-        name: iLearn
-        path: build/app/outputs/apk/release/app-release.apk
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+
+      - name: Create .env file
+        run: echo "BaseUrl=${{ secrets.BASEURL }}" > .env
+
+
+      - name: Flutter pub get
+        run: flutter pub get
+
+      # Build apk.
+      - name: Flutter build apk
+        run: flutter build apk
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: iLearn
+          path: build/app/outputs/apk/release/app-release.apk
