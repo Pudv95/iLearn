@@ -27,6 +27,7 @@ void main()async{
   return runApp( MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
+      appBarTheme: const AppBarTheme(elevation: 0.0),
       fontFamily: 'Work Sans',
       textTheme: const  TextTheme(
         displayMedium: TextStyle(
