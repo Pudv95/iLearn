@@ -24,11 +24,7 @@ class _CourseDescriptionState extends State<CourseDescription> {
             width: double.maxFinite,
             child: Stack(
               children: [
-                Image.asset(
-                  widget.course.coursePic!,
-                  fit: BoxFit.cover,
-                  scale: 0.2,
-                ),
+
                 Positioned(
                   top: 10,
                   right: 10,
@@ -249,8 +245,8 @@ class _CourseDescriptionState extends State<CourseDescription> {
                         SizedBox(
                           height: size.height * 0.01,
                         ),
-                        const Text(
-                          '160 hours',
+                        Text(
+                          '${widget.course.duration!} hours',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 24,

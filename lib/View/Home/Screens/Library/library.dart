@@ -1,4 +1,5 @@
 import 'package:ilearn/Resources/imports.dart';
+import 'package:ilearn/View/Home/Services/courses.dart';
 import 'Models/icon_button_data.dart';
 import 'Widgets/courses_for_me.dart';
 import 'Widgets/iconElevatedButton.dart';
@@ -25,38 +26,7 @@ class _LibraryState extends State<Library> {
         title: 'Teach at iLearn', icon: AllIcons.teachIcon, onPressed: () {}),
   ];
   final List<Course> recommendedCourse = [
-    Course(
-        rating: 4.3,
-        courseTitle: 'Learn flutter in 37 hours',
-        coursePic: 'assets/Icons/coursePic.png',
-        liked: true,
-        price: '899',
-        courseDescription:
-            'By the end of the cone you with create simple and complex 20 3D animation You will learn the programer Effects am how to work with shapes, keyframes, etc. You! be able to animate characters logos infographics and typography You wil work such soft products Adobe A Media Encoder, Trapcode and others '),
-    Course(
-        rating: 4.3,
-        courseTitle: 'Learn flutter in 37 hours {Easy Version}',
-        coursePic: 'assets/Icons/coursePic.png',
-        liked: false,
-        price: '8999',
-        courseDescription:
-            'By the end of the cone you with create simple and complex 20 3D animation You will learn the programer Effects am how to work with shapes, keyframes, etc. You! be able to animate characters logos infographics and typography You wil work such soft products Adobe A Media Encoder, Trapcode and others '),
-    Course(
-        rating: 4.3,
-        courseTitle: 'Learn flutter in 37 hours',
-        coursePic: 'assets/Icons/coursePic.png',
-        liked: true,
-        price: '89239',
-        courseDescription:
-            'By the end of the cone you with create simple and complex 20 3D animation You will learn the programer Effects am how to work with shapes, keyframes, etc. You! be able to animate characters logos infographics and typography You wil work such soft products Adobe A Media Encoder, Trapcode and others '),
-    Course(
-        rating: 4.3,
-        courseTitle: 'Learn flutter in 37 hours',
-        coursePic: 'assets/Icons/coursePic.png',
-        liked: false,
-        price: '8993',
-        courseDescription:
-            'By the end of the cone you with create simple and complex 20 3D animation You will learn the programer Effects am how to work with shapes, keyframes, etc. You! be able to animate characters logos infographics and typography You wil work such soft products Adobe A Media Encoder, Trapcode and others '),
+    Course(rating: 2, courseTitle: 'f', liked: true, price: '21', courseDescription: '12')
   ];
   final List<Widget> categoryList = [
     CategoriesButton(
@@ -188,18 +158,41 @@ class _LibraryState extends State<Library> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: 360,
-                    child: ListView(
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      children:
-                          List.generate(recommendedCourse.length, (index) {
-                        return CoursesForMeCards(
-                          course: recommendedCourse[index],
-                          pageController: widget.pageController,
-                        );
-                      }),
-                    ),
+                    child: FutureBuilder(future: GetCourse().getCategoryCourse('Python'),
+                      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                        if(snapshot.hasData){
+                          List<Course> topCourse = snapshot.data;
+                          List<Widget> c1 = [];
+                          for(var course in topCourse){
+                            c1.add(CoursesForMeCards(course: course, pageController: widget.pageController));
+                          }
+                          print(topCourse);
+                          return SizedBox(
+                            height: 250,
+                            width: 250,
+                            child: ListView(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              children: c1,
+                            ),
+                          );
+                        }
+                        else{
+                          return const CircularProgressIndicator();
+                        }
+                      },),
+                    // child: ListView(
+                    //   physics: const BouncingScrollPhysics(),
+                    //   shrinkWrap: true,
+                    //   scrollDirection: Axis.horizontal,
+                    //   children:
+                    //       List.generate(recommendedCourse.length, (index) {
+                    //     return CoursesForMeCards(
+                    //       course: recommendedCourse[index],
+                    //       pageController: widget.pageController,
+                    //     );
+                    //   }),
+                    // ),
                   ),
                   Row(
                     children: [
@@ -230,32 +223,34 @@ class _LibraryState extends State<Library> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const TopCourseText(title: 'Figma'),
+                  const TopCourseText(title: 'Python'),
                   const SizedBox(height: 20),
                   SizedBox(
                     height: 250,
                     width: double.maxFinite,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        TopCourseCard(
-                          course: recommendedCourse[0],
-                          pageController: widget.pageController,
-                        ),
-                        TopCourseCard(
-                          course: recommendedCourse[0],
-                          pageController: widget.pageController,
-                        ),
-                        TopCourseCard(
-                          course: recommendedCourse[0],
-                          pageController: widget.pageController,
-                        ),
-                        TopCourseCard(
-                          course: recommendedCourse[0],
-                          pageController: widget.pageController,
-                        ),
-                      ],
-                    ),
+                    child: FutureBuilder(future: GetCourse().getCategoryCourse('Python'),
+                      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                          if(snapshot.hasData){
+                            List<Course> topCourse = snapshot.data;
+                            List<Widget> c1 = [];
+                            for(var course in topCourse){
+                              c1.add(TopCourseCard(course: course, pageController: widget.pageController));
+                            }
+                            print(topCourse);
+                            return SizedBox(
+                              height: 250,
+                              width: 250,
+                              child: ListView(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                children: c1,
+                              ),
+                            );
+                          }
+                          else{
+                            return const CircularProgressIndicator();
+                          }
+                      },)
                   ),
                   const SizedBox(
                     height: 20,
@@ -266,28 +261,30 @@ class _LibraryState extends State<Library> {
                   ),
                   SizedBox(
                     height: 250,
-                    width: double.maxFinite,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        TopCourseCard(
-                          course: recommendedCourse[0],
-                          pageController: widget.pageController,
-                        ),
-                        TopCourseCard(
-                          course: recommendedCourse[0],
-                          pageController: widget.pageController,
-                        ),
-                        TopCourseCard(
-                          course: recommendedCourse[0],
-                          pageController: widget.pageController,
-                        ),
-                        TopCourseCard(
-                          course: recommendedCourse[0],
-                          pageController: widget.pageController,
-                        ),
-                      ],
-                    ),
+                    width: 250,
+                    child: FutureBuilder(future: GetCourse().getCategoryCourse('Python'),
+                      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                        if(snapshot.hasData){
+                          List<Course> topCourse = snapshot.data;
+                          List<Widget> c1 = [];
+                          for(var course in topCourse){
+                            c1.add(TopCourseCard(course: course, pageController: widget.pageController));
+                          }
+                          print(topCourse);
+                          return SizedBox(
+                            height: 250,
+                            width: 250,
+                            child: ListView(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              children: c1,
+                            ),
+                          );
+                        }
+                        else{
+                          return const CircularProgressIndicator();
+                        }
+                      },)
                   ),
                   const SizedBox(
                     height: 120,

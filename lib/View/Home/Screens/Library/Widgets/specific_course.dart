@@ -13,7 +13,7 @@ class SpecificCourse extends StatelessWidget {
           SizedBox(
               height: 50,
               width: 50,
-              child: Image.network(course.coursePic ?? '')),
+              ),
           Column(
             children: [Text(course.courseTitle ?? '')],
           ),

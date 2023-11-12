@@ -34,36 +34,36 @@ class _TopCourseCardState extends State<TopCourseCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Stack(
-                  children: [
-                    Image.asset(
-                      widget.course.coursePic!,
-                      scale: 1.5,
-                    ),
-                    Positioned(
-                        right: 4,
-                        top: 4,
-                        child: Container(
-                          height: 37,
-                          width: 37,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color:
-                                Colors.white.withOpacity(0.40000000298023224),
-                          ),
-                          child: IconButton(
-                            icon: (widget.course.liked!)
-                                ? const Icon(Icons.favorite)
-                                : const Icon(Icons.favorite_outline),
-                            color: AllColor.iconColor,
-                            onPressed: () {
-                              setState(() {
-                                widget.course.liked = !widget.course.liked!;
-                              });
-                            },
-                          ),
-                        )),
-                  ],
+                SizedBox(
+                  height: 140,
+                  width: double.maxFinite,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                          right: 4,
+                          top: 4,
+                          child: Container(
+                            height: 37,
+                            width: 37,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color:
+                                  Colors.white.withOpacity(0.40000000298023224),
+                            ),
+                            child: IconButton(
+                              icon: (widget.course.liked!)
+                                  ? const Icon(Icons.favorite)
+                                  : const Icon(Icons.favorite_outline),
+                              color: AllColor.iconColor,
+                              onPressed: () {
+                                setState(() {
+                                  widget.course.liked = !widget.course.liked!;
+                                });
+                              },
+                            ),
+                          )),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Text(
