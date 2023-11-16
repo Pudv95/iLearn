@@ -35,7 +35,6 @@ void main()async{
           fontSize: 24,
           fontFamily: 'SF Pro Display',
           fontWeight: FontWeight.w600,
-          height: 0,
         ),
         displayLarge: TextStyle(
           fontFamily: 'Montserrat',

@@ -1,5 +1,6 @@
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/View/Home/Services/courses.dart';
+import '../Widgets/shimmer_blocks.dart';
 import 'Models/icon_button_data.dart';
 import 'Widgets/courses_for_me.dart';
 import 'Widgets/iconElevatedButton.dart';
@@ -24,9 +25,6 @@ class _LibraryState extends State<Library> {
         title: 'Popular', icon: AllIcons.trendingIcon, onPressed: () {}),
     IconButtonData(
         title: 'Teach at iLearn', icon: AllIcons.teachIcon, onPressed: () {}),
-  ];
-  final List<Course> recommendedCourse = [
-    Course(rating: 2, courseTitle: 'f', liked: true, price: '21', courseDescription: '12')
   ];
   final List<Widget> categoryList = [
     CategoriesButton(
@@ -87,15 +85,19 @@ class _LibraryState extends State<Library> {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    print(height);
+    print(width);
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          toolbarHeight: 80,
+          toolbarHeight: (80/height)*height,
           elevation: 0,
           backgroundColor: Colors.white,
-          title: const Padding(
-            padding: EdgeInsets.only(left: 15, right: 15),
-            child: Text(
+          title: Padding(
+            padding: EdgeInsets.only(left: (15/width)*width, right: (15/width)*width),
+            child: const Text(
               'Library',
               style: TextStyle(
                   color: Colors.black,
@@ -103,14 +105,14 @@ class _LibraryState extends State<Library> {
                   fontWeight: FontWeight.bold),
             ),
           ),
-          actions: const [
-            Icon(
+          actions: [
+            const Icon(
               Icons.favorite_outline,
               size: 30,
             ),
             Padding(
-              padding: EdgeInsets.only(left: 10, right: 35),
-              child: Icon(
+              padding: EdgeInsets.only(left: (10/width)*width, right: (35/width)*width),
+              child: const Icon(
                 Icons.notifications,
                 size: 30,
               ),
@@ -119,7 +121,7 @@ class _LibraryState extends State<Library> {
           iconTheme: const IconThemeData(color: Colors.black),
         ),
         body: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
+          padding: EdgeInsets.only(left: (20/width)*width, right: (20/width)*width),
           child: SingleChildScrollView(
             child: SizedBox(
               height: MediaQuery.of(context).size.height,
@@ -137,14 +139,14 @@ class _LibraryState extends State<Library> {
                           );
                         })),
                   ),
-                  const SizedBox(
-                    height: 5,
+                  SizedBox(
+                    height: (5/height)*height,
                   ),
                   const StreakCalendar(
                     streak: 10,
                   ),
-                  const SizedBox(
-                    height: 30,
+                  SizedBox(
+                    height: (30/height)*height,
                   ),
                   Align(
                       alignment: Alignment.centerLeft,
@@ -152,12 +154,12 @@ class _LibraryState extends State<Library> {
                         'Courses for You',
                         style: Theme.of(context).textTheme.displayMedium,
                       )),
-                  const SizedBox(
-                    height: 20,
+                  SizedBox(
+                    height: (20/height)*height,
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
-                    height: 360,
+                    height: (360/height)*height,
                     child: FutureBuilder(future: GetCourse().getCategoryCourse('Python'),
                       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                         if(snapshot.hasData){
@@ -168,8 +170,8 @@ class _LibraryState extends State<Library> {
                           }
                           print(topCourse);
                           return SizedBox(
-                            height: 250,
-                            width: 250,
+                            height: (250/height)*height,
+                            width: (250/width)*width,
                             child: ListView(
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
@@ -178,7 +180,7 @@ class _LibraryState extends State<Library> {
                           );
                         }
                         else{
-                          return const CircularProgressIndicator();
+                          return ShimmerBlocks(context: context).coursesForYouShimmer();
                         }
                       },),
                     // child: ListView(
@@ -216,17 +218,17 @@ class _LibraryState extends State<Library> {
                     ],
                   ),
                   SizedBox(
-                    height: 60,
+                    height: (60/height)*height,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: categoryList,
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: (20/height)*height),
                   const TopCourseText(title: 'Python'),
-                  const SizedBox(height: 20),
+                  SizedBox(height: (20/height)*height),
                   SizedBox(
-                    height: 250,
+                      height: (250/height)*height,
                     width: double.maxFinite,
                     child: FutureBuilder(future: GetCourse().getCategoryCourse('Python'),
                       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -252,17 +254,17 @@ class _LibraryState extends State<Library> {
                           }
                       },)
                   ),
-                  const SizedBox(
-                    height: 20,
+                  SizedBox(
+                    height: (20/height)*height,
                   ),
-                  const TopCourseText(title: 'Flutter'),
-                  const SizedBox(
-                    height: 20,
+                  const TopCourseText(title: 'DSA'),
+                   SizedBox(
+                    height: (20/height)*height,
                   ),
                   SizedBox(
-                    height: 250,
-                    width: 250,
-                    child: FutureBuilder(future: GetCourse().getCategoryCourse('Python'),
+                      height: (250/height)*height,
+                      width: (250/width)*width,
+                    child: FutureBuilder(future: GetCourse().getCategoryCourse('DSA'),
                       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                         if(snapshot.hasData){
                           List<Course> topCourse = snapshot.data;
@@ -286,8 +288,8 @@ class _LibraryState extends State<Library> {
                         }
                       },)
                   ),
-                  const SizedBox(
-                    height: 120,
+                  SizedBox(
+                    height: (120/height)*height,
                   )
                 ],
               ),

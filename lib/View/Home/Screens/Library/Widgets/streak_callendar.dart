@@ -11,8 +11,8 @@ class StreakCalendar extends StatelessWidget {
       children: [
         Column(
           children: [
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: (20/height)*height,
             ),
             SizedBox(
               height: height * 0.2155,
@@ -26,7 +26,7 @@ class StreakCalendar extends StatelessWidget {
                     height: height * 0.06928,
                     width: width * 0.24305,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 30, top: 10),
+                      padding: EdgeInsets.only(left: (30/width)*width, top: (10/height)*height),
                       child: Row(
                         children: [
                           SizedBox(
@@ -40,7 +40,6 @@ class StreakCalendar extends StatelessWidget {
                                     color: Colors.black,
                                     fontSize: 18,
                                     fontWeight: FontWeight.w600,
-                                    height: 0,
                                   ),
                                 ),
                                 Row(
@@ -64,7 +63,6 @@ class StreakCalendar extends StatelessWidget {
                                           fontSize: 16,
                                           fontFamily: 'SF Pro Text',
                                           fontWeight: FontWeight.w600,
-                                          height: 0,
                                         ),
                                       ),
                                     ])

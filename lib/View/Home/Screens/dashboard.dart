@@ -2,7 +2,7 @@ import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/View/Home/Screens/Community/community.dart';
 import 'package:ilearn/View/Home/Screens/Library/library.dart';
 import 'package:ilearn/View/Home/Screens/Search/search.dart';
-import 'package:ilearn/View/Home/Screens/bottom_navigation_bar.dart';
+import 'package:ilearn/View/Home/Screens/Widgets/bottom_navigation_bar.dart';
 import '../../../Models/student_model.dart';
 import 'Profile/profilie.dart';
 

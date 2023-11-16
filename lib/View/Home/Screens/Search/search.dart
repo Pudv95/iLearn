@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ilearn/Resources/imports.dart';
 
 class Search extends StatefulWidget {
@@ -27,56 +29,75 @@ class _SearchState extends State<Search> {
 
 class CustomSearchDelegate extends SearchDelegate {
   List<String> searchTerms = ["Flutter", "Python", "C", "C++"];
+  List<String> searchResults = [];
 
   @override
-  ThemeData appBarTheme(BuildContext context){
+  ThemeData appBarTheme(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    return theme.copyWith(
-
-    );
+    return theme.copyWith();
   }
 
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
       IconButton(
-          onPressed: () {
-            query = '';
-          },
-          icon: const Icon(Icons.clear,color: Colors.grey,))
+        onPressed: () {
+          query = '';
+        },
+        icon: const Icon(Icons.clear, color: Colors.grey),
+      )
     ];
   }
 
   @override
   Widget? buildLeading(BuildContext context) {
-     return IconButton(onPressed: (){
-       close(context, null);
-     }, icon: const Icon(Icons.arrow_back,color: Colors.grey,));
+    return IconButton(
+      onPressed: () {
+        close(context, null);
+      },
+      icon: const Icon(Icons.arrow_back, color: Colors.grey),
+    );
+  }
+
+  void _runSearch(String query) {
+    List<String> matchQuery = [];
+    for (var course in searchTerms) {
+      if (course.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(course);
+      }
+    }
+    searchResults = matchQuery;
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    List<String> matchQuery = [];
-    for(var course in searchTerms){
-      if(course.toLowerCase().contains(query.toLowerCase())){
-        matchQuery.add(course);
-      }
-    }
-    return ListView.builder(itemCount: matchQuery.length,itemBuilder: (BuildContext context, int index) {
-      return ListTile(title: Text(matchQuery[index]),);
-    },);
+    return FutureBuilder(
+      future: Future.delayed(const Duration(milliseconds: 500), () {
+        _runSearch(query);
+      }),
+      builder: (context, snapshot) {
+        return ListView(
+          children: searchResults
+              .map((result) => ListTile(title: Text(result)))
+              .toList(),
+        );
+      },
+    );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<String> matchQuery = [];
-    for(var course in searchTerms){
-      if(course.toLowerCase().contains(query.toLowerCase())){
-        matchQuery.add(course);
-      }
-    }
-    return ListView.builder(itemCount: matchQuery.length,itemBuilder: (BuildContext context, int index) {
-      return ListTile(title: Text(matchQuery[index]),);
-    },);
+    return FutureBuilder(
+      future: Future.delayed(const Duration(milliseconds: 500), () {
+        _runSearch(query);
+      }),
+      builder: (context, snapshot) {
+        return ListView(
+          children: searchResults
+              .map((result) => ListTile(title: Text(result),onTap: (){query = result;},))
+              .toList(),
+        );
+      },
+    );
   }
 }

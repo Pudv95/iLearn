@@ -12,6 +12,7 @@ class CoursesForMeCards extends StatefulWidget {
 }
 
 class _CoursesForMeCardsState extends State<CoursesForMeCards> {
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -30,7 +31,7 @@ class _CoursesForMeCardsState extends State<CoursesForMeCards> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 180,
+              height: (180/size.height)*size.height,
               child: Stack(
                 children: [
                   Positioned(
@@ -39,8 +40,8 @@ class _CoursesForMeCardsState extends State<CoursesForMeCards> {
                     child: Stack(
                       children: [
                         Container(
-                          height: 40,
-                          width: 40,
+                          height: (40/size.height)*size.height,
+                          width: (40/size.width)*size.width,
                           decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.6),
                             shape: BoxShape.circle
@@ -71,8 +72,8 @@ class _CoursesForMeCardsState extends State<CoursesForMeCards> {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 10,
+            SizedBox(
+              height: (10/size.height)*size.height,
             ),
             Wrap(
               children: [

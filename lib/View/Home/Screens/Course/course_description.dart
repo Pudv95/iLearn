@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:ilearn/Resources/imports.dart';
-import 'package:ilearn/View/Home/Screens/bottom_navigation_bar.dart';
+import 'package:ilearn/View/Home/Screens/Widgets/bottom_navigation_bar.dart';
 
 class CourseDescription extends StatefulWidget {
   final PageController pageController;

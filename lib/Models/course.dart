@@ -1,7 +1,7 @@
 class Course {
   String? id;
   String? courseTitle;
-  double? rating;
+  int? rating;
   String? courseDescription;
   String? price;
   bool? liked;
@@ -9,7 +9,7 @@ class Course {
   String? duration;
   int? totalStudents;
   List? videos;
-  List? createdBy;
+  Map<String, dynamic>? createdBy;
     Course(
       {required this.rating,
         required this.courseTitle,
@@ -28,7 +28,7 @@ class Course {
     return Course(
       id: json['_id'],
       courseTitle: json['title'],
-      rating: json['rating'].toDouble(),
+      rating: json['rating'],
       courseDescription: json['description'],
       price: json['price'],
       category: json['category'],

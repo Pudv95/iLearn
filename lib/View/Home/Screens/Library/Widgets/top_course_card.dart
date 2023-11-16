@@ -14,6 +14,8 @@ class TopCourseCard extends StatefulWidget {
 class _TopCourseCardState extends State<TopCourseCard> {
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.sizeOf(context).height;
+    final width = MediaQuery.sizeOf(context).width;
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -30,12 +32,12 @@ class _TopCourseCardState extends State<TopCourseCard> {
               borderRadius: BorderRadius.circular(20),
               side: BorderSide(color: AllColor.iconButtonColor)),
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.all((10.0/height)*height),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 140,
+                  height: (140/height)*height,
                   width: double.maxFinite,
                   child: Stack(
                     children: [
@@ -43,8 +45,8 @@ class _TopCourseCardState extends State<TopCourseCard> {
                           right: 4,
                           top: 4,
                           child: Container(
-                            height: 37,
-                            width: 37,
+                            height: (37/height)*height,
+                            width: (37/width)*width,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(50),
                               color:
@@ -65,7 +67,7 @@ class _TopCourseCardState extends State<TopCourseCard> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: (10/height)*height),
                 Text(
                   widget.course.courseTitle!,
                   style: const TextStyle(

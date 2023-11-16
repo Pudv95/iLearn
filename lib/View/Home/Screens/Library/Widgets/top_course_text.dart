@@ -16,7 +16,6 @@ class TopCourseText extends StatelessWidget {
               fontSize: 24,
               fontFamily: 'SF Pro Display',
               fontWeight: FontWeight.w500,
-              height: 0,
             ),
           ),
           TextSpan(
@@ -26,7 +25,6 @@ class TopCourseText extends StatelessWidget {
               fontSize: 24,
               fontFamily: 'SF Pro Display',
               fontWeight: FontWeight.w500,
-              height: 0,
             ),
           ),
         ],

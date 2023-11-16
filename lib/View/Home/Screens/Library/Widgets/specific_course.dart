@@ -6,13 +6,15 @@ class SpecificCourse extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.sizeOf(context).height;
+    final width = MediaQuery.sizeOf(context).width;
     return SizedBox(
       height: 200,
       child: Row(
         children: [
           SizedBox(
-              height: 50,
-              width: 50,
+              height: (50/height)*height,
+              width: (50/width)*width,
               ),
           Column(
             children: [Text(course.courseTitle ?? '')],

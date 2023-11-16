@@ -1,8 +1,8 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ilearn/Resources/imports.dart';
+import 'package:ilearn/View/Home/Screens/Course/play_course.dart';
 import 'package:ilearn/View/Home/Screens/Library/Models/icon_button_data.dart';
 import 'package:ilearn/View/Home/Screens/Library/Widgets/top_course_button.dart';
-import 'package:ilearn/View/Home/Services/courses.dart';
-
 import '../../../../Models/student_model.dart';
 
 class Profile extends StatefulWidget {
@@ -124,8 +124,10 @@ class _ProfileState extends State<Profile> {
             SizedBox(height: 10),
             Row(
               children: [
-                CategoriesButton(iconButtonData: IconButtonData(title: 'Edit Profile', icon: null, onPressed: (){})),
-                CategoriesButton(iconButtonData: IconButtonData(title: 'Teach at iLearn', icon: AllIcons.teachIcon, onPressed: (){}))
+                CategoriesButton(iconButtonData: IconButtonData(title: 'Edit Profile', icon: null, onPressed: (){ })),
+                CategoriesButton(iconButtonData: IconButtonData(title: 'Teach at iLearn', icon: AllIcons.teachIcon, onPressed: ()async{
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>PlayCourse()));
+                }))
               ],
             ),
 

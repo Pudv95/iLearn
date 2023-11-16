@@ -12,10 +12,12 @@ class IconElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return Padding(
       padding: const EdgeInsets.all(8),
       child: SizedBox(
-        height: 40,
+        height: (40/height)*height,
         child: ElevatedButton.icon(
           onPressed: onPress,
           icon: icon,
