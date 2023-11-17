@@ -1,6 +1,6 @@
 import 'package:ilearn/Resources/imports.dart';
-import 'package:ilearn/View/Home/Control/data_parse.dart';
-import 'package:ilearn/View/Home/Screens/Course/course_description.dart';
+import 'package:ilearn/Features/Home/Control/data_parse.dart';
+import 'package:ilearn/Features/Home/Screens/Course/course_description.dart';
 
 class TopCourseCard extends StatefulWidget {
   final PageController pageController;

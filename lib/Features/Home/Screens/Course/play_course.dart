@@ -1,5 +1,5 @@
 import 'package:ilearn/Resources/imports.dart';
-import 'package:ilearn/View/Home/Services/courses.dart';
+import 'package:ilearn/Features/Home/Services/courses.dart';
 import 'package:video_player/video_player.dart';
 
 class PlayCourse extends StatefulWidget {

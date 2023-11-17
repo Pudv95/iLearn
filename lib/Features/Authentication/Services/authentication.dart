@@ -4,8 +4,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ilearn/Models/student_model.dart';
-import 'package:ilearn/View/Authentication/Screens/Login/login_page.dart';
-import 'package:ilearn/View/Home/Screens/dashboard.dart';
+import 'package:ilearn/Features/Authentication/Screens/Login/login_page.dart';
+import 'package:ilearn/Features/Home/Screens/dashboard.dart';
 import '../../../Models/user_model.dart';
 import '../../../Resources/imports.dart';
 

@@ -1,6 +1,6 @@
 import 'package:ilearn/Models/user_model.dart';
 import 'package:ilearn/Resources/imports.dart';
-import 'package:ilearn/View/Authentication/Services/authentication.dart';
+import 'package:ilearn/Features/Authentication/Services/authentication.dart';
 import '../../Widgets/password_stepper.dart';
 
 class SignUP extends StatefulWidget {

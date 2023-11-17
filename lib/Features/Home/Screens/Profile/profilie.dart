@@ -1,9 +1,9 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ilearn/Resources/imports.dart';
-import 'package:ilearn/View/Home/Screens/Course/play_course.dart';
-import 'package:ilearn/View/Home/Screens/Library/Models/icon_button_data.dart';
-import 'package:ilearn/View/Home/Screens/Library/Widgets/top_course_button.dart';
-import 'package:ilearn/View/Home/Services/courses.dart';
+import 'package:ilearn/Features/Home/Screens/Course/play_course.dart';
+import 'package:ilearn/Features/Home/Screens/Library/Models/icon_button_data.dart';
+import 'package:ilearn/Features/Home/Screens/Library/Widgets/top_course_button.dart';
+import 'package:ilearn/Features/Home/Services/courses.dart';
 import '../../../../Models/student_model.dart';
 
 class Profile extends StatefulWidget {

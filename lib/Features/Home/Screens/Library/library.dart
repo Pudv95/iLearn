@@ -1,5 +1,5 @@
 import 'package:ilearn/Resources/imports.dart';
-import 'package:ilearn/View/Home/Services/courses.dart';
+import 'package:ilearn/Features/Home/Services/courses.dart';
 import '../Widgets/shimmer_blocks.dart';
 import 'Models/icon_button_data.dart';
 import 'Widgets/courses_for_me.dart';

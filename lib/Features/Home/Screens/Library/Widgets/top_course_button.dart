@@ -1,5 +1,5 @@
 import 'package:ilearn/Resources/imports.dart';
-import 'package:ilearn/View/Home/Screens/Library/Models/icon_button_data.dart';
+import 'package:ilearn/Features/Home/Screens/Library/Models/icon_button_data.dart';
 
 class CategoriesButton extends StatelessWidget {
   final IconButtonData iconButtonData;

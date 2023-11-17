@@ -2,9 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:ilearn/Models/student_model.dart';
-import 'package:ilearn/View/Home/Screens/dashboard.dart';
-import 'package:ilearn/View/splash_screen.dart';
+import 'package:ilearn/Features/splash_screen.dart';
 
 
 class MyHttpOverrides extends HttpOverrides{

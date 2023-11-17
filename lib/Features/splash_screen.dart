@@ -1,7 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ilearn/Resources/imports.dart';
-import 'package:ilearn/View/Authentication/Screens/Login/login_page.dart';
+import 'package:ilearn/Features/Authentication/Screens/Login/login_page.dart';
 
 
 class SplashScreen extends StatefulWidget {

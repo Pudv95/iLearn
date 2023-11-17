@@ -3,7 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:ilearn/Resources/imports.dart';
-import 'package:ilearn/View/Home/Control/data_parse.dart';
+import 'package:ilearn/Features/Home/Control/data_parse.dart';
 import '../../../Models/course.dart';
 
 class GetCourse{
