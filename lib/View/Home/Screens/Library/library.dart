@@ -168,7 +168,7 @@ class _LibraryState extends State<Library> {
                           for(var course in topCourse){
                             c1.add(CoursesForMeCards(course: course, pageController: widget.pageController));
                           }
-                          print(topCourse);
+                          // print(topCourse);
                           return SizedBox(
                             height: (250/height)*height,
                             width: (250/width)*width,
@@ -238,7 +238,7 @@ class _LibraryState extends State<Library> {
                             for(var course in topCourse){
                               c1.add(TopCourseCard(course: course, pageController: widget.pageController));
                             }
-                            print(topCourse);
+                            // print(topCourse);
                             return SizedBox(
                               height: 250,
                               width: 250,
@@ -272,7 +272,7 @@ class _LibraryState extends State<Library> {
                           for(var course in topCourse){
                             c1.add(TopCourseCard(course: course, pageController: widget.pageController));
                           }
-                          print(topCourse);
+                          // print(topCourse);
                           return SizedBox(
                             height: 250,
                             width: 250,

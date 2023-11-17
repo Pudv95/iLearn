@@ -1,5 +1,6 @@
 import 'package:ilearn/Resources/imports.dart';
 
+import '../../../Control/data_parse.dart';
 import '../../Course/course_description.dart';
 
 class CoursesForMeCards extends StatefulWidget {
@@ -34,6 +35,7 @@ class _CoursesForMeCardsState extends State<CoursesForMeCards> {
               height: (180/size.height)*size.height,
               child: Stack(
                 children: [
+                  Center(child: Image.network(ParseData().parseUrl(widget.course.thumbnail!,),fit: BoxFit.cover,scale: 0.5,)),
                   Positioned(
                     top: 10,
                     right: 10,
@@ -89,7 +91,7 @@ class _CoursesForMeCardsState extends State<CoursesForMeCards> {
               ],
             ),
             Text(
-              widget.course.createdBy![0]['name'],
+              widget.course.createdBy!['name'],
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 14,

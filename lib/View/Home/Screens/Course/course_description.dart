@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:ilearn/Resources/imports.dart';
+import 'package:ilearn/View/Home/Control/data_parse.dart';
 import 'package:ilearn/View/Home/Screens/Widgets/bottom_navigation_bar.dart';
 
 class CourseDescription extends StatefulWidget {
@@ -24,7 +25,7 @@ class _CourseDescriptionState extends State<CourseDescription> {
             width: double.maxFinite,
             child: Stack(
               children: [
-
+                Center(child: Image.network(ParseData().parseUrl(widget.course.thumbnail!)),),
                 Positioned(
                   top: 10,
                   right: 10,
@@ -127,7 +128,7 @@ class _CourseDescriptionState extends State<CourseDescription> {
                               top: 55,
                               left: 10,
                               child: Text(
-                                widget.course.createdBy![0]['name'],
+                                widget.course.createdBy!['name'],
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 13,
@@ -311,11 +312,11 @@ class _CourseDescriptionState extends State<CourseDescription> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        const Column(children: [
+                        Column(children: [
                           Text(
-                            '04',
+                            widget.course.totalStudents!.toString(),
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 24,
                               fontFamily: 'SF Pro Display',
@@ -334,9 +335,9 @@ class _CourseDescriptionState extends State<CourseDescription> {
                           ),
                         ],),
                         VerticalDivider(color: AllColor.primaryFocusColor,thickness: 1,),
-                        const Expanded(child: Column(children: [
+                        Expanded(child: Column(children: [
                           Text(
-                            '4',
+                            widget.course.videos!.length.toString(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.black,
@@ -357,9 +358,9 @@ class _CourseDescriptionState extends State<CourseDescription> {
                           ),
                         ],)),
                         VerticalDivider(color: AllColor.primaryFocusColor,thickness: 1,),
-                        const Expanded(child: Column(children: [
+                        Expanded(child: Column(children: [
                           Text(
-                            '160',
+                            ParseData().parseHours(widget.course.videos!).toString(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.black,
