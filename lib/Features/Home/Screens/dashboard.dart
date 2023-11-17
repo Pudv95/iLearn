@@ -25,8 +25,9 @@ class _DashboardState extends State<Dashboard> {
         controller: _pageController,
         children:  [
           Library(pageController: _pageController,),
-          const Search(
+          Search(
             title: 'Search',
+            pageController: _pageController,
           ),
           const Community(
             title: 'Community',
