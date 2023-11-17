@@ -11,6 +11,7 @@ class User {
   List? createdCourses;
   List? ownedCourses;
   List? cart;
+  List? completeCourse;
   List? wishlist;
 
   User({this.sId,
@@ -25,6 +26,7 @@ class User {
     this.createdCourses,
     this.ownedCourses,
     this.cart,
+    this.completeCourse,
     this.wishlist});
 
   User.fromJson(Map<String, dynamic> json) {
@@ -41,6 +43,7 @@ class User {
     ownedCourses = json['ownedCourses'];
     cart = json['cart'];
     wishlist = json['wishlist'];
+    completeCourse = json['completedCourse'];
   }
 
   Map<String, dynamic> toJson() {
@@ -58,6 +61,7 @@ class User {
     data['ownedCourses'] = ownedCourses;
     data['cart'] = cart;
     data['wishlist'] = wishlist;
+    data['completedCourse'] = completeCourse;
     return data;
   }
 }

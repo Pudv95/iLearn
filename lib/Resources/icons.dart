@@ -29,7 +29,7 @@ class AllIcons{
   static SvgPicture dsaDevelopment = SvgPicture.asset('assets/Icons/dsa.svg');
   static SvgPicture photographyDevelopment = SvgPicture.asset('assets/Icons/photography.svg');
   static SvgPicture webDevelopment = SvgPicture.asset('assets/Icons/webDev.svg');
-  static SvgPicture personalityDevelopment = SvgPicture.asset('assets/Icons/personalityDev.svg');
+  static SvgPicture personalityDevelopment = SvgPicture.asset('assets/Icons/personaltiyDev.svg');
   static SvgPicture others = SvgPicture.asset('assets/Icons/others.svg');
 
 

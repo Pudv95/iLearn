@@ -54,9 +54,7 @@ class GetCourse {
       var response = await http.get(
           Uri.parse(
               '$baseURl/search-course/?coursetitle=$query&page=1&pagesize=2'),
-          // https://udemy-nx1v.onrender.com/search-course/?coursetitle=fl&page=1&pagesize=2
           headers: headers);
-      // print(response.body);
       if (response.statusCode == 200) {
         Map<String, dynamic> course = jsonDecode(response.body);
         return ParseData().parseCourses(course);
@@ -68,6 +66,22 @@ class GetCourse {
     } on Exception catch (e) {
       myToast(true, 'Couldn\'t fetch courses');
       print(e.toString());
+      return [];
+    }
+  }
+  
+  getCourseReview(String courseId)async{
+    String? token = await storage.read(key: 'token');
+    var headers = {'Authorization': 'Bearer $token'};
+    
+    var response = await http.get(Uri.parse('$baseURl/get-reviews/$courseId'),headers: headers);
+
+    if(response.statusCode == 200){
+      List<Map<String,dynamic>> reviews = jsonDecode(response.body)['data']['reviews'];
+      return reviews;
+    }
+    else{
+      myToast(true, 'Couldn\'t fetch reviews');
       return [];
     }
   }

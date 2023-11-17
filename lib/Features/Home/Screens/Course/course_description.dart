@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:ilearn/Features/Home/Services/courses.dart';
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/Features/Home/Control/data_parse.dart';
 import 'package:ilearn/Features/Home/Screens/Widgets/bottom_navigation_bar.dart';
@@ -248,7 +249,7 @@ class _CourseDescriptionState extends State<CourseDescription> {
                         ),
                         Text(
                           '${widget.course.duration!} hours',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.black,
                             fontSize: 24,
                             fontFamily: 'SF Pro Display',
@@ -262,7 +263,7 @@ class _CourseDescriptionState extends State<CourseDescription> {
                 SizedBox(
                   height: size.height * 0.03,
                 ),
-                CustomLoginButton(onPress: () async {}, data: 'BuyNow'),
+                CustomLoginButton(onPress: () async {}, data: 'Buy Now',color: const Color(0xFF246E9E),),
                 SizedBox(
                   height: size.height * 0.015,
                 ),
@@ -323,7 +324,7 @@ class _CourseDescriptionState extends State<CourseDescription> {
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          Text(
+                          const Text(
                             'Active learners',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -339,14 +340,14 @@ class _CourseDescriptionState extends State<CourseDescription> {
                           Text(
                             widget.course.videos!.length.toString(),
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 24,
                               fontFamily: 'SF Pro Display',
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          Text(
+                          const Text(
                             'Lectures',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -362,14 +363,14 @@ class _CourseDescriptionState extends State<CourseDescription> {
                           Text(
                             ParseData().parseHours(widget.course.videos!).toString(),
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 24,
                               fontFamily: 'SF Pro Display',
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          Text(
+                          const Text(
                             'Hours',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -421,16 +422,83 @@ class _CourseDescriptionState extends State<CourseDescription> {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-                const Row(
+                Row(
                   children: [
-                    CircleAvatar(
+                   const  CircleAvatar(
                       radius: 70,
+                      backgroundImage: NetworkImage('https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg'),
                     ),
+                    const SizedBox(width: 20,),
                     Column(
-                      children: [],
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(widget.course.createdBy!['name'],style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                        ),
+                            ),
+                        const SizedBox(height: 10,),
+                        const Text('Software Developer',style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w500,
+                        ),),
+                        const SizedBox(height:  10,),
+                        const Text('8+ years of Experience',style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w500,
+                        ),)
+                      ],
                     )
                   ],
-                )
+                ),
+                const SizedBox(height:  10,),
+                const Text(
+                  'Reviews',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 22,
+                    fontFamily: 'SF Pro Text',
+                    fontWeight: FontWeight.w600,
+                    height: 0,
+                  ),
+                ),
+                const SizedBox(height:10),
+                FutureBuilder(future: GetCourse().getCourseReview(widget.course.id!), builder: (context, snapshot){
+                  if(snapshot.connectionState == ConnectionState.done){
+                    if(snapshot.hasData){
+                      List reviews = snapshot.data as List;
+                      ListView.builder(itemCount: reviews.length,itemBuilder: (BuildContext context, int index) {
+                        return SizedBox(
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  CircleAvatar(),
+                                  Text(reviews[index]['name']),
+                                ],
+                              ),
+                              RichText(text: TextSpan(text : reviews[index]['review'].toString()))
+                            ],
+                          ),
+
+                        );
+                      },);
+                    }
+                    else{
+                      return Icon(Icons.close);
+                    }
+                  }
+                  else{
+                    return const Center(child: CircularProgressIndicator(),);
+                  }
+                  return const Center(child: CircularProgressIndicator(),);
+                })
               ],
             ),
           ),

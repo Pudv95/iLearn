@@ -4,6 +4,7 @@ import 'package:ilearn/Resources/colors.dart';
 class CustomLoginButton extends StatefulWidget {
   final GlobalKey<FormState>? formKey;
   final Future<void> Function() onPress;
+  final Color? color;
   final String data;
 
   const CustomLoginButton({
@@ -11,6 +12,7 @@ class CustomLoginButton extends StatefulWidget {
     this.formKey,
     required this.onPress,
     required this.data,
+    this.color = Colors.blue,
   }) : super(key: key);
 
   @override
@@ -28,9 +30,9 @@ class _CustomLoginButtonState extends State<CustomLoginButton> {
       width: double.infinity,
       height: height * 0.05,
       child: ElevatedButton(
-        onPressed: _isLoading ? (){} : () => _handlePress(),
+        onPressed: _isLoading ? null : () => _handlePress(),
         style: ButtonStyle(
-          backgroundColor: (!_isLoading)?MaterialStateProperty.all(AllColor.primaryButtonColor):MaterialStateProperty.all(AllColor.primaryButtonColorDisabled),
+          backgroundColor: (!_isLoading)?MaterialStateProperty.all(widget.color):MaterialStateProperty.all(AllColor.primaryButtonColorDisabled),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
