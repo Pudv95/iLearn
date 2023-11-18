@@ -12,43 +12,45 @@ class PlayCourse extends StatefulWidget {
 
 class _PlayCourseState extends State<PlayCourse> {
 
+  late VideoPlayerController _controller;
 
-  Future<VideoPlayerController> getCourse() async {
-    Course myCourse =
-        await GetCourse().getCourseById('6555a594dcf558cbd03ea5e6');
+  void initializeVideo() async {
+    Course myCourse = await GetCourse().getCourseById('6555a594dcf558cbd03ea5e6');
     String videoUrl = ParseData().parseUrl(myCourse.videos?[0]['videoUrl']);
-    VideoPlayerController controller = VideoPlayerController.networkUrl(Uri.parse(videoUrl));
-    return controller;
+    _controller = VideoPlayerController.networkUrl(Uri.parse(videoUrl))
+      ..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized
+        setState(() {});
+      });
   }
+
+
   @override
   void initState() {
     super.initState();
+    initializeVideo();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-      SizedBox(
-        height: 280,
-        child: FutureBuilder(future: getCourse(),
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if(snapshot.hasData){
-              VideoPlayerController controller = snapshot.data;
-              return  Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  VideoPlayer(controller),
-                  _ControlsOverlay(controller: controller),
-                  VideoProgressIndicator(controller, allowScrubbing: true,),
-                ],
-              );
-            }else{
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
-        ),
-      ),
+        body:
+        SizedBox(
+            height: 280,
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                _controller.value.isInitialized
+                    ? AspectRatio(
+                  aspectRatio: _controller.value.aspectRatio,
+                  child: VideoPlayer(_controller),
+                )
+                    : const CircularProgressIndicator(),
+                _ControlsOverlay(controller: _controller),
+                VideoProgressIndicator(_controller, allowScrubbing: true,),
+              ],
+            )
+        )
     );
   }
 }

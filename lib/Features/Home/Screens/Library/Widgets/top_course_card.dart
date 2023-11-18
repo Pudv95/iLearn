@@ -42,7 +42,9 @@ class _TopCourseCardState extends State<TopCourseCard> {
                   width: double.maxFinite,
                   child: Stack(
                     children: [
-                      Positioned(child: Center(child: Image.network(ParseData().parseUrl(widget.course.thumbnail!)))),
+                      Positioned(child: Center(child: Image.network(ParseData().parseUrl(widget.course.thumbnail!), errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                        return const Icon(Icons.broken_image);
+                      },))),
                       Positioned(
                           right: 4,
                           top: 4,

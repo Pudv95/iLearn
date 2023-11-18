@@ -26,7 +26,7 @@ class _CoursesForMeCardsState extends State<CoursesForMeCards> {
                       CourseDescription(course: widget.course, pageController: widget.pageController,)));
       },
       child: SizedBox(
-        width: size.width * 0.95,
+        width: size.width * 0.90,
         height: size.height * 0.01,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,7 +35,13 @@ class _CoursesForMeCardsState extends State<CoursesForMeCards> {
               height: (180/size.height)*size.height,
               child: Stack(
                 children: [
-                  Center(child: Image.network(ParseData().parseUrl(widget.course.thumbnail!,),fit: BoxFit.cover,scale: 0.5,)),
+                  Center(child: Image.network(
+                    ParseData().parseUrl(widget.course.thumbnail!,),
+                    fit: BoxFit.cover,scale: 0.5,
+                      errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                        return const Icon(Icons.broken_image);
+                      },
+                  ),),
                   Positioned(
                     top: 10,
                     right: 10,

@@ -16,7 +16,7 @@ class GetCourse {
     var headers = {'Authorization': 'Bearer $token'};
 
     var response = await http.get(
-      Uri.parse('$baseURl/getCourse?page=1&pagesize=5'),
+      Uri.parse('$baseURl/get-popular-course?page=1&pagesize=5'),
       headers: headers,
     );
 
@@ -32,10 +32,8 @@ class GetCourse {
   getCourseById(String courseId) async {
     String? token = await storage.read(key: 'token');
     var headers = {'Authorization': 'Bearer $token'};
-
     var response = await http.get(Uri.parse('$baseURl/getCourseById/$courseId'),
         headers: headers);
-
     if (response.statusCode == 200) {
       Map<String, dynamic> courseJSON =
           jsonDecode(response.body)['data']['course'];
@@ -69,18 +67,19 @@ class GetCourse {
       return [];
     }
   }
-  
-  getCourseReview(String courseId)async{
+
+  getCourseReview(String courseId) async {
     String? token = await storage.read(key: 'token');
     var headers = {'Authorization': 'Bearer $token'};
-    
-    var response = await http.get(Uri.parse('$baseURl/get-reviews/$courseId'),headers: headers);
 
-    if(response.statusCode == 200){
-      List<Map<String,dynamic>> reviews = jsonDecode(response.body)['data']['reviews'];
+    var response = await http.get(Uri.parse('$baseURl/get-reviews/$courseId'),
+        headers: headers);
+
+    if (response.statusCode == 200) {
+      List<Map<String, dynamic>> reviews =
+          jsonDecode(response.body)['data']['reviews'];
       return reviews;
-    }
-    else{
+    } else {
       myToast(true, 'Couldn\'t fetch reviews');
       return [];
     }

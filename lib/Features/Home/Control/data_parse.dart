@@ -1,5 +1,4 @@
 
-
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../../../Models/course.dart';
@@ -10,9 +9,8 @@ class ParseData{
 
 
   String parseUrl(String thumbnail) {
-    String actualURI = thumbnail.replaceAll('public', '');
-    Uri url = Uri.parse(baseUrl + actualURI);
-    // print(url.toString());
+    // String actualURI = thumbnail.replaceAll('public', '');
+    Uri url = Uri.parse('$baseUrl/$thumbnail');
     return url.toString();
   }
 

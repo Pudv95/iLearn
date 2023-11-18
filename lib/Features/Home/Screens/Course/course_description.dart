@@ -26,7 +26,9 @@ class _CourseDescriptionState extends State<CourseDescription> {
             width: double.maxFinite,
             child: Stack(
               children: [
-                Center(child: Image.network(ParseData().parseUrl(widget.course.thumbnail!)),),
+                Center(child: Image.network( errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+      return const Icon(Icons.broken_image);
+      },ParseData().parseUrl(widget.course.thumbnail!)),),
                 Positioned(
                   top: 10,
                   right: 10,
