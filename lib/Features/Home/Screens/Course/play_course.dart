@@ -12,45 +12,48 @@ class PlayCourse extends StatefulWidget {
 
 class _PlayCourseState extends State<PlayCourse> {
 
-  late VideoPlayerController _controller;
 
-  void initializeVideo() async {
-    Course myCourse = await GetCourse().getCourseById('6555a594dcf558cbd03ea5e6');
-    String videoUrl = ParseData().parseUrl(myCourse.videos?[0]['videoUrl']);
-    _controller = VideoPlayerController.networkUrl(Uri.parse(videoUrl))
-      ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized
-        setState(() {});
-      });
+  VideoPlayerController? controller;
+
+  getVideos()async{
+    Course selectedCourse = await GetCourse().getCourseById('6555a594dcf558cbd03ea5e6');
+    String videoLink = selectedCourse.videos![0]['videoUrl'];
+    videoLink = videoLink.replaceAll('public', 'https://udemy-nx1v.onrender.com');
+    controller = VideoPlayerController.networkUrl(Uri.parse(
+        videoLink));
+    controller!.addListener(() {
+      setState(() {});
+    });
+    controller!.initialize().then((_) => setState(() {}));
+    controller!.play();
   }
-
 
   @override
   void initState() {
     super.initState();
-    initializeVideo();
+    getVideos();
+
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body:
-        SizedBox(
-            height: 280,
+    return SafeArea(
+      child: Scaffold(
+          body: (controller != null)?SizedBox(
+            height: 320,
             child: Stack(
-              alignment: Alignment.bottomCenter,
+              alignment: Alignment.topCenter,
               children: [
-                _controller.value.isInitialized
+                controller!.value.isInitialized
                     ? AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  child: VideoPlayer(_controller),
-                )
-                    : const CircularProgressIndicator(),
-                _ControlsOverlay(controller: _controller),
-                VideoProgressIndicator(_controller, allowScrubbing: true,),
+                        aspectRatio: controller!.value.aspectRatio,
+                        child: VideoPlayer(controller!),
+                      )
+                    : const LinearProgressIndicator(),
+                _ControlsOverlay(controller: controller!),
               ],
-            )
-        )
+            ),
+          ):Container()),
     );
   }
 }
@@ -127,13 +130,10 @@ class _ControlsOverlay extends StatelessWidget {
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                // Using less vertical padding as the text is also longer
-                // horizontally, so it feels like it would need more spacing
-                // horizontally (matching the aspect ratio of the video).
                 vertical: 12,
                 horizontal: 16,
               ),
-              child: Text('${controller.value.captionOffset.inMilliseconds}ms'),
+              child: Text('${controller.value.captionOffset.inMilliseconds}ms',style: const TextStyle(color: Colors.white),),
             ),
           ),
         ),
@@ -156,13 +156,10 @@ class _ControlsOverlay extends StatelessWidget {
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                // Using less vertical padding as the text is also longer
-                // horizontally, so it feels like it would need more spacing
-                // horizontally (matching the aspect ratio of the video).
                 vertical: 12,
                 horizontal: 16,
               ),
-              child: Text('${controller.value.playbackSpeed}x'),
+              child: Text('${controller.value.playbackSpeed}x',style: const TextStyle(color: Colors.white),),
             ),
           ),
         ),
