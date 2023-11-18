@@ -1,6 +1,7 @@
 import 'package:ilearn/Resources/imports.dart';
-import 'Widgets/search_delegate.dart';
-import 'dart:math' as math;
+import 'Widgets/custom_searchbar.dart';
+import 'Widgets/popular_search_tile.dart';
+
 
 class Search extends StatefulWidget {
   final String title;
@@ -93,66 +94,5 @@ class _SearchState extends State<Search> {
   }
 }
 
-class AlwaysDisabledFocusNode extends FocusNode {
-  @override
-  bool get hasFocus => false;
-}
 
-class CustomSearchBar extends StatelessWidget {
-  final PageController pageController;
-  const CustomSearchBar({super.key, required this.pageController});
 
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      enableInteractiveSelection: false,
-      onTap: () {
-        showSearch(
-            context: context,
-            delegate: CustomSearchDelegate(pageController: pageController));
-      },
-      focusNode: AlwaysDisabledFocusNode(),
-      decoration: InputDecoration(
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-        prefixIcon: const Icon(Icons.search),
-        prefixIconColor: Colors.grey,
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(style: BorderStyle.none, width: 0)),
-        fillColor: AllColor.textFormBox,
-        filled: true,
-        label: const Text('What do you want to learn'),
-        focusColor: AllColor.textFormBoxFocus,
-      ),
-      cursorColor: AllColor.textFormText,
-    );
-  }
-}
-
-class PopularSearch extends StatelessWidget {
-  final String title;
-  const PopularSearch({super.key, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      onTap: (){},
-      leading: Text(
-        title,
-        style: const TextStyle(
-          color: Color(0xFF040C17),
-          fontSize: 16,
-          fontFamily: 'Work Sans',
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-      trailing: Transform.rotate(
-        angle: 45 * math.pi / 180,
-        child: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
-      ),
-    );
-  }
-}
