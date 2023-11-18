@@ -1,6 +1,5 @@
 import 'package:ilearn/Features/Home/Screens/Search/Widgets/search_result.dart';
 import 'package:ilearn/Resources/imports.dart';
-
 import '../../../Services/courses.dart';
 
 class CustomSearchDelegate extends SearchDelegate {

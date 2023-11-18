@@ -20,27 +20,33 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
-      body: PageView(
-        controller: _pageController,
-        children:  [
-          Library(pageController: _pageController,),
-          Search(
-            title: 'Search',
-            pageController: _pageController,
-          ),
-          const Community(
-            title: 'Community',
-          ),
-          Profile(user: widget.user),
-        ],
-        onPageChanged: (index) {
-          setState(() {
-            currPage = index;
-          });
-        },
-      ),
-      bottomNavigationBar: CustomBottomNavigationBar(currPage: currPage, pageController: _pageController, onTap: (ind) { _pageController.jumpToPage(ind); },)
-    );
+        extendBody: true,
+        body: PageView(
+          controller: _pageController,
+          children: [
+            Library(
+              pageController: _pageController,
+            ),
+            Search(
+              title: 'Search',
+              pageController: _pageController,
+            ),
+            const Community(
+              title: 'Community',
+            ),
+            Profile(user: widget.user),
+          ],
+          onPageChanged: (index) {
+            setState(() {
+              currPage = index;
+            });
+          },
+        ),
+        bottomNavigationBar: CustomBottomNavigationBar(
+          currPage: currPage,
+          onTap: (ind) {
+            _pageController.jumpToPage(ind);
+          },
+        ));
   }
 }

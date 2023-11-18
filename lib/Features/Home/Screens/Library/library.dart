@@ -18,6 +18,7 @@ class Library extends StatefulWidget {
 }
 
 class _LibraryState extends State<Library> {
+
   final List<IconButtonData> buttonData = [
     IconButtonData(
         title: 'Your Learnings', icon: AllIcons.learningIcon, onPressed: () {}),
@@ -87,8 +88,6 @@ class _LibraryState extends State<Library> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    print(height);
-    print(width);
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(

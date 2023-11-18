@@ -1,4 +1,3 @@
-import 'package:ilearn/Features/Home/Control/data_parse.dart';
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/Features/Home/Services/courses.dart';
 import 'package:video_player/video_player.dart';
@@ -14,10 +13,11 @@ class _PlayCourseState extends State<PlayCourse> {
 
 
   VideoPlayerController? controller;
+  Course? selectedCourse;
 
   getVideos()async{
-    Course selectedCourse = await GetCourse().getCourseById('6555a594dcf558cbd03ea5e6');
-    String videoLink = selectedCourse.videos![0]['videoUrl'];
+    selectedCourse = await GetCourse().getCourseById('6555a594dcf558cbd03ea5e6');
+    String videoLink = selectedCourse!.videos![0]['videoUrl'];
     videoLink = videoLink.replaceAll('public', 'https://udemy-nx1v.onrender.com');
     controller = VideoPlayerController.networkUrl(Uri.parse(
         videoLink));

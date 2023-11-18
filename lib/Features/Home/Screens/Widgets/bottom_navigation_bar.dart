@@ -5,9 +5,8 @@ import 'package:ilearn/Resources/imports.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final int currPage;
-  final PageController pageController;
   final void Function(int)? onTap;
-  const CustomBottomNavigationBar({super.key, required this.currPage, required this.pageController, required this.onTap});
+  const CustomBottomNavigationBar({super.key, required this.currPage, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

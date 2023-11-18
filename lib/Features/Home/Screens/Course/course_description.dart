@@ -508,7 +508,6 @@ class _CourseDescriptionState extends State<CourseDescription> {
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
           currPage: 0,
-          pageController: widget.pageController,
           onTap: (ind) {
             widget.pageController.jumpToPage(ind);
             Navigator.pop(context);

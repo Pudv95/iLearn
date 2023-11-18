@@ -12,14 +12,11 @@ class GetCourse {
 
   getCategoryCourse(String category) async {
     String? token = await storage.read(key: 'token');
-
     var headers = {'Authorization': 'Bearer $token'};
-
     var response = await http.get(
       Uri.parse('$baseURl/get-popular-course?page=1&pagesize=5'),
       headers: headers,
     );
-
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonData = json.decode(response.body);
       List<Course> courses = await ParseData().parseCourses(jsonData);
