@@ -1,5 +1,7 @@
+import 'package:ilearn/Features/Home/Screens/Widgets/actions.dart';
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/Features/Home/Services/courses.dart';
+import '../../../../Models/student_model.dart';
 import '../Widgets/shimmer_blocks.dart';
 import 'Models/icon_button_data.dart';
 import 'Widgets/courses_for_me.dart';
@@ -10,8 +12,9 @@ import 'Widgets/top_course_card.dart';
 import 'Widgets/top_course_text.dart';
 
 class Library extends StatefulWidget {
+  final User user;
   final PageController pageController;
-  const Library({super.key, required this.pageController});
+  const Library({super.key, required this.pageController, required this.user});
 
   @override
   State<Library> createState() => _LibraryState();
@@ -104,19 +107,7 @@ class _LibraryState extends State<Library> {
                   fontWeight: FontWeight.bold),
             ),
           ),
-          actions: [
-            const Icon(
-              Icons.favorite_outline,
-              size: 30,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: (10/width)*width, right: (35/width)*width),
-              child: const Icon(
-                Icons.notifications,
-                size: 30,
-              ),
-            ),
-          ],
+          actions: ActionBar(context: context, pageIndex: 0, controller: widget.pageController).actionList(),
           iconTheme: const IconThemeData(color: Colors.black),
         ),
         body: Padding(
@@ -165,7 +156,7 @@ class _LibraryState extends State<Library> {
                           List<Course> topCourse = snapshot.data;
                           List<Widget> c1 = [];
                           for(var course in topCourse){
-                            c1.add(CoursesForMeCards(course: course, pageController: widget.pageController));
+                            c1.add(CoursesForMeCards(course: course, pageController: widget.pageController, user: widget.user,));
                           }
                           // print(topCourse);
                           return SizedBox(
@@ -235,7 +226,7 @@ class _LibraryState extends State<Library> {
                             List<Course> topCourse = snapshot.data;
                             List<Widget> c1 = [];
                             for(var course in topCourse){
-                              c1.add(TopCourseCard(course: course, pageController: widget.pageController));
+                              c1.add(TopCourseCard(course: course, pageController: widget.pageController, user: widget.user,));
                             }
                             // print(topCourse);
                             return SizedBox(
@@ -269,7 +260,7 @@ class _LibraryState extends State<Library> {
                           List<Course> topCourse = snapshot.data;
                           List<Widget> c1 = [];
                           for(var course in topCourse){
-                            c1.add(TopCourseCard(course: course, pageController: widget.pageController));
+                            c1.add(TopCourseCard(course: course, pageController: widget.pageController, user: widget.user,));
                           }
                           // print(topCourse);
                           return SizedBox(

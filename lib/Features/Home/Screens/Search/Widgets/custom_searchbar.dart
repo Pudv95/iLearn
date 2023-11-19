@@ -1,14 +1,17 @@
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/Features/Home/Screens/Search/Widgets/search_delegate.dart';
 
+import '../../../../../Models/student_model.dart';
+
 class AlwaysDisabledFocusNode extends FocusNode {
   @override
   bool get hasFocus => false;
 }
 
 class CustomSearchBar extends StatelessWidget {
+  final User user;
   final PageController pageController;
-  const CustomSearchBar({super.key, required this.pageController});
+  const CustomSearchBar({super.key, required this.pageController, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +20,7 @@ class CustomSearchBar extends StatelessWidget {
       onTap: () {
         showSearch(
             context: context,
-            delegate: CustomSearchDelegate(pageController: pageController));
+            delegate: CustomSearchDelegate(pageController: pageController, user: user));
       },
       focusNode: AlwaysDisabledFocusNode(),
       decoration: InputDecoration(

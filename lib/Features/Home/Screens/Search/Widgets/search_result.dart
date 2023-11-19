@@ -1,13 +1,15 @@
 import 'package:ilearn/Resources/imports.dart';
 
+import '../../../../../Models/student_model.dart';
 import '../../../Control/data_parse.dart';
 import '../../Course/course_description.dart';
 
 class SearchResults extends StatelessWidget {
+  final User user;
   final PageController pageController;
   final Course course;
   const SearchResults(
-      {super.key, required this.course, required this.pageController});
+      {super.key, required this.course, required this.pageController, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +23,9 @@ class SearchResults extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => CourseDescription(
-                        course: course, pageController: pageController)));
+                        course: course, pageController: pageController, user: user,)));
           },
           child: SizedBox(
-            width: double.maxFinite,
             height: (130 / height) * height,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -33,7 +34,7 @@ class SearchResults extends StatelessWidget {
                 SizedBox(
                   width: (30 / width) * width,
                 ),
-                Image.network(ParseData().parseUrl(course.thumbnail!)),
+                SizedBox(height:80,width:80,child: Image.network(ParseData().parseUrl(course.thumbnail!),)),
                 SizedBox(
                   width: (30 / width) * width,
                 ),
@@ -54,7 +55,7 @@ class SearchResults extends StatelessWidget {
                       ),
                       SizedBox(
                         height: 25,
-                        width: width-130,
+                        width: width-160,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,

@@ -25,16 +25,16 @@ class _DashboardState extends State<Dashboard> {
           controller: _pageController,
           children: [
             Library(
-              pageController: _pageController,
+              pageController: _pageController, user: widget.user,
             ),
             Search(
               title: 'Search',
-              pageController: _pageController,
+              pageController: _pageController, user: widget.user,
             ),
             const Community(
               title: 'Community',
             ),
-            Profile(user: widget.user),
+            Profile(user: widget.user, pageController: _pageController,),
           ],
           onPageChanged: (index) {
             setState(() {

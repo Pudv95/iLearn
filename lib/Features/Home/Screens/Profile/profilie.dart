@@ -1,4 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:ilearn/Features/Home/Screens/Widgets/actions.dart';
 import 'package:ilearn/Features/Home/Services/user.dart';
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/Features/Home/Screens/Course/play_course.dart';
@@ -8,8 +9,9 @@ import 'package:ilearn/Features/Home/Services/courses.dart';
 import '../../../../Models/student_model.dart';
 
 class Profile extends StatefulWidget {
+  final PageController pageController;
   final User user;
-  const Profile({super.key,required this.user});
+  const Profile({super.key,required this.user, required this.pageController});
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -34,25 +36,7 @@ class _ProfileState extends State<Profile> {
                 fontWeight: FontWeight.bold),
           ),
         ),
-        actions: const [
-          Icon(
-            Icons.favorite_outline,
-            size: 30,
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 10),
-            child: Icon(
-              Icons.shopping_cart_outlined,size: 30,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 10, right: 30),
-            child: Icon(
-              Icons.notifications_none_outlined,
-              size: 30,
-            ),
-          ),
-        ],
+        actions: ActionBar(context: context, pageIndex: 3, controller: widget.pageController).actionList(),
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Padding(

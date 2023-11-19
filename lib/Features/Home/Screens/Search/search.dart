@@ -1,12 +1,16 @@
+import 'package:ilearn/Features/Home/Screens/Widgets/actions.dart';
 import 'package:ilearn/Resources/imports.dart';
+import '../../../../Models/student_model.dart';
 import 'Widgets/custom_searchbar.dart';
 import 'Widgets/popular_search_tile.dart';
 
 
 class Search extends StatefulWidget {
+  final User user;
+
   final String title;
   final PageController pageController;
-  const Search({super.key, required this.title, required this.pageController});
+  const Search({super.key, required this.title, required this.pageController, required this.user});
 
   @override
   State<Search> createState() => _SearchState();
@@ -32,26 +36,7 @@ class _SearchState extends State<Search> {
                 color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
           ),
         ),
-        actions: const [
-          Icon(
-            Icons.favorite_outline,
-            size: 30,
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 10),
-            child: Icon(
-              Icons.shopping_cart_outlined,
-              size: 30,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 10, right: 30),
-            child: Icon(
-              Icons.notifications_none_outlined,
-              size: 30,
-            ),
-          ),
-        ],
+        actions: ActionBar(context: context, pageIndex: 1, controller: widget.pageController).actionList(),
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Padding(
@@ -59,7 +44,7 @@ class _SearchState extends State<Search> {
         child: ListView(
           children: [
             CustomSearchBar(
-              pageController: widget.pageController,
+              pageController: widget.pageController, user: widget.user,
             ),
             const SizedBox(
               height: 50,
@@ -82,7 +67,7 @@ class _SearchState extends State<Search> {
               ],
             ),
             const SizedBox(height: 20,),
-            const PopularSearch(title: 'Flutter course'),
+            const PopularSearch(title: 'Flutter Course'),
             const PopularSearch(title: 'Figma Course'),
             const PopularSearch(title: 'Best course for Pixel art'),
             const PopularSearch(title: 'How to get in SI probation'),

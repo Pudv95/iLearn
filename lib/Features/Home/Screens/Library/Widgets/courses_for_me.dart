@@ -1,18 +1,29 @@
+import 'package:ilearn/Features/Home/Services/user.dart';
 import 'package:ilearn/Resources/imports.dart';
 
+import '../../../../../Models/student_model.dart';
 import '../../../Control/data_parse.dart';
 import '../../Course/course_description.dart';
 
 class CoursesForMeCards extends StatefulWidget {
+  final User user;
   final PageController pageController;
   final Course course;
-  const CoursesForMeCards({super.key, required this.course, required this.pageController});
+  const CoursesForMeCards({super.key, required this.course, required this.pageController, required this.user});
 
   @override
   State<CoursesForMeCards> createState() => _CoursesForMeCardsState();
 }
 
 class _CoursesForMeCardsState extends State<CoursesForMeCards> {
+
+  bool isWishListed(){
+    String? courseId = widget.course.id;
+    for(var item in widget.user.wishlist!){
+      if(item == courseId) return true;
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +34,7 @@ class _CoursesForMeCardsState extends State<CoursesForMeCards> {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      CourseDescription(course: widget.course, pageController: widget.pageController,)));
+                      CourseDescription(course: widget.course, pageController: widget.pageController, user: widget.user,)));
       },
       child: SizedBox(
         width: size.width * 0.90,
@@ -59,16 +70,22 @@ class _CoursesForMeCardsState extends State<CoursesForMeCards> {
                           top: -2,
                           right:-5,
                           child: IconButton(
-                            onPressed: () {
+                            onPressed: () async {
                               {
-                                setState(() {
-                                  if (widget.course.liked != null) {
-                                    widget.course.liked = !widget.course.liked!;
-                                  }
+                                if(isWishListed()){
+                                  await UserFunctions().handleWishList(courseId: widget.course.id!);
+                                  widget.user.wishlist!.remove(widget.course.id!);
+                                }
+                                else{
+                                  await UserFunctions().handleWishList(courseId: widget.course.id!,deleting: false);
+                                  widget.user.wishlist!.add(widget.course.id!);
+                                }
+                                setState((){
+
                                 });
                               }
                             },
-                            icon: Icon((widget.course.liked!)
+                            icon: Icon((isWishListed())
                                 ? Icons.favorite
                                 : Icons.favorite_border),
                             color: AllColor.iconColor,

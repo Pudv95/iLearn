@@ -1,19 +1,30 @@
 import 'package:ilearn/Features/Home/Screens/Search/Widgets/search_result.dart';
 import 'package:ilearn/Resources/imports.dart';
+import '../../../../../Models/student_model.dart';
 import '../../../Services/courses.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
   final PageController pageController;
+  final User user;
   List<String> searchTerms = ["Flutter", "Python", "C", "C++", "Web"];
   List<String> searchResults = [];
 
-  CustomSearchDelegate({required this.pageController});
+  CustomSearchDelegate({required this.user,required this.pageController});
 
+  // @override
+  // ThemeData appBarTheme(BuildContext context) {
+  //   final ThemeData theme = Theme.of(context);
+  //   return theme.copyWith();
+  // }
   @override
-  ThemeData appBarTheme(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    return theme.copyWith();
-  }
+  InputDecorationTheme? get searchFieldDecorationTheme => InputDecorationTheme(
+    floatingLabelBehavior: FloatingLabelBehavior.never,
+    prefixIconColor: Colors.grey,
+    border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(style: BorderStyle.none, width: 0)),
+    focusColor: AllColor.textFormBoxFocus,
+  );
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -59,7 +70,7 @@ class CustomSearchDelegate extends SearchDelegate {
             itemBuilder: (BuildContext context, int index) {
               return SearchResults(
                 course: course![index],
-                pageController: pageController,
+                pageController: pageController, user: user,
               );
             },
           );

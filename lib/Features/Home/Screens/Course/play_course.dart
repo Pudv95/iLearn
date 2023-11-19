@@ -10,17 +10,16 @@ class PlayCourse extends StatefulWidget {
 }
 
 class _PlayCourseState extends State<PlayCourse> {
-
-
   VideoPlayerController? controller;
   Course? selectedCourse;
 
-  getVideos()async{
-    selectedCourse = await GetCourse().getCourseById('6555a594dcf558cbd03ea5e6');
+  getVideos() async {
+    selectedCourse =
+        await GetCourse().getCourseById('6555a594dcf558cbd03ea5e6');
     String videoLink = selectedCourse!.videos![0]['videoUrl'];
-    videoLink = videoLink.replaceAll('public', 'https://udemy-nx1v.onrender.com');
-    controller = VideoPlayerController.networkUrl(Uri.parse(
-        videoLink));
+    videoLink =
+        videoLink.replaceAll('public', 'https://udemy-nx1v.onrender.com');
+    controller = VideoPlayerController.networkUrl(Uri.parse(videoLink));
     controller!.addListener(() {
       setState(() {});
     });
@@ -32,28 +31,80 @@ class _PlayCourseState extends State<PlayCourse> {
   void initState() {
     super.initState();
     getVideos();
-
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: (controller != null)?SizedBox(
-            height: 320,
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                controller!.value.isInitialized
-                    ? AspectRatio(
-                        aspectRatio: controller!.value.aspectRatio,
-                        child: VideoPlayer(controller!),
-                      )
-                    : const LinearProgressIndicator(),
-                _ControlsOverlay(controller: controller!),
-              ],
-            ),
-          ):Container()),
+          body: (controller != null)
+              ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 300,
+                      child: Stack(
+                        alignment: Alignment.topCenter,
+                        children: [
+                          controller!.value.isInitialized
+                              ? AspectRatio(
+                                  aspectRatio: controller!.value.aspectRatio,
+                                  child: VideoPlayer(controller!),
+                                )
+                              : const LinearProgressIndicator(),
+                          _ControlsOverlay(controller: controller!),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 20,),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20,right: 20),
+                      child: SizedBox(
+                        height: 200,
+                        child: ListView(
+                          shrinkWrap: true,
+                          children: [
+                            Text(
+                              selectedCourse!.courseTitle!,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 22,
+                                fontFamily: 'SF Pro Text',
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              selectedCourse!.createdBy!['name'],
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontFamily: 'SF Pro Text',
+                              ),
+                            ),
+                            SizedBox(
+                              height :200,
+                              child: ListView.builder(
+                                itemCount: selectedCourse!.videos!.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return ListTile(
+                                    leading: Container(color: Colors.grey,height: 20,width: 20,),
+                                    title: Column(
+                                      children: [
+                                        Text(selectedCourse!.videos![index]['videoTitle']),
+                                        Text(selectedCourse!.videos![index]['videoDuration'].toString()),
+                                      ],
+                                    ),
+
+                                  );
+                                },),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                )
+              : Container()),
     );
   }
 }
@@ -133,7 +184,10 @@ class _ControlsOverlay extends StatelessWidget {
                 vertical: 12,
                 horizontal: 16,
               ),
-              child: Text('${controller.value.captionOffset.inMilliseconds}ms',style: const TextStyle(color: Colors.white),),
+              child: Text(
+                '${controller.value.captionOffset.inMilliseconds}ms',
+                style: const TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ),
@@ -159,7 +213,10 @@ class _ControlsOverlay extends StatelessWidget {
                 vertical: 12,
                 horizontal: 16,
               ),
-              child: Text('${controller.value.playbackSpeed}x',style: const TextStyle(color: Colors.white),),
+              child: Text(
+                '${controller.value.playbackSpeed}x',
+                style: const TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ),

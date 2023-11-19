@@ -4,7 +4,6 @@ class Course {
   int? rating;
   String? courseDescription;
   String? price;
-  bool? liked;
   String? category;
   String? duration;
   int? totalStudents;
@@ -15,7 +14,6 @@ class Course {
     Course(
       {required this.rating,
         required this.courseTitle,
-        this.liked = true,
         required this.price,
         required this.courseDescription,
         this.id,

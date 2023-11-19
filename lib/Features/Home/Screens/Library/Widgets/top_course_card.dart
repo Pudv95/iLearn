@@ -1,18 +1,34 @@
+import 'package:ilearn/Models/user_model.dart';
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/Features/Home/Control/data_parse.dart';
 import 'package:ilearn/Features/Home/Screens/Course/course_description.dart';
 
+import '../../../../../Models/student_model.dart';
+import '../../../Services/user.dart';
+
 class TopCourseCard extends StatefulWidget {
+  final User user;
   final PageController pageController;
   final Course course;
 
-  const TopCourseCard({super.key, required this.course, required this.pageController});
+  const TopCourseCard({super.key, required this.course, required this.pageController, required this.user});
 
   @override
   State<TopCourseCard> createState() => _TopCourseCardState();
 }
 
 class _TopCourseCardState extends State<TopCourseCard> {
+
+
+  bool isWishListed(){
+    String? courseId = widget.course.id;
+    for(var item in widget.user.wishlist!){
+      if(item == courseId) return true;
+    }
+    return false;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
@@ -23,7 +39,7 @@ class _TopCourseCardState extends State<TopCourseCard> {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    CourseDescription(course: widget.course, pageController: widget.pageController,)));
+                    CourseDescription(course: widget.course, pageController: widget.pageController, user: widget.user,)));
       },
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.5,
@@ -57,14 +73,24 @@ class _TopCourseCardState extends State<TopCourseCard> {
                                   Colors.white.withOpacity(0.40000000298023224),
                             ),
                             child: IconButton(
-                              icon: (widget.course.liked!)
+                              icon: (isWishListed())
                                   ? const Icon(Icons.favorite)
                                   : const Icon(Icons.favorite_outline),
                               color: AllColor.iconColor,
-                              onPressed: () {
-                                setState(() {
-                                  widget.course.liked = !widget.course.liked!;
-                                });
+                              onPressed: () async {
+                                {
+                                  if(isWishListed()){
+                                    await UserFunctions().handleWishList(courseId: widget.course.id!);
+                                    widget.user.wishlist!.remove(widget.course.id!);
+                                  }
+                                  else{
+                                    await UserFunctions().handleWishList(courseId: widget.course.id!,deleting: false);
+                                    widget.user.wishlist!.add(widget.course.id!);
+                                  }
+                                  setState(() {
+
+                                  });
+                                }
                               },
                             ),
                           )),

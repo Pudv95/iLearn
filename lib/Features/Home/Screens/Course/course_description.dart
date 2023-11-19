@@ -3,18 +3,28 @@ import 'package:ilearn/Features/Home/Services/courses.dart';
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/Features/Home/Control/data_parse.dart';
 import 'package:ilearn/Features/Home/Screens/Widgets/bottom_navigation_bar.dart';
+import '../../../../Models/student_model.dart';
+import '../../Services/user.dart';
 
 class CourseDescription extends StatefulWidget {
+  final User user;
   final PageController pageController;
   final Course course;
   const CourseDescription(
-      {super.key, required this.course, required this.pageController});
+      {super.key, required this.course, required this.pageController, required this.user});
 
   @override
   State<CourseDescription> createState() => _CourseDescriptionState();
 }
 
 class _CourseDescriptionState extends State<CourseDescription> {
+  bool isWishListed(){
+    String? courseId = widget.course.id;
+    for(var item in widget.user.wishlist!){
+      if(item == courseId) return true;
+    }
+    return false;
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -47,16 +57,21 @@ class _CourseDescriptionState extends State<CourseDescription> {
                         top: 2,
                         right: 0,
                         child: IconButton(
-                          onPressed: () {
+                          onPressed: () async {
                             {
-                              setState(() {
-                                if (widget.course.liked != null) {
-                                  widget.course.liked = !widget.course.liked!;
+                              setState(() async {
+                                if(isWishListed()){
+                                  await UserFunctions().handleWishList(courseId: widget.course.id!);
+                                  widget.user.wishlist!.remove(widget.course.id!);
+                                }
+                                else{
+                                  await UserFunctions().handleWishList(courseId: widget.course.id!,deleting: false);
+                                  widget.user.wishlist!.add(widget.course.id!);
                                 }
                               });
                             }
                           },
-                          icon: Icon((widget.course.liked!)
+                          icon: Icon((isWishListed())
                               ? Icons.favorite
                               : Icons.favorite_border),
                           color: AllColor.iconColor,
@@ -84,6 +99,7 @@ class _CourseDescriptionState extends State<CourseDescription> {
                       borderRadius: BorderRadius.circular(10),
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 52, sigmaY: 52),
+                        blendMode: BlendMode.src,
                         child: Stack(
                           children: [
                             Positioned(
