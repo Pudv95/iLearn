@@ -36,7 +36,7 @@ class _ProfileState extends State<Profile> {
                 fontWeight: FontWeight.bold),
           ),
         ),
-        actions: ActionBar(context: context, pageIndex: 3, controller: widget.pageController).actionList(),
+        actions: ActionBar(context: context, pageIndex: 3, controller: widget.pageController, user: widget.user).actionList(),
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Padding(

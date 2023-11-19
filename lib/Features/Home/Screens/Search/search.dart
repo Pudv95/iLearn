@@ -36,7 +36,7 @@ class _SearchState extends State<Search> {
                 color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
           ),
         ),
-        actions: ActionBar(context: context, pageIndex: 1, controller: widget.pageController).actionList(),
+        actions: ActionBar(context: context, pageIndex: 1, controller: widget.pageController, user: widget.user).actionList(),
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Padding(
