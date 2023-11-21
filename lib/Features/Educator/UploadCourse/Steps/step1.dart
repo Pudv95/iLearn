@@ -1,5 +1,9 @@
+import 'package:ilearn/Features/Educator/Control/control.dart';
+import 'package:ilearn/Features/Educator/UploadCourse/Steps/step2.dart';
 import 'package:ilearn/Features/Educator/UploadCourse/Widgets/headings.dart';
 import 'package:ilearn/Resources/imports.dart';
+import 'dart:io';
+
 
 class Step1 extends StatefulWidget {
   const Step1({super.key});
@@ -9,6 +13,8 @@ class Step1 extends StatefulWidget {
 }
 
 class _Step1State extends State<Step1> {
+  File? image;
+  Map<String,dynamic> newCourse = {};
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -38,21 +44,35 @@ class _Step1State extends State<Step1> {
           children: [
             const CustomTitle(title: 'Upload a Thumbnail'),
             const SizedBox(height: 30,),
-            Container(
-              width: double.maxFinite,
-              height: 182,
-              decoration: ShapeDecoration(
-                color: const Color(0xFFF1F1F1),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+            InkWell(
+              onTap: ()async{
+                image = await Control().getImageFromGallery();
+                newCourse['image'] = image;
+                setState(() {});
+              },
+              child: Container(
+                width: double.maxFinite,
+                height: 182,
+                decoration: ShapeDecoration(
+                  color: const Color(0xFFF1F1F1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
-              ),
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.image_rounded,size: 50,color: Colors.grey,),
-                  Text('Choose a file',style: TextStyle(color: Colors.grey),),
-                ],
+                child: (image == null)?const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.image_rounded,size: 50,color: Colors.grey,),
+                    Text('Choose a file',style: TextStyle(color: Colors.grey),),
+                  ],
+                ):Stack(
+                  children: [
+                    Positioned(child: SizedBox(height:double.maxFinite,width:double.maxFinite,child: Image.file(image!,fit: BoxFit.cover,))),
+                    Positioned(bottom:10,right:10,child: IconButton(onPressed: (){setState(() {
+                      image = null;
+                    });}, icon: const Icon(Icons.delete,color: Colors.red,)))
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 30,),
@@ -60,7 +80,7 @@ class _Step1State extends State<Step1> {
             const SizedBox(height: 10,),
             TextFormField(
               enableInteractiveSelection: false,
-              onTap: () {},
+              onChanged: (value){newCourse['title'] = value;},
               decoration: InputDecoration(
                 floatingLabelBehavior: FloatingLabelBehavior.never,
                 border: OutlineInputBorder(
@@ -76,9 +96,11 @@ class _Step1State extends State<Step1> {
             const CustomTitle(title: 'Course Description'),
             const SizedBox(height: 10,),
             TextFormField(
+              textInputAction: TextInputAction.go,
               enableInteractiveSelection: false,
-              minLines: 8,
+              minLines: 3,
               maxLines: 8,
+              onChanged: (value){newCourse['description']= value;},
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -93,9 +115,9 @@ class _Step1State extends State<Step1> {
             const SizedBox(height: 30,),
             const CustomTitle(title: 'Course Category'),
             const SizedBox(height: 10,),
-            const DropDown(),
+            DropDown(data: newCourse,),
             const SizedBox(height: 30,),
-            CustomLoginButton(onPress: ()async{}, data: 'Next',color: AllColor.primaryFocusColor,),
+            CustomLoginButton(onPress: ()async{print(newCourse);Navigator.push(context, MaterialPageRoute(builder: (context)=>Step2(course: newCourse,)));}, data: 'Next',color: AllColor.primaryFocusColor,),
             const SizedBox(height: 15,),
             SizedBox(
                 height: 45,
@@ -107,7 +129,7 @@ class _Step1State extends State<Step1> {
                         shape: MaterialStateProperty.all(
                             RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)))),
-                    onPressed: () {},
+                    onPressed: () {Navigator.pop(context);},
                     child: Text(
                       'Cancel',
                       style: TextStyle(
@@ -117,6 +139,7 @@ class _Step1State extends State<Step1> {
                         fontWeight: FontWeight.w500,
                       ),
                     ))),
+            const SizedBox(height: 25,),
           ],
         ),
       ),
@@ -125,7 +148,8 @@ class _Step1State extends State<Step1> {
 }
 
 class DropDown extends StatefulWidget {
-  const DropDown({super.key});
+  final Map<String,dynamic> data;
+  const DropDown({super.key,required this.data});
 
   @override
   State<DropDown> createState() => _DropDownState();
@@ -154,7 +178,7 @@ class _DropDownState extends State<DropDown> {
       ),
       isExpanded: true,
       iconSize: 30.0,
-      items: ['Flutter', 'Web', 'C++',"Design"].map(
+      items: ['Flutter', 'Web Development', 'C++',"Design"].map(
             (val) {
           return DropdownMenuItem<String>(
             value: val,
@@ -165,6 +189,7 @@ class _DropDownState extends State<DropDown> {
       onChanged: (val) {
         setState(
               () {
+                widget.data['category'] = val;
             _dropDownValue = val;
           },
         );

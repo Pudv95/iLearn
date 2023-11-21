@@ -20,7 +20,7 @@ class TeacherDashboard extends StatefulWidget {
 
 class _TeacherDashboardState extends State<TeacherDashboard> {
   final PageController _pageController = PageController(initialPage: 1);
-  int currPage = 0;
+  int currPage = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
