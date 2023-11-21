@@ -11,7 +11,8 @@ import '../../../../Models/student_model.dart';
 class Profile extends StatefulWidget {
   final PageController pageController;
   final User user;
-  const Profile({super.key,required this.user, required this.pageController});
+  final bool learner;
+  const Profile({super.key,required this.user, required this.pageController,this.learner = true});
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -111,7 +112,7 @@ class _ProfileState extends State<Profile> {
             Row(
               children: [
                 CategoriesButton(iconButtonData: IconButtonData(title: 'Edit Profile', icon: null, onPressed: () async { GetCourse().getCourseById('6555a594dcf558cbd03ea5e6'); String? temp = await const FlutterSecureStorage().read(key: 'token');print(temp);})),
-                CategoriesButton(iconButtonData: IconButtonData(title: 'Teach at iLearn', icon: AllIcons.teachIcon, onPressed: ()async{
+                CategoriesButton(iconButtonData: IconButtonData(title: widget.learner?'Teach at iLearn':'Back to Learner', icon: AllIcons.teachIcon, onPressed: ()async{
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>const PlayCourse()));
                 }))
               ],

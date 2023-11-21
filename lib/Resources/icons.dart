@@ -32,5 +32,10 @@ class AllIcons{
   static SvgPicture personalityDevelopment = SvgPicture.asset('assets/Icons/personaltiyDev.svg');
   static SvgPicture others = SvgPicture.asset('assets/Icons/others.svg');
 
+  static SvgPicture home = SvgPicture.asset('assets/Icons/home.svg');
+  static SvgPicture homeSelected = SvgPicture.asset('assets/Icons/homeSelected.svg');
+  static SvgPicture upload = SvgPicture.asset('assets/Icons/upload.svg');
+  static SvgPicture uploadSelected = SvgPicture.asset('assets/Icons/uploadSelected.svg');
+
 
 }

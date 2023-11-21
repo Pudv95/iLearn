@@ -8,6 +8,7 @@ import 'package:ilearn/Features/Authentication/Screens/Login/login_page.dart';
 import 'package:ilearn/Features/Home/Screens/dashboard.dart';
 import '../../../Models/user_model.dart';
 import '../../../Resources/imports.dart';
+import '../../Educator/dashboard.dart';
 
 class Authentication{
 
@@ -254,9 +255,9 @@ class Authentication{
       var response = await http.get(url, headers: headers);
       if (response.statusCode == 200) {
         User user = User.fromJson(jsonDecode(response.body)['user']);
-        print(user.toJson());
+        // print(user.toJson());
         if(context.mounted){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Dashboard(user: user)));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>TeacherDashboard(user: user)));
         }
       } else if(response.statusCode == 401){
         myToast(false,"Login expired");
