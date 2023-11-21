@@ -2,6 +2,8 @@ import 'package:ilearn/Features/Home/Screens/Widgets/actions.dart';
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/Features/Home/Services/courses.dart';
 import '../../../../Models/student_model.dart';
+import '../../Control/control.dart';
+import '../../Services/user.dart';
 import '../Widgets/shimmer_blocks.dart';
 import 'Models/icon_button_data.dart';
 import 'Widgets/courses_for_me.dart';
@@ -21,6 +23,21 @@ class Library extends StatefulWidget {
 }
 
 class _LibraryState extends State<Library> {
+
+
+  Future<void> handleWishListing(String courseId)async{
+        if(Control().isWishListed(courseId, widget.user.wishlist!)){
+          await UserFunctions().handleWishList(courseId:courseId);
+          widget.user.wishlist!.remove(courseId);
+        }
+        else{
+          await UserFunctions().handleWishList(courseId: courseId,deleting: false);
+          widget.user.wishlist!.add(courseId);
+        }
+        setState((){
+
+        });
+  }
 
   final List<IconButtonData> buttonData = [
     IconButtonData(
@@ -156,7 +173,7 @@ class _LibraryState extends State<Library> {
                           List<Course> topCourse = snapshot.data;
                           List<Widget> c1 = [];
                           for(var course in topCourse){
-                            c1.add(CoursesForMeCards(course: course, pageController: widget.pageController, user: widget.user,));
+                            c1.add(CoursesForMeCards(course: course, pageController: widget.pageController, user: widget.user, onPressed: ()async{handleWishListing(course.id!);},));
                           }
                           // print(topCourse);
                           return SizedBox(
@@ -173,18 +190,6 @@ class _LibraryState extends State<Library> {
                           return ShimmerBlocks(context: context).coursesForYouShimmer();
                         }
                       },),
-                    // child: ListView(
-                    //   physics: const BouncingScrollPhysics(),
-                    //   shrinkWrap: true,
-                    //   scrollDirection: Axis.horizontal,
-                    //   children:
-                    //       List.generate(recommendedCourse.length, (index) {
-                    //     return CoursesForMeCards(
-                    //       course: recommendedCourse[index],
-                    //       pageController: widget.pageController,
-                    //     );
-                    //   }),
-                    // ),
                   ),
                   Row(
                     children: [
@@ -226,7 +231,7 @@ class _LibraryState extends State<Library> {
                             List<Course> topCourse = snapshot.data;
                             List<Widget> c1 = [];
                             for(var course in topCourse){
-                              c1.add(TopCourseCard(course: course, pageController: widget.pageController, user: widget.user,));
+                              c1.add(TopCourseCard(course: course, pageController: widget.pageController, user: widget.user, onPressed: ()async{handleWishListing(course.id!);},));
                             }
                             // print(topCourse);
                             return SizedBox(
@@ -260,7 +265,7 @@ class _LibraryState extends State<Library> {
                           List<Course> topCourse = snapshot.data;
                           List<Widget> c1 = [];
                           for(var course in topCourse){
-                            c1.add(TopCourseCard(course: course, pageController: widget.pageController, user: widget.user,));
+                            c1.add(TopCourseCard(course: course, pageController: widget.pageController, user: widget.user,onPressed: ()async{handleWishListing(course.id!);},));
                           }
                           // print(topCourse);
                           return SizedBox(

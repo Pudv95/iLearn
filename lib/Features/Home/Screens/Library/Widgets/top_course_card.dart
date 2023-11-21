@@ -1,3 +1,4 @@
+import 'package:ilearn/Features/Home/Control/control.dart';
 import 'package:ilearn/Models/user_model.dart';
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/Features/Home/Control/data_parse.dart';
@@ -10,8 +11,8 @@ class TopCourseCard extends StatefulWidget {
   final User user;
   final PageController pageController;
   final Course course;
-
-  const TopCourseCard({super.key, required this.course, required this.pageController, required this.user});
+  final VoidCallback onPressed;
+  const TopCourseCard({super.key, required this.course, required this.pageController, required this.user, required this.onPressed});
 
   @override
   State<TopCourseCard> createState() => _TopCourseCardState();
@@ -19,14 +20,6 @@ class TopCourseCard extends StatefulWidget {
 
 class _TopCourseCardState extends State<TopCourseCard> {
 
-
-  bool isWishListed(){
-    String? courseId = widget.course.id;
-    for(var item in widget.user.wishlist!){
-      if(item == courseId) return true;
-    }
-    return false;
-  }
 
 
   @override
@@ -73,25 +66,11 @@ class _TopCourseCardState extends State<TopCourseCard> {
                                   Colors.white.withOpacity(0.40000000298023224),
                             ),
                             child: IconButton(
-                              icon: (isWishListed())
+                              icon: (Control().isWishListed(widget.course.id!,widget.user.wishlist!))
                                   ? const Icon(Icons.favorite)
                                   : const Icon(Icons.favorite_outline),
                               color: AllColor.iconColor,
-                              onPressed: () async {
-                                {
-                                  if(isWishListed()){
-                                    await UserFunctions().handleWishList(courseId: widget.course.id!);
-                                    widget.user.wishlist!.remove(widget.course.id!);
-                                  }
-                                  else{
-                                    await UserFunctions().handleWishList(courseId: widget.course.id!,deleting: false);
-                                    widget.user.wishlist!.add(widget.course.id!);
-                                  }
-                                  setState(() {
-
-                                  });
-                                }
-                              },
+                              onPressed: widget.onPressed,
                             ),
                           )),
                     ],

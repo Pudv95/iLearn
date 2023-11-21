@@ -5,7 +5,6 @@ import '../Services/courses.dart';
 class ParseData{
   final String baseUrl = dotenv.get('BaseUrl');
 
-
   String parseUrl(String thumbnail) {
     Uri url = Uri.parse('$baseUrl/$thumbnail');
     return url.toString();

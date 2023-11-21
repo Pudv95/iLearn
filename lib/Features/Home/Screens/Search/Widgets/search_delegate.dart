@@ -11,11 +11,6 @@ class CustomSearchDelegate extends SearchDelegate {
 
   CustomSearchDelegate({required this.user,required this.pageController});
 
-  // @override
-  // ThemeData appBarTheme(BuildContext context) {
-  //   final ThemeData theme = Theme.of(context);
-  //   return theme.copyWith();
-  // }
   @override
   InputDecorationTheme? get searchFieldDecorationTheme => InputDecorationTheme(
     floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -96,6 +91,7 @@ class CustomSearchDelegate extends SearchDelegate {
             title: Text(result),
             onTap: () {
               query = result;
+              showResults(context);
             },
           ))
               .toList(),
