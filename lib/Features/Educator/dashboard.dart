@@ -8,7 +8,7 @@ import 'package:ilearn/Features/Home/Screens/Widgets/bottom_navigation_bar.dart'
 import '../../../Models/student_model.dart';
 import '../Home/Screens/Profile/profilie.dart';
 import 'EducatorHome/educator_home.dart';
-import 'UploadCourse/upload_course.dart';
+import 'UploadCourse/upload_course_steps.dart';
 
 class TeacherDashboard extends StatefulWidget {
   final User user;
@@ -29,7 +29,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
           controller: _pageController,
           children: [
             EducatorHome(),
-            UploadCourse(),
+            UploadCourseSteps(user: widget.user,),
             Profile(user: widget.user, pageController: _pageController,learner: false,),
           ],
           onPageChanged: (index) {

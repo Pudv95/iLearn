@@ -37,5 +37,7 @@ class AllIcons{
   static SvgPicture upload = SvgPicture.asset('assets/Icons/upload.svg');
   static SvgPicture uploadSelected = SvgPicture.asset('assets/Icons/uploadSelected.svg');
 
+  static Image uploadVector = Image.asset('assets/Icons/uploadVector.png',scale: 0.9,);
+
 
 }
