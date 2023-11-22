@@ -10,7 +10,23 @@ class GetCourse {
   final storage = const FlutterSecureStorage();
   final String baseURl = dotenv.get('BaseUrl');
 
-  getCategoryCourse(String category) async {
+  getCourse(String category) async {
+    String? token = await storage.read(key: 'token');
+    var headers = {'Authorization': 'Bearer $token'};
+    var response = await http.get(
+      Uri.parse('$baseURl/getCourse?page=1&pagesize=5'),
+      headers: headers,
+    );
+    if (response.statusCode == 200) {
+      Map<String, dynamic> jsonData = json.decode(response.body);
+      List<Course> courses = await ParseData().parseCourses(jsonData);
+      return courses;
+    } else {
+      print('Error: ${response.reasonPhrase}');
+    }
+  }
+
+  getPopularCourse(String category) async {
     String? token = await storage.read(key: 'token');
     var headers = {'Authorization': 'Bearer $token'};
     var response = await http.get(

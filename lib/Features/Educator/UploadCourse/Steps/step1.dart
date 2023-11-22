@@ -1,4 +1,5 @@
 import 'package:ilearn/Features/Educator/Control/control.dart';
+import 'package:ilearn/Features/Educator/Services/services.dart';
 import 'package:ilearn/Features/Educator/UploadCourse/Steps/step2.dart';
 import 'package:ilearn/Features/Educator/UploadCourse/Widgets/headings.dart';
 import 'package:ilearn/Resources/imports.dart';
@@ -117,7 +118,12 @@ class _Step1State extends State<Step1> {
             const SizedBox(height: 10,),
             DropDown(data: newCourse,),
             const SizedBox(height: 30,),
-            CustomLoginButton(onPress: ()async{print(newCourse);Navigator.push(context, MaterialPageRoute(builder: (context)=>Step2(course: newCourse,)));}, data: 'Next',color: AllColor.primaryFocusColor,),
+            CustomLoginButton(onPress: ()async{print(newCourse);
+
+              await Services().createCourse(newCourse);
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Step2(course: newCourse,)));
+
+              }, data: 'Next',color: AllColor.primaryFocusColor,),
             const SizedBox(height: 15,),
             SizedBox(
                 height: 45,
@@ -172,7 +178,7 @@ class _DropDownState extends State<DropDown> {
         // label: const Text('Describe Your Course'),
       ),
       hint: _dropDownValue == null
-          ? const Text('Dropdown')
+          ? const Text('Select Category')
           : Text(
         _dropDownValue!,
       ),

@@ -167,7 +167,7 @@ class _LibraryState extends State<Library> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: (360/height)*height,
-                    child: FutureBuilder(future: GetCourse().getCategoryCourse('Python'),
+                    child: FutureBuilder(future: GetCourse().getCourse('Python'),
                       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                         if(snapshot.hasData){
                           List<Course> topCourse = snapshot.data;
@@ -225,7 +225,7 @@ class _LibraryState extends State<Library> {
                   SizedBox(
                       height: (250/height)*height,
                     width: double.maxFinite,
-                    child: FutureBuilder(future: GetCourse().getCategoryCourse('Python'),
+                    child: FutureBuilder(future: GetCourse().getCourse('Python'),
                       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                           if(snapshot.hasData){
                             List<Course> topCourse = snapshot.data;
@@ -259,7 +259,7 @@ class _LibraryState extends State<Library> {
                   SizedBox(
                       height: (250/height)*height,
                       width: (250/width)*width,
-                    child: FutureBuilder(future: GetCourse().getCategoryCourse('DSA'),
+                    child: FutureBuilder(future: GetCourse().getCourse('DSA'),
                       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                         if(snapshot.hasData){
                           List<Course> topCourse = snapshot.data;

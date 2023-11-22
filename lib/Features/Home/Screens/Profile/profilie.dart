@@ -1,4 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:ilearn/Features/Educator/dashboard.dart';
 import 'package:ilearn/Features/Home/Screens/Widgets/actions.dart';
 import 'package:ilearn/Features/Home/Services/user.dart';
 import 'package:ilearn/Resources/imports.dart';
@@ -113,7 +114,7 @@ class _ProfileState extends State<Profile> {
               children: [
                 CategoriesButton(iconButtonData: IconButtonData(title: 'Edit Profile', icon: null, onPressed: () async { GetCourse().getCourseById('6555a594dcf558cbd03ea5e6'); String? temp = await const FlutterSecureStorage().read(key: 'token');print(temp);})),
                 CategoriesButton(iconButtonData: IconButtonData(title: widget.learner?'Teach at iLearn':'Back to Learner', icon: AllIcons.teachIcon, onPressed: ()async{
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const PlayCourse()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>TeacherDashboard(user: widget.user)));
                 }))
               ],
             ),

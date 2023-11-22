@@ -266,7 +266,7 @@ class _CourseDescriptionState extends State<CourseDescription> {
                           height: size.height * 0.01,
                         ),
                         Text(
-                          '${widget.course.duration!} hours',
+                          '${widget.course.duration!.toString()} hours',
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 24,
@@ -379,7 +379,7 @@ class _CourseDescriptionState extends State<CourseDescription> {
                         VerticalDivider(color: AllColor.primaryFocusColor,thickness: 1,),
                         Expanded(child: Column(children: [
                           Text(
-                            ParseData().parseHours(widget.course.videos!).toString(),
+                            widget.course.duration.toString(),
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               color: Colors.black,

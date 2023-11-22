@@ -22,13 +22,13 @@ class ParseData{
     return courses;
   }
 
-  double parseHours(List videos){
-    double seconds = 0;
-    for(var video in videos){
-      seconds += video['videoDuration'];
-    }
-    seconds /= (60*60);
-    double hours = double.parse(seconds.toStringAsFixed(3));
-    return hours;
-  }
+  // double parseHours(List videos){
+  //   double seconds = 0;
+  //   for(var video in videos){
+  //     seconds += video['videoDuration'];
+  //   }
+  //   seconds /= (60*60);
+  //   double hours = double.parse(seconds.toStringAsFixed(3));
+  //   return hours;
+  // }
 }

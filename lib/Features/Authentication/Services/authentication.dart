@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:ilearn/Features/Educator/UploadCourse/Steps/step1.dart';
 import 'package:ilearn/Models/student_model.dart';
 import 'package:ilearn/Features/Authentication/Screens/Login/login_page.dart';
 import 'package:ilearn/Features/Home/Screens/dashboard.dart';
@@ -257,7 +258,8 @@ class Authentication{
         User user = User.fromJson(jsonDecode(response.body)['user']);
         // print(user.toJson());
         if(context.mounted){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>TeacherDashboard(user: user)));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Dashboard(user: user)));
+          // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Step1()));
         }
       } else if(response.statusCode == 401){
         myToast(false,"Login expired");

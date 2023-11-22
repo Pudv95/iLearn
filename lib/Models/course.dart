@@ -5,7 +5,7 @@ class Course {
   String? courseDescription;
   String? price;
   String? category;
-  String? duration;
+  int? duration;
   int? totalStudents;
   List? videos;
   List? notes;

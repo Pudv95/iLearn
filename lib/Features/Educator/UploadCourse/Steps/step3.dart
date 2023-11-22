@@ -3,7 +3,8 @@ import 'package:ilearn/Resources/imports.dart';
 import '../Widgets/headings.dart';
 
 class Step3 extends StatefulWidget {
-  const Step3({super.key});
+  final Map<String,dynamic> myCourse;
+  const Step3({super.key, required this.myCourse});
 
   @override
   State<Step3> createState() => _Step3State();
@@ -12,6 +13,7 @@ class Step3 extends StatefulWidget {
 class _Step3State extends State<Step3> {
   @override
   Widget build(BuildContext context) {
+    print(widget.myCourse);
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -59,7 +61,9 @@ class _Step3State extends State<Step3> {
             const SizedBox(height: 10,),
             TextFormField(
               enableInteractiveSelection: false,
-              onChanged: (value){},
+              onChanged: (value){
+                widget.myCourse['duration'] = value;
+              },
               decoration: InputDecoration(
                 floatingLabelBehavior: FloatingLabelBehavior.never,
                 border: OutlineInputBorder(
