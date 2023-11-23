@@ -1,6 +1,7 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart' as http;
+import 'dart:io';
 import 'package:dio/dio.dart';
 
 class Services{
@@ -13,23 +14,14 @@ class Services{
       course['image'].path,
       filename: 'thumbnail',
     );
-    //
-    //
-    // var body = {
-    //   'title': course['title'],
-    //   'description' : course['description'],
-    //   'image': img,
-    // };
+
     FormData data = FormData.fromMap({
       'title': course['title'],
       'category' : course['category'],
       'description' : course['description'],
       'image': img,
     });
-    // print(body);
-    print('idhar to aa gya yarr mei but aage ni pata kya hoga');
     Dio dio = Dio();
-    // dio.options.headers["authorization"] = "token $token";
     var response = await dio.post('$baseURl/create-course', data: data,options: Options(headers: {
       "Authorization":
       "Bearer $token",
@@ -39,6 +31,19 @@ class Services{
     }
     else{
       print('error ${response.data}');
+    }
+  }
+
+  uploadVideos(List<File> lectures,List<PlatformFile> notes)async{
+    final List lecturesData = [];
+    final List notesData = [];
+    
+    for(var item in lecturesData){
+      final img = await MultipartFile.fromFile(
+        item.path,
+        filename: 'Lecture',
+      );
+      lecturesData.add(img);
     }
   }
 }

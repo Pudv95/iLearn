@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset('assets/Icons/iLearn.svg',height: 80,width: 80,),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             const Padding(
               padding: EdgeInsets.only(left: 30,right: 20),
               child: LinearProgressIndicator(),

@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
+import 'package:ilearn/Features/Educator/Services/services.dart';
 import 'package:ilearn/Features/Educator/UploadCourse/Steps/step3.dart';
 import 'package:ilearn/Features/Educator/UploadCourse/Widgets/headings.dart';
 import 'package:ilearn/Resources/imports.dart';
@@ -66,14 +66,14 @@ class _Step2State extends State<Step2> {
                               color: Colors.grey,
                             ),
                             Text('Lecture ${index + 1}'),
-                            Spacer(),
+                            const Spacer(),
                             IconButton(
                                 onPressed: () {
                                   setState(() {
                                     lectures.removeAt(index);
                                   });
                                 },
-                                icon: Icon(Icons.close))
+                                icon: const Icon(Icons.close))
                           ],
                         ),
                       ),
@@ -181,10 +181,11 @@ class _Step2State extends State<Step2> {
             ),
             CustomLoginButton(
               onPress: () async {
-                widget.course['lectures'] = lectures;
-                widget.course['notes'] = notes;
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Step3(myCourse: widget.course,)));
+                await Services().uploadVideos(lectures, notes);
+                if (context.mounted) {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Step3(myCourse: widget.course,)));
+                }
               },
               data: 'Next',
               color: AllColor.primaryFocusColor,

@@ -392,14 +392,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  password_stepper:
-    dependency: "direct main"
-    description:
-      name: password_stepper
-      sha256: "75734e2de0cbb828deca2e47dddc2e31e586184a8701d2dfdf8306249899fd8a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.2"
   path:
     dependency: transitive
     description:

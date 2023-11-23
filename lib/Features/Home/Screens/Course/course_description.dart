@@ -1,9 +1,11 @@
 import 'dart:ui';
+import 'package:ilearn/Features/Home/Screens/Course/play_course.dart';
 import 'package:ilearn/Features/Home/Services/courses.dart';
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/Features/Home/Control/data_parse.dart';
 import 'package:ilearn/Features/Home/Screens/Widgets/bottom_navigation_bar.dart';
 import '../../../../Models/student_model.dart';
+import '../../Control/control.dart';
 import '../../Services/user.dart';
 
 class CourseDescription extends StatefulWidget {
@@ -24,6 +26,19 @@ class _CourseDescriptionState extends State<CourseDescription> {
       if(item == courseId) return true;
     }
     return false;
+  }
+  Future<void> handleCartSystem(String courseId)async{
+    if(Control().inCart(courseId, widget.user.cart!)){
+      await UserFunctions().handleCartList(courseId:courseId);
+      widget.user.cart!.remove(courseId);
+    }
+    else{
+      await UserFunctions().handleCartList(courseId: courseId,deleting: false);
+      widget.user.cart!.add(courseId);
+    }
+    setState((){
+
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -281,7 +296,9 @@ class _CourseDescriptionState extends State<CourseDescription> {
                 SizedBox(
                   height: size.height * 0.03,
                 ),
-                CustomLoginButton(onPress: () async {}, data: 'Buy Now',color: const Color(0xFF246E9E),),
+                CustomLoginButton(onPress: () async {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const PlayCourse()));
+                }, data: 'Buy Now',color: const Color(0xFF246E9E),),
                 SizedBox(
                   height: size.height * 0.015,
                 ),
@@ -295,7 +312,9 @@ class _CourseDescriptionState extends State<CourseDescription> {
                             shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10)))),
-                        onPressed: () {},
+                        onPressed: () async {
+                            handleCartSystem(widget.course.id!);
+                        },
                         child: Text(
                           'Add to cart',
                           style: TextStyle(
@@ -497,7 +516,7 @@ class _CourseDescriptionState extends State<CourseDescription> {
                             children: [
                               Row(
                                 children: [
-                                  CircleAvatar(),
+                                  const CircleAvatar(),
                                   Text(reviews[index]['name']),
                                 ],
                               ),
@@ -509,7 +528,7 @@ class _CourseDescriptionState extends State<CourseDescription> {
                       },);
                     }
                     else{
-                      return Icon(Icons.close);
+                      return const Text('No Reviews');
                     }
                   }
                   else{
