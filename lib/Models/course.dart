@@ -12,11 +12,11 @@ class Course {
   String? thumbnail;
   Map<String, dynamic>? createdBy;
     Course(
-      {required this.rating,
-        required this.courseTitle,
-        required this.price,
-        required this.courseDescription,
-        this.id,
+      {this.rating,
+        this.courseTitle,
+        this.price,
+        this.courseDescription,
+        required this.id,
         this.category,
         this.videos,
         this.createdBy,

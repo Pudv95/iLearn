@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:ilearn/Features/Authentication/Widgets/toast.dart';
+import 'package:ilearn/Models/course.dart';
 
 class Services{
   final storage = const FlutterSecureStorage();
@@ -26,11 +29,21 @@ class Services{
       "Authorization":
       "Bearer $token",
     }));
-    if(response.statusCode == 200){
-      print(response.data);
+    print(response.statusCode);
+    print(response.data);
+    if(response.statusCode == 201){
+      String id = response.data['data']['courseId'];
+      print(id);
+      Course newCourse = Course(id: id);
+      return newCourse;
+    }
+    else if(response.statusCode == 400){
+      myToast(true, 'Please select different course title');
+      return null;
     }
     else{
       print('error ${response.data}');
+      myToast(false, jsonDecode(response.data)['message']);
     }
   }
 

@@ -22,6 +22,9 @@ void main()async{
   ));
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky, overlays: [ SystemUiOverlay.top ]);
   await dotenv.load(fileName: ".env");
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   return runApp( MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(

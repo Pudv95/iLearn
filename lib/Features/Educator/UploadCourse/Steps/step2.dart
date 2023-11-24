@@ -7,7 +7,7 @@ import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/Features/Educator/Control/control.dart';
 
 class Step2 extends StatefulWidget {
-  final Map<String, dynamic> course;
+  final Course course;
   const Step2({super.key, required this.course});
 
   @override

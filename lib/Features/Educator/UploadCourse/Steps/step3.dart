@@ -3,7 +3,7 @@ import 'package:ilearn/Resources/imports.dart';
 import '../Widgets/headings.dart';
 
 class Step3 extends StatefulWidget {
-  final Map<String,dynamic> myCourse;
+  final Course myCourse;
   const Step3({super.key, required this.myCourse});
 
   @override
@@ -62,7 +62,7 @@ class _Step3State extends State<Step3> {
             TextFormField(
               enableInteractiveSelection: false,
               onChanged: (value){
-                widget.myCourse['duration'] = value;
+                widget.myCourse.duration = value;
               },
               decoration: InputDecoration(
                 floatingLabelBehavior: FloatingLabelBehavior.never,
