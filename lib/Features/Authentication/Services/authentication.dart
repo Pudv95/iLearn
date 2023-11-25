@@ -251,10 +251,12 @@ class Authentication{
     };
 
     try {
+      print(token);
       var url = Uri.parse('$baseURl/');
       var response = await http.get(url, headers: headers);
       if (response.statusCode == 200) {
-        User user = User.fromJson(jsonDecode(response.body)['user']);
+        // print(jsonDecode(response.body)['user']['wallet']);
+        User user = User.fromJson(jsonDecode(response.body)['data']['user']);
         if(context.mounted){
           String? platform = await storage.read(key: 'platform');
           if(platform == 'teacher'){

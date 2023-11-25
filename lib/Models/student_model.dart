@@ -8,14 +8,42 @@ class User {
   String? role;
   String? shortId;
   int? iV;
+  int? wallet;
   List? createdCourses;
   List? ownedCourses;
   List? cart;
   List? completeCourse;
   List? wishlist;
+  String? profileimg;
+  String? domain;
+  String? bio;
+  int? educatorRating;
+  bool? is_certified_educator;
+
+
+  /*
+    "profileimg": "thumbnail/1699964184412.jpg",
+      "domain": "Backend",
+      "bio": "A student at akgec",
+      "createdCourse": [
+      "655cea2aac5a9e0a11a1fbc2",
+      "655dbc10283a12e32a1e4f37",
+      "655dbc10283a12e32a1e4f37",
+      "6560df66d5491f93b7ae7694"
+      ],
+      "wallet": 0,
+      "educator_rating": 4,
+      "is_certified_educator": true
+   */
+
 
   User({this.sId,
     this.username,
+    this.is_certified_educator,
+    this.profileimg,
+    this.bio,
+    this.domain,
+    this.educatorRating,
     this.name,
     this.email,
     this.password,
@@ -26,6 +54,7 @@ class User {
     this.createdCourses,
     this.ownedCourses,
     this.cart,
+    this.wallet,
     this.completeCourse,
     this.wishlist});
 
@@ -35,10 +64,16 @@ class User {
     name = json['name'];
     email = json['email'];
     password = json['password'];
+    domain = json['domain'];
+    bio = json['bio'];
+    is_certified_educator = json['is_certified_educator'];
+    educatorRating = json['educatorRating'];
+    profileimg = json['profileimg'];
     verify = json['verify'];
     role = json['role'];
     shortId = json['shortId'];
     iV = json['__v'];
+    wallet = json['wallet'];
     createdCourses = json['createdCourses'];
     ownedCourses = json['ownedCourses'];
     cart = json['cart'];
@@ -57,6 +92,7 @@ class User {
     data['role'] = role;
     data['shortId'] = shortId;
     data['__v'] = iV;
+    data['wallet'] = wallet;
     data['createdCourses'] = createdCourses;
     data['ownedCourses'] = ownedCourses;
     data['cart'] = cart;

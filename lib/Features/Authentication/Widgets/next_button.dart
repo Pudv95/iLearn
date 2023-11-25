@@ -47,7 +47,12 @@ class _CustomLoginButtonState extends State<CustomLoginButton> {
           color: Colors.white,
         ),
             )
-            : Text(widget.data),
+            : Text(widget.data,style: const TextStyle(
+          color: Colors.white,
+          fontSize: 18,
+          fontFamily: 'SF Pro Display',
+          fontWeight: FontWeight.w500,
+        ),),
       ),
     );
   }

@@ -29,7 +29,7 @@ class UploadCourseSteps extends StatelessWidget {
                 ),
               ),
               SizedBox(height: (20/height)*height,),
-              CustomLoginButton(onPress: ()async{Navigator.push(context, MaterialPageRoute(builder: (context)=>const UploadCourse()));}, data: 'Upload a Course',color: AllColor.primaryFocusColor,),
+              CustomLoginButton(onPress: ()async{Navigator.push(context, MaterialPageRoute(builder: (context)=>UploadCourse(user: user)));}, data: 'Upload a Course',color: AllColor.primaryFocusColor,),
               SizedBox(height: (60/height)*height,),
               const Text(
                 'Publish courses in a 3 step process',

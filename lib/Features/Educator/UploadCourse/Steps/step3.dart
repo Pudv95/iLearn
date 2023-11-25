@@ -1,10 +1,13 @@
+import 'package:ilearn/Features/Educator/Services/services.dart';
+import 'package:ilearn/Features/Educator/UploadCourse/Steps/course_published.dart';
 import 'package:ilearn/Resources/imports.dart';
-
+import '../../../../Models/student_model.dart';
 import '../Widgets/headings.dart';
 
 class Step3 extends StatefulWidget {
+  final User user;
   final Course myCourse;
-  const Step3({super.key, required this.myCourse});
+  const Step3({super.key, required this.myCourse, required this.user});
 
   @override
   State<Step3> createState() => _Step3State();
@@ -43,8 +46,11 @@ class _Step3State extends State<Step3> {
             const CustomTitle(title: 'Set Course Price'),
             const SizedBox(height: 10,),
             TextFormField(
+              keyboardType: TextInputType.number,
               enableInteractiveSelection: false,
-              onChanged: (value){},
+              onChanged: (value){
+                widget.myCourse.price = value;
+              },
               decoration: InputDecoration(
                 floatingLabelBehavior: FloatingLabelBehavior.never,
                 border: OutlineInputBorder(
@@ -64,7 +70,9 @@ class _Step3State extends State<Step3> {
               onChanged: (value){
                 widget.myCourse.duration = value;
               },
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
+
                 floatingLabelBehavior: FloatingLabelBehavior.never,
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -76,7 +84,11 @@ class _Step3State extends State<Step3> {
               cursorColor: AllColor.textFormText,
             ),
             const SizedBox(height: 30,),
-            CustomLoginButton(onPress: ()async{}, data: 'Publish Course',color: AllColor.primaryFocusColor,),
+            CustomLoginButton(onPress: ()async{
+              await Services().publishCourse(widget.myCourse);
+              myToast(false, 'Course published Successfully');
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>PublishedCourseScreen(user:  widget.user,)));
+            }, data: 'Publish Course',color: AllColor.primaryFocusColor,),
             const SizedBox(height: 10,),
             SizedBox(
                 height: 45,

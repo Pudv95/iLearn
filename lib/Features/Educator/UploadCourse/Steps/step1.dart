@@ -4,15 +4,18 @@ import 'package:ilearn/Features/Educator/UploadCourse/Steps/step2.dart';
 import 'package:ilearn/Features/Educator/UploadCourse/Widgets/headings.dart';
 import 'package:ilearn/Resources/imports.dart';
 import 'dart:io';
+import '../../../../Models/student_model.dart';
 
 class Step1 extends StatefulWidget {
-  const Step1({super.key});
+  final User user;
+  const Step1({super.key,required  this.user});
 
   @override
   State<Step1> createState() => _Step1State();
 }
 
 class _Step1State extends State<Step1> {
+  GlobalKey<FormState> key = GlobalKey<FormState>();
   File? image;
   Map<String, dynamic> newCourse = {};
   @override
@@ -105,79 +108,101 @@ class _Step1State extends State<Step1> {
             const SizedBox(
               height: 30,
             ),
-            const CustomTitle(title: 'Course Title'),
-            const SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              enableInteractiveSelection: false,
-              onChanged: (value) {
-                newCourse['title'] = value;
-              },
-              decoration: InputDecoration(
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide:
-                        const BorderSide(style: BorderStyle.none, width: 0)),
-                fillColor: const Color(0xFFF1F1F1),
-                filled: true,
-                label: const Text('  Choose a catchy title'),
-              ),
-              cursorColor: AllColor.textFormText,
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            const CustomTitle(title: 'Course Description'),
-            const SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              textInputAction: TextInputAction.go,
-              enableInteractiveSelection: false,
-              minLines: 3,
-              maxLines: 8,
-              onChanged: (value) {
-                newCourse['description'] = value;
-              },
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide:
-                          const BorderSide(style: BorderStyle.none, width: 0)),
-                  fillColor: const Color(0xFFF1F1F1),
-                  filled: true,
-                  hintText: 'Describe your course'
-                  // label: const Text('Describe Your Course'),
+            Form(
+              key: key,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const CustomTitle(title: 'Course Title'),
+                  const SizedBox(
+                    height: 10,
                   ),
-              cursorColor: AllColor.textFormText,
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            const CustomTitle(title: 'Course Category'),
-            const SizedBox(
-              height: 10,
-            ),
-            DropDown(
-              data: newCourse,
+                  TextFormField(
+                    enableInteractiveSelection: false,
+                    onChanged: (value) {
+                      newCourse['title'] = value;
+                    },
+                    validator: (value){
+                      if(value!.isEmpty){
+                        return 'Title cannot be empty';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                          const BorderSide(style: BorderStyle.none, width: 0)),
+                      fillColor: const Color(0xFFF1F1F1),
+                      filled: true,
+                      label: const Text('  Choose a catchy title'),
+                    ),
+                    cursorColor: AllColor.textFormText,
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  const CustomTitle(title: 'Course Description'),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    textInputAction: TextInputAction.done,
+                    enableInteractiveSelection: false,
+                    minLines: 3,
+                    maxLines: 8,
+                    validator: (value) {
+                      if (value!.length < 10) {
+                        return 'At least 10 character required';
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      newCourse['description'] = value;
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(style: BorderStyle.none, width: 0),
+                      ),
+                      fillColor: const Color(0xFFF1F1F1),
+                      filled: true,
+                      hintText: 'Describe your course',
+                    ),
+                    cursorColor: AllColor.textFormText,
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  const CustomTitle(title: 'Course Category'),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  DropDown(
+                    data: newCourse,
+                  ),
+                ],
+              ),
             ),
             const SizedBox(
               height: 30,
             ),
             CustomLoginButton(
               onPress: () async {
-                print(newCourse);
-
-                Course myCourse = await Services().createCourse(newCourse);
-                if (context.mounted) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Step2(
-                                course: myCourse,
-                              )));
+                if(key.currentState!.validate()){
+                  Course myCourse = await Services().createCourse(newCourse);
+                  myCourse.category = newCourse['category'];
+                  if (context.mounted) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Step2(
+                              user: widget.user,
+                              course: myCourse,
+                            )));
+                  }
                 }
               },
               data: 'Next',
@@ -237,8 +262,6 @@ class _DropDownState extends State<DropDown> {
               borderSide: const BorderSide(style: BorderStyle.none, width: 0)),
           fillColor: const Color(0xFFF1F1F1),
           filled: true,
-          hintText: 'Describe your course'
-          // label: const Text('Describe Your Course'),
           ),
       hint: _dropDownValue == null
           ? const Text('Select Category')
@@ -266,6 +289,12 @@ class _DropDownState extends State<DropDown> {
           );
         },
       ).toList(),
+      validator: (value) {
+      if (value == null || value.isEmpty) {
+        return 'Please select an option';
+      }
+      return null;
+    },
       onChanged: (val) {
         setState(
           () {
