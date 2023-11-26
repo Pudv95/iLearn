@@ -92,9 +92,7 @@ class Services{
   }
 
   publishCourse(Course course)async{
-    print(course.id);
     String? token = await storage.read(key: 'token');
-    print(token);
     var url = Uri.parse('$baseURl/publish-course/${course.id}');
     var headers = {'Authorization': 'Bearer $token'};
     var body = {

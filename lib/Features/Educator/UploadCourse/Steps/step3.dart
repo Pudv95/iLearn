@@ -58,7 +58,7 @@ class _Step3State extends State<Step3> {
                     borderSide: const BorderSide(style: BorderStyle.none, width: 0)),
                 fillColor: const Color(0xFFF1F1F1),
                 filled: true,
-                label: const Text(' Enter Price in INR'),
+                label: const Text('Enter Price in INR'),
               ),
               cursorColor: AllColor.textFormText,
             ),
@@ -87,7 +87,9 @@ class _Step3State extends State<Step3> {
             CustomLoginButton(onPress: ()async{
               await Services().publishCourse(widget.myCourse);
               myToast(false, 'Course published Successfully');
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>PublishedCourseScreen(user:  widget.user,)));
+              if (context.mounted) {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>PublishedCourseScreen(user:  widget.user,)));
+              }
             }, data: 'Publish Course',color: AllColor.primaryFocusColor,),
             const SizedBox(height: 10,),
             SizedBox(

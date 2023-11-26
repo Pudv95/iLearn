@@ -14,7 +14,7 @@ class CategoriesButton extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all((8.0/MediaQuery.sizeOf(context).height)*MediaQuery.of(context).size.height),
       child: ElevatedButton.icon(
-        onPressed: iconButtonData.onPressed,
+        onPressed: ()=>iconButtonData.onPressed,
         icon: (iconButtonData.icon != null)
             ? iconButtonData.icon ?? const Icon(Icons.edit)
             : iconButtonData.image ??

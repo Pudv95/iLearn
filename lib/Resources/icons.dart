@@ -39,6 +39,7 @@ class AllIcons{
 
 
   static SvgPicture coursePublished = SvgPicture.asset('assets/Icons/published.svg');
+  static SvgPicture playButton = SvgPicture.asset('assets/Icons/play_button.svg');
 
   static Image uploadVector = Image.asset('assets/Icons/uploadVector.png',scale: 0.9,);
 

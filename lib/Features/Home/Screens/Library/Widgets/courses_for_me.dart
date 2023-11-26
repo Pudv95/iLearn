@@ -118,13 +118,16 @@ class _CoursesForMeCardsState extends State<CoursesForMeCards> {
                   color: AllColor.iconColor,
                 ),
                 SizedBox(width: size.width*0.55,),
-                Text(
-                  '₹${widget.course.price.toString()}',
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 22,
-                    fontFamily: 'SF Pro Display',
-                    fontWeight: FontWeight.w800,
+                SizedBox(
+                  width: 100,
+                  child: Text(
+                    '₹${widget.course.price.toString()}',
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 22,
+                      fontFamily: 'SF Pro Display',
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ),
               ],

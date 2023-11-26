@@ -3,7 +3,8 @@ import 'package:ilearn/Features/Home/Services/courses.dart';
 import 'package:video_player/video_player.dart';
 
 class PlayCourse extends StatefulWidget {
-  const PlayCourse({super.key});
+  final Course course;
+  const PlayCourse({super.key, required this.course});
 
   @override
   State<PlayCourse> createState() => _PlayCourseState();

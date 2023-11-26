@@ -1,5 +1,4 @@
 import 'dart:ui';
-import 'package:ilearn/Features/Home/Screens/Course/play_course.dart';
 import 'package:ilearn/Features/Home/Services/courses.dart';
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/Features/Home/Control/data_parse.dart';
@@ -296,9 +295,7 @@ class _CourseDescriptionState extends State<CourseDescription> {
                 SizedBox(
                   height: size.height * 0.03,
                 ),
-                CustomLoginButton(onPress: () async {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const PlayCourse()));
-                }, data: 'Buy Now',color: const Color(0xFF246E9E),),
+                CustomLoginButton(onPress: () async {}, data: 'Buy Now',color: const Color(0xFF246E9E),),
                 SizedBox(
                   height: size.height * 0.015,
                 ),

@@ -1,3 +1,4 @@
+import 'package:ilearn/Features/Home/Screens/Library/Screens/your_learning.dart';
 import 'package:ilearn/Features/Home/Screens/Widgets/actions.dart';
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/Features/Home/Services/courses.dart';
@@ -41,13 +42,13 @@ class _LibraryState extends State<Library> {
 
   final List<IconButtonData> buttonData = [
     IconButtonData(
-        title: 'Your Learnings', icon: AllIcons.learningIcon, onPressed: () {
-    }),
+        title: 'Your Learnings', icon: AllIcons.learningIcon, onPressed: () {}),
     IconButtonData(
         title: 'Popular', icon: AllIcons.trendingIcon, onPressed: () {}),
     IconButtonData(
         title: 'Teach at iLearn', icon: AllIcons.teachIcon, onPressed: () {}),
   ];
+
   final List<Widget> categoryList = [
     CategoriesButton(
       iconButtonData: IconButtonData(
@@ -105,8 +106,10 @@ class _LibraryState extends State<Library> {
     ),
   ];
 
+
   @override
   Widget build(BuildContext context) {
+
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -143,7 +146,9 @@ class _LibraryState extends State<Library> {
                           return IconElevatedButton(
                             title: buttonData[index].title,
                             icon: buttonData[index].icon!,
-                            onPress: buttonData[index].onPressed,
+                            onPress: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>YourLearning(user:  widget.user,)));
+                            },
                           );
                         })),
                   ),
