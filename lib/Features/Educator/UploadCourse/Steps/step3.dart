@@ -86,7 +86,6 @@ class _Step3State extends State<Step3> {
             const SizedBox(height: 30,),
             CustomLoginButton(onPress: ()async{
               await Services().publishCourse(widget.myCourse);
-              myToast(false, 'Course published Successfully');
               if (context.mounted) {
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>PublishedCourseScreen(user:  widget.user,)));
               }

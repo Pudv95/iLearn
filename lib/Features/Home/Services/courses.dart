@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -46,6 +47,7 @@ class GetCourse {
     var headers = {'Authorization': 'Bearer $token'};
     var response = await http.get(Uri.parse('$baseURl/getCourseById/$courseId'),
         headers: headers);
+    log(response.body);
     if (response.statusCode == 200) {
       Map<String, dynamic> courseJSON =
           jsonDecode(response.body)['data']['course'];
@@ -86,7 +88,7 @@ class GetCourse {
 
     var response = await http.get(Uri.parse('$baseURl/get-reviews/$courseId'),
         headers: headers);
-
+    print(response.body);
     if (response.statusCode == 200) {
       List<Map<String, dynamic>> reviews =
           jsonDecode(response.body)['data']['reviews'];
@@ -97,3 +99,5 @@ class GetCourse {
     }
   }
 }
+
+

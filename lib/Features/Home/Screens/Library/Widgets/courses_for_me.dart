@@ -80,7 +80,7 @@ class _CoursesForMeCardsState extends State<CoursesForMeCards> {
               ),
             ),
             SizedBox(
-              height: (10/size.height)*size.height,
+              height: (30/size.height)*size.height,
             ),
             Wrap(
               children: [
@@ -117,7 +117,7 @@ class _CoursesForMeCardsState extends State<CoursesForMeCards> {
                   Icons.star,
                   color: AllColor.iconColor,
                 ),
-                SizedBox(width: size.width*0.55,),
+                SizedBox(width: size.width*0.45,),
                 SizedBox(
                   width: 100,
                   child: Text(

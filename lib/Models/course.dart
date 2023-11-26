@@ -1,7 +1,7 @@
 class Course {
   String? id;
   String? courseTitle;
-  int? rating;
+  dynamic rating;
   String? courseDescription;
   String? price;
   String? category;
@@ -9,12 +9,16 @@ class Course {
   int? totalStudents;
   List? videos;
   List? notes;
+  dynamic createdAt;
+  dynamic updatedAt;
   String? thumbnail;
   Map<String, dynamic>? createdBy;
     Course(
       {this.rating,
         this.courseTitle,
         this.price,
+        this.createdAt,
+        this.updatedAt,
         this.courseDescription,
         required this.id,
         this.category,
@@ -30,6 +34,8 @@ class Course {
       id: json['_id'],
       courseTitle: json['title'],
       rating: json['rating'],
+      updatedAt: json['updatedAt'],
+      createdAt: json['createdAt'],
       courseDescription: json['description'],
       price: json['price'],
       category: json['category'],
@@ -55,6 +61,8 @@ class Course {
       'videos' : videos,
       'notes' : notes,
       'thumbnail' : thumbnail,
+      'createdAt': createdAt,
+      'updatedAt':updatedAt,
     };
   }
 }

@@ -1,12 +1,10 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:ilearn/Features/Educator/dashboard.dart';
+import 'dart:developer';
 import 'package:ilearn/Features/Home/Screens/Widgets/actions.dart';
 import 'package:ilearn/Features/Home/Control/control.dart';
 import 'package:ilearn/Features/Home/Services/user.dart';
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/Features/Home/Screens/Library/Models/icon_button_data.dart';
 import 'package:ilearn/Features/Home/Screens/Library/Widgets/top_course_button.dart';
-import 'package:ilearn/Features/Home/Services/courses.dart';
 import '../../../../Models/student_model.dart';
 
 class Profile extends StatefulWidget {
@@ -24,6 +22,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +61,7 @@ class _ProfileState extends State<Profile> {
                   backgroundColor: Colors.black,
                   child: Text(
                     widget.user.name![0].toUpperCase(),
-                    style: TextStyle(fontSize: 40, color: Colors.white),
+                    style: const TextStyle(fontSize: 40, color: Colors.white),
                   ),
                 ),
                 const SizedBox(width: 15),
@@ -133,7 +132,9 @@ class _ProfileState extends State<Profile> {
                             ? 'Teach at iLearn'
                             : 'Back to Learner',
                         icon: AllIcons.teachIcon,
-                        onPressed:()async{await Control().switchSide(widget.learner, context, widget.user);}))
+                        onPressed:()async{
+                          await Control().switchSide(widget.learner, context, widget.user);
+                        }))
               ],
             ),
             const SizedBox(

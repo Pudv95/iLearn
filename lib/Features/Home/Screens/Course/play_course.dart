@@ -1,7 +1,8 @@
 import 'dart:math';
-
+import 'package:ilearn/Features/Home/Control/data_parse.dart';
 import 'package:ilearn/Features/Home/Screens/Widgets/review_card.dart';
 import 'package:ilearn/Features/Home/Screens/Widgets/up_next_card.dart';
+import 'package:ilearn/Features/Home/Services/courses.dart';
 import 'package:ilearn/Resources/imports.dart';
 import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 import 'package:video_player/video_player.dart';
@@ -17,17 +18,6 @@ class PlayCourse extends StatefulWidget {
 class _PlayCourseState extends State<PlayCourse> {
   @override
   Widget build(BuildContext context) {
-    final review = {
-      "user": {
-        "_id": "653f8d0fa37347ad22d32777",
-        "username": "AVtheking",
-        "name": "AnkitOP",
-        "profileimg": "thumbnail/1700972907009.jpg"
-      },
-      "rating": "4",
-      'comment' : "The review of this course is that it is bad!!",
-      "_id": "6562ecc8537cf5cea5cc0652"
-    };
     double courseCompleted = 0.75;
     double height = MediaQuery.sizeOf(context).height;
     double width = MediaQuery.sizeOf(context).width;
@@ -36,12 +26,8 @@ class _PlayCourseState extends State<PlayCourse> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: (220 / height) * height,
-              width: width,
-              child: Placeholder(),
-            ),
-            SizedBox(height: 25,),
+            VideoPlayerWidget(videoUrl: ParseData().parseVideoUrl(widget.course.videos![0]['video']['videoUrl']),),
+            const SizedBox(height: 25,),
             Padding(
               padding: const EdgeInsets.only(left: 30,right: 30),
               child: Column(
@@ -53,7 +39,7 @@ class _PlayCourseState extends State<PlayCourse> {
                     fontFamily: 'SF Pro Text',
                     fontWeight: FontWeight.w600,
                   ),),
-                  SizedBox(height: 5,),
+                  const SizedBox(height: 5,),
                   Text(widget.course.createdBy!['name'],style: const TextStyle(
                     color: Colors.black,
                     fontSize: 14,
@@ -61,7 +47,7 @@ class _PlayCourseState extends State<PlayCourse> {
                     fontWeight: FontWeight.w400,
                     letterSpacing: 1.1
                   ),),
-                  SizedBox(height: 15,),
+                  const SizedBox(height: 15,),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: ProgressBar(
@@ -100,10 +86,24 @@ class _PlayCourseState extends State<PlayCourse> {
                     fontSize: 20,
                     fontFamily: 'SF Pro Text',
                     fontWeight: FontWeight.w600,
-                    height: 0.07,
                   ),),
                   const SizedBox(height: 20,),
-                  ReviewCard(review: review),
+                  FutureBuilder(future: GetCourse().getCourseReview(widget.course.id!), builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if(snapshot.connectionState == ConnectionState.done){
+                      if(snapshot.hasData){
+                        return ListView.builder(itemBuilder: (BuildContext context, int index) {
+                          List<Map<String,dynamic>> reviews = snapshot.data;
+                          return ReviewCard(review: reviews[index]);
+                        },);
+                      }
+                      else{
+                        return Text('No Reviews yet',style: TextStyle(fontSize: 30),);
+                      }
+                    }
+                    else{
+                      return const CircularProgressIndicator();
+                    }
+                  }, )
                 ],
               ),
             )
@@ -229,3 +229,70 @@ class _ControlsOverlay extends StatelessWidget {
     );
   }
 }
+
+class VideoPlayerWidget extends StatefulWidget {
+  final String videoUrl;
+
+  const VideoPlayerWidget({super.key, required this.videoUrl});
+
+  @override
+  State <VideoPlayerWidget> createState() => _VideoPlayerWidgetState();
+}
+
+class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
+  late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
+
+  @override
+  void initState() {
+    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl));
+    _initializeVideoPlayerFuture = _controller.initialize().then((value) {
+      setState(() {
+        print('initialization is done');
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl));
+    _initializeVideoPlayerFuture = _controller.initialize().then((value) {
+      setState(() {
+      });
+    });
+    return SizedBox(
+      height: (220 / MediaQuery.of(context).size.height) * MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      child: FutureBuilder(
+        future: _initializeVideoPlayerFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return AspectRatio(
+              aspectRatio: _controller.value.aspectRatio,
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  VideoPlayer(_controller),
+                  _ControlsOverlay(controller: _controller),
+                  VideoProgressIndicator(_controller, allowScrubbing: false)
+                ],
+              ),
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+}
+

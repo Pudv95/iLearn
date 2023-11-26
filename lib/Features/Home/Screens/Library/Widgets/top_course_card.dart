@@ -1,11 +1,8 @@
 import 'package:ilearn/Features/Home/Control/control.dart';
-import 'package:ilearn/Models/user_model.dart';
 import 'package:ilearn/Resources/imports.dart';
 import 'package:ilearn/Features/Home/Control/data_parse.dart';
 import 'package:ilearn/Features/Home/Screens/Course/course_description.dart';
-
 import '../../../../../Models/student_model.dart';
-import '../../../Services/user.dart';
 
 class TopCourseCard extends StatefulWidget {
   final User user;
@@ -47,7 +44,7 @@ class _TopCourseCardState extends State<TopCourseCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: (140/height)*height,
+                  height: (120/height)*height,
                   width: double.maxFinite,
                   child: Stack(
                     children: [

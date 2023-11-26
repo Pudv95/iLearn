@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -246,17 +247,18 @@ class Authentication{
 // Get UserData Function
 
   getUserData(context,token)async{
+
     var headers = {
       'Authorization': 'Bearer $token'
     };
 
     try {
-      print(token);
       var url = Uri.parse('$baseURl/');
       var response = await http.get(url, headers: headers);
       if (response.statusCode == 200) {
-        // print(jsonDecode(response.body)['user']['wallet']);
+        log(jsonDecode(response.body)['data']['user'].toString());
         User user = User.fromJson(jsonDecode(response.body)['data']['user']);
+        print(user.toJson());
         if(context.mounted){
           String? platform = await storage.read(key: 'platform');
           if(platform == 'teacher'){
@@ -265,8 +267,6 @@ class Authentication{
           else{
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Dashboard(user: user)));
           }
-
-          // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Step1()));
         }
       } else if(response.statusCode == 401){
         myToast(false,"Login expired");

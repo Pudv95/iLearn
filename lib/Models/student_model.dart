@@ -8,15 +8,15 @@ class User {
   String? role;
   String? shortId;
   int? iV;
+  String? domain;
+  String? bio;
   int? wallet;
-  List? createdCourses;
-  List? ownedCourses;
+  List? createdCourse;
+  List? ownedCourse;
   List? cart;
   List? completeCourse;
   List? wishlist;
   String? profileimg;
-  String? domain;
-  String? bio;
   int? educatorRating;
   bool? is_certified_educator;
 
@@ -51,8 +51,8 @@ class User {
     this.role,
     this.shortId,
     this.iV,
-    this.createdCourses,
-    this.ownedCourses,
+    this.createdCourse,
+    this.ownedCourse,
     this.cart,
     this.wallet,
     this.completeCourse,
@@ -74,8 +74,8 @@ class User {
     shortId = json['shortId'];
     iV = json['__v'];
     wallet = json['wallet'];
-    createdCourses = json['createdCourses'];
-    ownedCourses = json['ownedCourses'];
+    createdCourse = json['createdCourse'];
+    ownedCourse = json['ownedCourse'];
     cart = json['cart'];
     wishlist = json['wishlist'];
     completeCourse = json['completedCourse'];
@@ -93,8 +93,8 @@ class User {
     data['shortId'] = shortId;
     data['__v'] = iV;
     data['wallet'] = wallet;
-    data['createdCourses'] = createdCourses;
-    data['ownedCourses'] = ownedCourses;
+    data['createdCourses'] = createdCourse;
+    data['ownedCourses'] = ownedCourse;
     data['cart'] = cart;
     data['wishlist'] = wishlist;
     data['completedCourse'] = completeCourse;

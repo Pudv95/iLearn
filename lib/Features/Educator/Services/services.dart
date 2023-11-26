@@ -55,18 +55,17 @@ class Services{
     for (int i = 0; i < lectures.length; i++) {
       LectureModel lecture = lectures[i];
       FormData formData;
-      print(lecture.lectureTitle);
       if (lecture.notes != null) {
         formData = FormData.fromMap({
-          'video': await MultipartFile.fromFile(lecture.lecture.path,filename: lecture.lectureTitle),
-          'videoTitle' : 'title',
+          'video': await MultipartFile.fromFile(lecture.lecture!.path,filename: lecture.lectureTitle),
+          'videoTitle' : lecture.lectureTitle,
           'notes': await MultipartFile.fromFile(lecture.notes!.path!,filename: lecture.notes!.name)
         });
       }
       else{
         formData = FormData.fromMap({
-          'video': await MultipartFile.fromFile(lecture.lecture.path,filename: lecture.lectureTitle),
-          'videoTitle' : 'title 1'
+          'video': await MultipartFile.fromFile(lecture.lecture!.path,filename: lecture.lectureTitle),
+          'videoTitle' : lecture.lectureTitle
         });
       }
       try {
@@ -78,7 +77,7 @@ class Services{
             "Bearer $token",
           })
         );
-
+        print(response.data);
         if(response.statusCode == 200){
           var data = response.data;
           print(data);
@@ -92,22 +91,21 @@ class Services{
   }
 
   publishCourse(Course course)async{
+    print(course.id);
     String? token = await storage.read(key: 'token');
     var url = Uri.parse('$baseURl/publish-course/${course.id}');
     var headers = {'Authorization': 'Bearer $token'};
     var body = {
-      'price':course.id,
+      'price':course.price,
       'category':course.category,
       'duration':course.duration
     };
     var response = await http.post(url,headers: headers,body: body);
-    print(response.body);
-    print('abcdef');
     if(response.statusCode == 200){
       myToast(false, 'Course published successfully');
     }
     else{
-      myToast(true, 'errrr..... error');
+      myToast(true, 'Error: ${response.statusCode} ${jsonDecode(response.body)['message']}');
     }
   }
 

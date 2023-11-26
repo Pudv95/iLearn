@@ -6,37 +6,41 @@ import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 
 class LearningsCard extends StatelessWidget {
   final Course course;
-  const LearningsCard({super.key, required this.course});
+  final int completedLecture;
+  const LearningsCard({super.key, required this.course, required this.completedLecture});
 
   @override
   Widget build(BuildContext context) {
-    double completed = 0.75;
-    final height = MediaQuery.of(context).size.height;
+
     final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return SizedBox(
       width: width*0.9,
+      height: (150/height)*height,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListTile(
+            contentPadding: EdgeInsets.zero,
             onTap: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>PlayCourse(course: course,)));
             },
-              leading: ClipRRect(borderRadius:BorderRadius.circular(8),child: Image.network(ParseData().parseUrl(course.thumbnail!))),
+              leading: SizedBox(height:75,width:75,child: ClipRRect(borderRadius:BorderRadius.circular(8),child: Image.network(ParseData().parseUrl(course.thumbnail!)))),
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(children: [
-                  Text(course.courseTitle!,style:  const TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontFamily: 'SF Pro Text',
-                    fontWeight: FontWeight.w500,
-                  ),),
-                  const SizedBox(width: 20,),
-                  AllIcons.playButton,
+                  SizedBox(
+                    width: 220,
+                    child: Text(course.courseTitle!,style:  const TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontFamily: 'SF Pro Text',
+                      fontWeight: FontWeight.w500,
+                    ),),
+                  ),
                 ],),
-                Text(course.createdBy!['name'],style: TextStyle(
+                Text(course.createdBy!['name'],style: const TextStyle(
                   color: Colors.black,
                   fontSize: 12,
                   fontFamily: 'SF Pro Text',
@@ -44,12 +48,13 @@ class LearningsCard extends StatelessWidget {
                 ),)
               ],
             ),
+            trailing: AllIcons.playButton,
           ),
           SizedBox(height: 15,),
           Align(
             alignment: Alignment.center,
             child: ProgressBar(
-              value: completed,
+              value: completedLecture/course.videos!.length*100,
               color:AllColor.primaryFocusColor,
               width: (320/width)*width,
               height: 5,
@@ -57,12 +62,13 @@ class LearningsCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 15,),
-          Text('${(completed*100).toString()}%',style: TextStyle(
+          Text('${(completedLecture/course.videos!.length*100).toString()}%',style: const TextStyle(
             color: Colors.black,
-            fontSize: 30,
+            fontSize: 25,
             fontFamily: 'SF Pro Text',
             fontWeight: FontWeight.w500,
-          ),)
+          ),),
+          SizedBox(height: 20,)
         ],
       ),
     );
