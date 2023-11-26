@@ -50,7 +50,7 @@ class _YourLearningState extends State<YourLearning> {
                     return LearningsCard(course: ownedCourse,);
                   }
                   else{
-                    return SizedBox(height:100,width: width*0.9,child: Shimmer.fromColors(child: LearningsCard(course: Course(id: 'id',thumbnail: '',courseTitle: '')), baseColor: Colors.grey.shade300, highlightColor: Colors.grey.shade100));
+                    return SizedBox(height:100,width: width*0.9,child: Shimmer.fromColors(baseColor: Colors.grey.shade300, highlightColor: Colors.grey.shade100, child: LearningsCard(course: Course(id: 'id',thumbnail: '',courseTitle: '',createdBy: {'name':''}))));
 
                   }
                 }, ),

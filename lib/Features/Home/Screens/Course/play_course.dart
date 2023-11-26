@@ -1,5 +1,9 @@
+import 'dart:math';
+
+import 'package:ilearn/Features/Home/Screens/Widgets/review_card.dart';
+import 'package:ilearn/Features/Home/Screens/Widgets/up_next_card.dart';
 import 'package:ilearn/Resources/imports.dart';
-import 'package:ilearn/Features/Home/Services/courses.dart';
+import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 import 'package:video_player/video_player.dart';
 
 class PlayCourse extends StatefulWidget {
@@ -11,101 +15,101 @@ class PlayCourse extends StatefulWidget {
 }
 
 class _PlayCourseState extends State<PlayCourse> {
-  VideoPlayerController? controller;
-  Course? selectedCourse;
-
-  getVideos() async {
-    selectedCourse =
-        await GetCourse().getCourseById('6555a594dcf558cbd03ea5e6');
-    String videoLink = selectedCourse!.videos![0]['videoUrl'];
-    videoLink =
-        videoLink.replaceAll('public', 'https://udemy-nx1v.onrender.com');
-    controller = VideoPlayerController.networkUrl(Uri.parse(videoLink));
-    controller!.addListener(() {
-      setState(() {});
-    });
-    controller!.initialize().then((_) => setState(() {}));
-    controller!.play();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getVideos();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final review = {
+      "user": {
+        "_id": "653f8d0fa37347ad22d32777",
+        "username": "AVtheking",
+        "name": "AnkitOP",
+        "profileimg": "thumbnail/1700972907009.jpg"
+      },
+      "rating": "4",
+      'comment' : "The review of this course is that it is bad!!",
+      "_id": "6562ecc8537cf5cea5cc0652"
+    };
+    double courseCompleted = 0.75;
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return SafeArea(
       child: Scaffold(
-          body: (controller != null)
-              ? Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 300,
-                      child: Stack(
-                        alignment: Alignment.topCenter,
-                        children: [
-                          controller!.value.isInitialized
-                              ? AspectRatio(
-                                  aspectRatio: controller!.value.aspectRatio,
-                                  child: VideoPlayer(controller!),
-                                )
-                              : const LinearProgressIndicator(),
-                          _ControlsOverlay(controller: controller!),
-                        ],
-                      ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: (220 / height) * height,
+              width: width,
+              child: Placeholder(),
+            ),
+            SizedBox(height: 25,),
+            Padding(
+              padding: const EdgeInsets.only(left: 30,right: 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(widget.course.courseTitle!,style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 22,
+                    fontFamily: 'SF Pro Text',
+                    fontWeight: FontWeight.w600,
+                  ),),
+                  SizedBox(height: 5,),
+                  Text(widget.course.createdBy!['name'],style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontFamily: 'SF Pro Text',
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: 1.1
+                  ),),
+                  SizedBox(height: 15,),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: ProgressBar(
+                      value: courseCompleted,
+                      color:AllColor.primaryFocusColor,
+                      width: (320/width)*width,
+                      height: 5,
+                      backgroundColor: Colors.grey,
                     ),
-                    SizedBox(height: 20,),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20,right: 20),
-                      child: SizedBox(
-                        height: 200,
-                        child: ListView(
-                          shrinkWrap: true,
-                          children: [
-                            Text(
-                              selectedCourse!.courseTitle!,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 22,
-                                fontFamily: 'SF Pro Text',
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(
-                              selectedCourse!.createdBy!['name'],
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontFamily: 'SF Pro Text',
-                              ),
-                            ),
-                            SizedBox(
-                              height :200,
-                              child: ListView.builder(
-                                itemCount: selectedCourse!.videos!.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return ListTile(
-                                    leading: Container(color: Colors.grey,height: 20,width: 20,),
-                                    title: Column(
-                                      children: [
-                                        Text(selectedCourse!.videos![index]['videoTitle']),
-                                        Text(selectedCourse!.videos![index]['videoDuration'].toString()),
-                                      ],
-                                    ),
-
-                                  );
-                                },),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              : Container()),
+                  ),
+                  const SizedBox(height: 7,),
+                  Text('${(courseCompleted*100).toString()}% complete',style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 25,
+                    fontFamily: 'SF Pro Text',
+                    fontWeight: FontWeight.w500,
+                  ),),
+                  const SizedBox(height: 45,),
+                  const Text('Up Next',style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontFamily: 'SF Pro Text',
+                    fontWeight: FontWeight.w600,
+                    height: 0.07,
+                  ),),
+                  const SizedBox(height: 20,),
+                  SizedBox(
+                    height: min(height/2,widget.course.videos!.length*55),
+                    child: ListView.builder(itemCount: widget.course.videos!.length,itemBuilder: (BuildContext context, int index) {
+                        return UpNextCard(video: widget.course.videos![index]);
+                    },),
+                  ),
+                  const SizedBox(height: 50,),
+                  const Text('Reviews',style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontFamily: 'SF Pro Text',
+                    fontWeight: FontWeight.w600,
+                    height: 0.07,
+                  ),),
+                  const SizedBox(height: 20,),
+                  ReviewCard(review: review),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

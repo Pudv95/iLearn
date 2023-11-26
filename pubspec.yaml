@@ -51,6 +51,7 @@ dependencies:
   dio: ^5.3.4
   http_parser: ^4.0.2
   simple_progress_indicators: ^0.2.0
+  flutter_rating_bar: ^4.0.1
 
 
 dev_dependencies:
